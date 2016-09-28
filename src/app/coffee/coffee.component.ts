@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { coffeesData } from './coffeesData';
 
 @Component({
   selector: 'coffee',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./coffee.component.css']
 })
 export class CoffeeComponent {
-    
+
+    coffees = coffeesData.coffees;
+
 }

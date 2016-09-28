@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Project name</a>
+      <a class="navbar-brand" href="#">OASIT</a>
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
@@ -36,15 +36,15 @@
       
       <div class="row">
 
-            <div class="col-sm-6 col-md-4" *ngFor="let num of [1,2,3,4,5,6]">
+            <div class="col-sm-6 col-md-4" *ngFor="let coffee of coffees">
                 <div class="thumbnail">
-                <img src="assets/images/coffee.jpg" alt="..." class="img-responsive">
+                <img src={{coffee.url}} alt="..." class="img-responsive">
                 <div class="caption">
-                    <h3>Coffee Latte</h3>
-                    <p class="description">Hot</p>
+                    <h3>{{coffee.name}}</h3>
+                    <p class="description">{{coffee.type}}</p>
                     <div>
                     <div class="clearfix">
-                        <div class="price pull-left">$12.23</div>
+                        <div class="price pull-left">${{coffee.price}}</div>
                         <a href="#" class="btn btn-success pull-right" role="button">Add to cart</a>
                     </div>
                     </div>
