@@ -47,7 +47,7 @@ export const coffeesData = {
             id:6,
             url: "http://globalassets.starbucks.com/assets/cbbe8f49e8a640c19020788a735a6c59.jpg",
             name: "Frappucino",
-            category: "special menu",
+            category: "frappe",
             type: "cold",
             price: 75
         },

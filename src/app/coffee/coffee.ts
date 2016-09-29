@@ -1,11 +1,14 @@
 
 export class Coffee {
     
-    id:string;
-    url:string;
-    name:string;
-    category:string;
-    status:string;
-    price:number;
+    constructor(public id:string, 
+                public url:string, 
+                public name:string, 
+                public category:string,
+                public type:string, 
+                public price:number
+                ) {
+
+    } 
     
 }
