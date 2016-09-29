@@ -10,7 +10,8 @@ export class CoffeeComponent {
 
     coffees = coffeesData.coffees;
 
+    filter = 0;
     filterCoffee() {
-        alert('test');
+        this.filter = 1;
     }
 }

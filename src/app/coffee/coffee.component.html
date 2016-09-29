@@ -36,7 +36,7 @@
       
       <div class="row">
 
-            <div class="col-sm-6 col-md-4" *ngFor="let coffee of coffees | coffeeFilter">
+            <div class="col-sm-6 col-md-4" *ngFor="let coffee of coffees | coffeeFilter:filter">
                 <div class="thumbnail">
                 <img src={{coffee.url}} alt="..." class="img-responsive">
                 <div class="caption">
