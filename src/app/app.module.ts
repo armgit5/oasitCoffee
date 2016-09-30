@@ -7,6 +7,7 @@ import { routeConfig,navigatableComponents } from "./app.routing";
 import { CoffeePipe } from "./coffees/coffee.pipe";
 import { HeaderComponent } from "./header.component";
 import { CategoryComponent } from './coffees/category/category.component';
+import { CoffeeComponent } from './coffees/coffee.component';
 
 import { AppComponent } from './app.component';
 
@@ -16,7 +17,8 @@ import { AppComponent } from './app.component';
     ...navigatableComponents,
     CoffeePipe,
     HeaderComponent,
-    CategoryComponent
+    CategoryComponent,
+    CoffeeComponent
   ],
   imports: [
     BrowserModule,

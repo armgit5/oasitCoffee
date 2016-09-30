@@ -1,0 +1,33 @@
+
+
+<div class="container main">
+  <div class="row row-offcanvas row-offcanvas-right">
+
+    <category-selector (filter)="onFilter($event)"></category-selector>
+
+    <div class="col-xs-12 col-sm-9">
+      
+      <div class="row">
+
+            <div (filter)="onFilter($event)">
+            </div>
+
+            
+            <coffee-component [coffee]="coffee" *ngFor="let coffee of coffees | coffeeFilter:filterArg"></coffee-component>
+            
+            
+      </div><!--/row-->
+    </div><!--/span-->
+
+    
+  </div><!--/row-->
+
+  <hr>
+
+  <footer>
+    <p>© Company 2014</p>
+  </footer>
+
+</div><!--/.container-->
+
+
