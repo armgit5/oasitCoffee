@@ -3,8 +3,10 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   template: `
-              <my-header></my-header>
-              <router-outlet></router-outlet>
+              <div class="container">
+                <my-header></my-header>
+                <router-outlet></router-outlet>
+              </div>
             `,
   styleUrls: ['./app.component.css']
 })

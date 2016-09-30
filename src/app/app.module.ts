@@ -6,6 +6,8 @@ import { RouterModule } from "@angular/router";
 import { routeConfig,navigatableComponents } from "./app.routing";
 import { CoffeePipe } from "./coffee/coffee.pipe";
 import { HeaderComponent } from "./header.component";
+import { CategoryComponent } from './coffee/category.component';
+
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -13,7 +15,8 @@ import { AppComponent } from './app.component';
     AppComponent,
     ...navigatableComponents,
     CoffeePipe,
-    HeaderComponent
+    HeaderComponent,
+    CategoryComponent
   ],
   imports: [
     BrowserModule,

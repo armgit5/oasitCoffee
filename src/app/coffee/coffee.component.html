@@ -3,19 +3,14 @@
 <div class="container main">
   <div class="row row-offcanvas row-offcanvas-right">
 
-    <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
-      <div class="list-group">
-        <a class="list-group-item" [class.active]="allActive" (click)="filterAll()">All Types</a>
-        <a class="list-group-item" [class.active]="coffeeActive"  (click)="filterCoffee()">Coffee</a>
-        <a class="list-group-item" [class.active]="menuActive" (click)="filterMenu()">Menu</a>
-        <a class="list-group-item" [class.active]="specialActive" (click)="filterSpecialMenu()">Special Menu</a>
-        <a class="list-group-item" [class.active]="frappeActive" (click)="filterFrappe()">Frappe</a>
-      </div>
-    </div><!--/span-->
+    <category (filter)="onFilter($event)"></category>
 
     <div class="col-xs-12 col-sm-9">
       
       <div class="row">
+
+            <div (filter)="onFilter($event)">
+            </div>
 
             <div class="col-sm-6 col-md-4" *ngFor="let coffee of coffees | coffeeFilter:filterArg">
                 <div class="thumbnail">
