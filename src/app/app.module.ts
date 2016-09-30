@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from "@angular/router";
 import { routeConfig,navigatableComponents } from "./app.routing";
-import { CoffeePipe } from "./coffee/coffee.pipe";
+import { CoffeePipe } from "./coffees/coffee.pipe";
 import { HeaderComponent } from "./header.component";
-import { CategoryComponent } from './coffee/category.component';
+import { CategoryComponent } from './coffees/category/category.component';
 
 import { AppComponent } from './app.component';
 

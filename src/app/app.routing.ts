@@ -1,9 +1,9 @@
-import { CoffeeComponent } from "./coffee/coffee.component";
+import { CoffeesComponent } from "./coffees/coffees.component";
 
 export const routeConfig = [
-  { path: "", component: CoffeeComponent }
+  { path: "", component: CoffeesComponent }
 ];
 
 export const navigatableComponents = [
-  CoffeeComponent
+  CoffeesComponent
 ];
