@@ -5,14 +5,15 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from "@angular/router";
 import { routeConfig,navigatableComponents } from "./app.routing";
 import { CoffeePipe } from "./coffee/coffee.pipe";
-
+import { HeaderComponent } from "./header.component";
 import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ...navigatableComponents,
-    CoffeePipe
+    CoffeePipe,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
