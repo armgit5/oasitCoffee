@@ -18,9 +18,6 @@ export class CoffeePipe implements PipeTransform {
             return this.output 
         } else {
             return array;
-        }
- 
-        
-        
+        }       
     }
 }

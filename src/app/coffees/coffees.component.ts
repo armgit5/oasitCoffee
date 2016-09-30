@@ -4,11 +4,10 @@ import { coffeesData } from './coffeesData';
 
 @Component({
   selector: 'coffee',
-  templateUrl: './coffees.component.html',
-  styleUrls: ['./coffees.component.css']
+  templateUrl: './coffees.component.html'
 })
 export class CoffeesComponent {
-    
+
     coffees = coffeesData.coffees;
     
     filterArg = "";

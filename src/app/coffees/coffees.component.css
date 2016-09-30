@@ -1,5 +1,15 @@
 
+.container.main {
+    padding-top: 60px;
+}
 
-/*.input-group {
-    width: 100px;
-}*/
+.thumbnail{        
+    width: 250px; 
+    height: 300px;
+    overflow: auto;
+}
+
+img {
+    width: 252px;
+    height: 158px;
+}
