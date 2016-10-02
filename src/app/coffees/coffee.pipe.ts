@@ -6,9 +6,9 @@ import {Coffee} from "./coffee";
 
 export class CoffeePipe implements PipeTransform {
     output: Coffee[] = [];
-    transform(array: Coffee[], args: string): any {
+    transform(array: Coffee[], args: number): any {
         this.output = [];
-        if (args != "") {
+        if (args != null) {
             for (var i = 0; i < array.length; i++) { 
                 if (array[i].category === args) {
                     this.output.push(array[i]);

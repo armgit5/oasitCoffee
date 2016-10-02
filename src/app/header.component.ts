@@ -38,7 +38,6 @@ import { Component } from '@angular/core';
     `,
     styles: [`
         header {
-            margin-bottom: 20px;
         }
     
         ul {

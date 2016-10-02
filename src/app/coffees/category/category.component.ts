@@ -1,17 +1,20 @@
-import { Component, Output, EventEmitter} from '@angular/core';
+import { Component, Output, EventEmitter, OnInit} from '@angular/core';
+import { categoriesData } from './categoriesData';
+import { Category } from './category';
+
 
 @Component({
     selector: 'category-selector',
     template: `
         
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
-            <div class="list-group">
-                <a class="list-group-item" [class.active]="allActive" (click)="filterAll()">All Types</a>
-                <a class="list-group-item" [class.active]="coffeeActive"  (click)="filterCoffee()">Coffee</a>
-                <a class="list-group-item" [class.active]="menuActive" (click)="filterMenu()">Menu</a>
-                <a class="list-group-item" [class.active]="specialActive" (click)="filterSpecialMenu()">Special Menu</a>
-                <a class="list-group-item" [class.active]="frappeActive" (click)="filterFrappe()">Frappe</a>
-            </div>
+            <div class="list-group" ShowOneContainer>
+
+                <a class="list-group-item" [class.active]="allStatus" (click)=filterAll()>All</a>
+                <a class="list-group-item" *ngFor="let category of categories" 
+                     [class.active]="activeStatus[category.id]"  (click)=filter(category)>{{category.name}}</a>
+                
+              </div>
         </div><!--/span-->
 
     `,
@@ -19,47 +22,37 @@ import { Component, Output, EventEmitter} from '@angular/core';
        
     `]
 })
-export class CategoryComponent {
-    
-    allActive = true;
-    coffeeActive = false;
-    menuActive = false;
-    specialActive = false;
-    frappeActive = false;
-   
+export class CategoryComponent implements OnInit {
+
+    categories = categoriesData.categories;
+
+    activeStatus = {};
+    allStatus = true;
+
+    ngOnInit() {
+         this.categories.forEach(element => {
+            this.activeStatus[element.id] = false;
+        });
+    }
+
     @Output("filter")
     filterOutput = new EventEmitter();
 
-    removeActive() {
-        this.allActive = false;
-        this.coffeeActive = false;
-        this.menuActive = false;
-        this.specialActive = false;
-        this.frappeActive = false;
+    filter(category: Category) {
+        this.allStatus = false;
+        this.categories.forEach(element => {
+            this.activeStatus[element.id] = element.id == category.id;
+        });
+        this.filterOutput.emit(category.id);
     }
+
     filterAll() {
-        this.filterOutput.emit("");
-        this.removeActive();
-        this.allActive = true;
+        this.allStatus = true;
+        this.categories.forEach(element => {
+            this.activeStatus[element.id] = false;
+        });
+        this.filterOutput.emit();
     }
-    filterCoffee() {
-        this.filterOutput.emit("coffee");
-        this.removeActive();
-        this.coffeeActive = true;   
-    }
-    filterMenu() {
-        this.filterOutput.emit("menu");
-        this.removeActive();
-        this.menuActive = true;
-    }
-    filterSpecialMenu() {
-        this.filterOutput.emit("special menu");
-        this.removeActive();
-        this.specialActive = true;
-    }
-    filterFrappe() {
-        this.filterOutput.emit("frappe");
-        this.removeActive();
-        this.frappeActive = true;
-    }
+    
+   
 }

@@ -5,20 +5,20 @@ export const categoriesData = {
     categories: [
         {
             id:1,
-            name: "coffee"
+            name: "Coffee"
         },
         {
             id:2,
-            name: "menu"
+            name: "Menu"
         },
         {
             id:3,
-            name: "special menu"
+            name: "Special menu"
         },
         {
             id:4,
-            name: "frappe"
-        },
+            name: "Frappe"
+        }
        
     ]
 

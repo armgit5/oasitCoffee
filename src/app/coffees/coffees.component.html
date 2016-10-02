@@ -12,7 +12,9 @@
             <div (filter)="onFilter($event)">
             </div>
 
-            <coffee-component [coffee]="coffee" *ngFor="let coffee of coffees | coffeeFilter:filterArg"></coffee-component>
+            <div class="col-sm-6 col-md-4" *ngFor="let coffee of coffees | coffeeFilter:filterArg">
+                <coffee-component [coffee]="coffee"></coffee-component>
+            </div>
             
       </div><!--/row-->
     </div><!--/span-->
