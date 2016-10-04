@@ -1,0 +1,23 @@
+<h2>Coffee Cart</h2>
+<div>
+    <table class="table">
+        <tr>
+            <th>Coffee</th>
+            <th>Comment</th>
+            <th>Qty</th>
+            <th>Cost</th>
+            <th></th>
+        </tr>
+        <tr *ngFor="let cartItem of cartItems">
+            <td><input type="text" value={{cartItem.coffeeId}}></td>           
+            <td><input type="text" value={{cartItem.comment}}></td>
+            <td><input type="number" value={{cartItem.qty}}></td>
+            <td><input type="number" value={{cartItem.coffeeId}}></td>            
+        </tr>
+         
+        <tr>
+            <td>Total:</td>
+            <td>{{total}}</td>
+        </tr>
+    </table>
+</div>
