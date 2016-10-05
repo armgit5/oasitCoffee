@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+// import { cartData } from './cart/cartData';
 
 @Component({
   selector: 'app-root',
@@ -11,5 +12,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
+    // coffeeCount = cartData.cart.length;
 }

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { cartData } from './cart/cartData';
+import { CoffeeService } from './coffees/coffee.service';
+import { Observable } from "rxjs/Observable";
 
 @Component({
     selector: 'my-header',
@@ -25,4 +27,9 @@ import { cartData } from './cart/cartData';
 })
 export class HeaderComponent {
     coffeeCount = cartData.cart.length;
-}
+
+
+    
+    
+
+}   
