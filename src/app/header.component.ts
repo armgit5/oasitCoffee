@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { cartData } from './cart/cartData';
 import { CoffeeService } from './coffees/coffee.service';
 import { Observable } from "rxjs/Observable";
@@ -27,6 +27,9 @@ import { Observable } from "rxjs/Observable";
 })
 export class HeaderComponent {
     coffeeCount = cartData.cart.length;
+
+    @Input()
+    count?: number;
 
 
     

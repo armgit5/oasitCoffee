@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { coffeesData } from './coffeesData';
+import { cartData } from '../cart/cartData';
 
 @Component({
   selector: 'coffee',
@@ -8,7 +9,8 @@ import { coffeesData } from './coffeesData';
 export class CoffeesComponent {
 
     coffees = coffeesData.coffees;
-    
+    cartItems = cartData.cart;
+
     filterArg: number;
 
     onFilter(filter) {
