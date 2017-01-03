@@ -8,8 +8,9 @@ import { CoffeePipe } from "./coffees/coffee.pipe";
 import { HeaderComponent } from "./header.component";
 import { CategoryComponent } from './coffees/category/category.component';
 import { CoffeeComponent } from './coffees/coffee.component';
-
 import { AppComponent } from './app.component';
+import { AngularFireModule } from 'angularfire2';
+import { firebaseConfig, authConfig } from '../environments/firebase.config';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { AppComponent } from './app.component';
     FormsModule,
     HttpModule,
     RouterModule.forRoot(routeConfig),
+    AngularFireModule.initializeApp(firebaseConfig, authConfig)
   ],
   providers: [],
   bootstrap: [AppComponent]
