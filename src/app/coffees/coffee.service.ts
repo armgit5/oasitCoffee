@@ -4,6 +4,7 @@ import {Http} from "@angular/http";
 import {xhrHeaders} from "./xhr-headers";
 import { cartData } from '../cart/cartData';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable, FirebaseRef } from 'angularfire2';
+import { Coffee } from './coffee';
 
 @Injectable()
 export class CoffeeService {
@@ -28,7 +29,8 @@ export class CoffeeService {
     }
 
     loadAllCoffees() {
-        return this.af.database.list('coffees');
+        return this.af.database.list('coffees')
+                .map(Coffee.fromJsonList);
     }
     
 }

@@ -1,7 +1,8 @@
 
 export class Coffee {
     
-    constructor(public id:number, 
+    constructor(
+                public $key:string,
                 public url:string, 
                 public name:string, 
                 public category:number,
@@ -11,9 +12,13 @@ export class Coffee {
 
     } 
 
-    static fromJson({id, url, name, category, type, price}):Coffee {
+    static fromJsonList(array): Coffee[] {
+        return array.map(Coffee.fromJson);
+    }
+
+    static fromJson({$key, url, name, category, type, price}):Coffee {
        return new Coffee(
-           id,
+           $key,
            url,
            name,
            category,

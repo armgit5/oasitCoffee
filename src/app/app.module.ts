@@ -12,6 +12,8 @@ import { AppComponent } from './app.component';
 import { AngularFireModule } from 'angularfire2';
 import { firebaseConfig, authConfig } from '../environments/firebase.config';
 import { CoffeeService } from './coffees/coffee.service';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/do';
 
 @NgModule({
   declarations: [

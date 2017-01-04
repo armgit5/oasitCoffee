@@ -19,11 +19,11 @@ export class AppComponent {
     courses$ : FirebaseObjectObservable<any>;
 
     constructor(private af: AngularFire) {
-      this.courses$ = af.database.object('test/1');
+      // this.courses$ = af.database.object('test/1');
 
-      this.courses$.subscribe(
-            val => console.log(val)
-          );
+      // this.courses$.subscribe(
+      //       val => console.log(val)
+      //     );
 
     }
 }
