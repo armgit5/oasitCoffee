@@ -1,16 +1,16 @@
-import { Component, Input} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { coffeesData } from './coffeesData';
 import {Coffee} from "./coffee";
 import { cartData } from '../cart/cartData';
 import { CoffeeService } from './coffee.service';
+import { Observable } from "rxjs/Rx";
 
 @Component({
   selector: 'coffee-component',
   templateUrl: './coffee.component.html',
-  styleUrls: ['./coffees.component.css'],
-  providers: [CoffeeService]
+  styleUrls: ['./coffees.component.css']
 })
-export class CoffeeComponent {
+export class CoffeeComponent implements OnInit {
 
     @Input()
     coffee: Coffee;
@@ -19,7 +19,11 @@ export class CoffeeComponent {
     cart = cartData.cart;
 
     constructor(private coffeeService: CoffeeService) {
+      
+    }
 
+    ngOnInit() {
+      
     }
 
     plus() {

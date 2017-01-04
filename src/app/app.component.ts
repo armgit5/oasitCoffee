@@ -16,10 +16,10 @@ import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'a
 export class AppComponent {
     // coffeeCount = cartData.cart.length;
 
-    courses$ : FirebaseListObservable<any>;
+    courses$ : FirebaseObjectObservable<any>;
 
     constructor(private af: AngularFire) {
-      this.courses$ = af.database.list('test');
+      this.courses$ = af.database.object('test/1');
 
       this.courses$.subscribe(
             val => console.log(val)

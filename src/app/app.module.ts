@@ -11,6 +11,7 @@ import { CoffeeComponent } from './coffees/coffee.component';
 import { AppComponent } from './app.component';
 import { AngularFireModule } from 'angularfire2';
 import { firebaseConfig, authConfig } from '../environments/firebase.config';
+import { CoffeeService } from './coffees/coffee.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { firebaseConfig, authConfig } from '../environments/firebase.config';
     RouterModule.forRoot(routeConfig),
     AngularFireModule.initializeApp(firebaseConfig, authConfig)
   ],
-  providers: [],
+  providers: [CoffeeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

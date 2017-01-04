@@ -10,5 +10,16 @@ export class Coffee {
                 ) {
 
     } 
+
+    static fromJson({id, url, name, category, type, price}):Coffee {
+       return new Coffee(
+           id,
+           url,
+           name,
+           category,
+           type,
+           price
+       );
+    }
     
 }
