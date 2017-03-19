@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { cartData } from './cart/cartData';
 import { CoffeeService } from './coffees/coffee.service';
 import { Observable } from "rxjs/Observable";
@@ -25,14 +25,22 @@ import { Observable } from "rxjs/Observable";
         }
     `]
 })
-export class HeaderComponent {
-    coffeeCount = cartData.cart.length;
+export class HeaderComponent implements OnInit {
+    // coffeeCounts = cartData.cart.length;
+    coffeeCounts: number;
 
     @Input()
     count?: number;
 
-
+    constructor(private coffeeService: CoffeeService) {
+        
+    }
     
+    ngOnInit() {
+        this.coffeeCounts = this.coffeeService.getCoffeeCounts();
+        this.coffeeService.coffeeCountsChanged
+            .subscribe(coffeeCounts => this.coffeeCounts = coffeeCounts);
+    }
     
 
 }   

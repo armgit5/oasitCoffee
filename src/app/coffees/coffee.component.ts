@@ -40,5 +40,7 @@ export class CoffeeComponent implements OnInit {
 
     add() {
       this.coffeeService.addToCart(this.coffee.$key);
+      this.coffeeService.addCoffeeCounts();
+      this.coffeeService.fetchCounts();
     }
 }

@@ -7,7 +7,8 @@ export class Coffee {
                 public name:string, 
                 public category:number,
                 public type:string, 
-                public price:number
+                public price:number,
+                public comment:string
                 ) {
 
     } 
@@ -16,14 +17,15 @@ export class Coffee {
         return array.map(Coffee.fromJson);
     }
 
-    static fromJson({$key, url, name, category, type, price}):Coffee {
+    static fromJson({$key, url, name, category, type, price, comment}):Coffee {
        return new Coffee(
            $key,
            url,
            name,
            category,
            type,
-           price
+           price,
+           comment
        );
     }
     
