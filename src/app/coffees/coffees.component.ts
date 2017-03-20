@@ -12,7 +12,6 @@ import { Coffee } from './coffee';
 export class CoffeesComponent {
 
     coffees: Coffee[];
-    cartItems = cartData.cart;
 
     filterArg: number;
 

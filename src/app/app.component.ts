@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-// import { cartData } from './cart/cartData';
+import { cartData } from './cart/cartData';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 
 
@@ -8,22 +8,18 @@ import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'a
   selector: 'app-root',
   template: `
               <div class="container main">
+                <my-header [count]="cartItems.length"></my-header>
                 <router-outlet></router-outlet>
               </div>
             `,
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-    // coffeeCount = cartData.cart.length;
 
     courses$ : FirebaseObjectObservable<any>;
+    cartItems = cartData.cart;
 
     constructor(private af: AngularFire) {
-      // this.courses$ = af.database.object('test/1');
-
-      // this.courses$.subscribe(
-      //       val => console.log(val)
-      //     );
 
     }
 }
