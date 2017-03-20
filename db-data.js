@@ -39,7 +39,12 @@ var dbData = {
             name: "Cappuccino",
             category: 1,
             type: "cold",
-            price: 65
+            price: 65,
+            cart: {
+                    qty: 5,
+                    comment: "add more sugar"
+                }     
+            
         },
         {
             id:6,
@@ -47,7 +52,12 @@ var dbData = {
             name: "Frappucino",
             category: 4,
             type: "cold",
-            price: 75
+            price: 75,
+            cart: {
+                    qty: 4,
+                    comment: "add less sugar too"
+                }     
+            
         },
         {
             id:7,
@@ -63,9 +73,36 @@ var dbData = {
             name: "Espresso",
             category: 1,
             type: "cold",
-            price: 55
+            price: 55,
+            cart: {
+                    qty: 2,
+                    comment: "add less sugar"
+                }     
+        }
+    ],
+
+    cart: [
+        {
+            id:1,
+            coffeeId: 1,
+            qty: 2,
+            comment: "add less sugar"
+        },
+        {
+            id:2,
+            coffeeId: 2,
+            qty: 4,
+            comment: "add less sugar too"
+        },
+        {
+            id:3,
+            coffeeId: 3,
+            qty: 5,
+            comment: "add more sugar"
         }
     ]
+
+
 
 };
 

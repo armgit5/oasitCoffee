@@ -9,13 +9,25 @@ var app = firebase.initializeApp({
 });
 
 var coffeeRef = firebase.database().ref('coffees');
+var cartRef = firebase.database().ref('cart');
+
 dbData.coffees.forEach(function (coffee) {
     console.log('adding coffee', coffee.name);
-    coffeeRef.push({
+    let coffeeKey = coffeeRef.push({
         url: coffee.url,
         name: coffee.name,
         category: coffee.category,
         type: coffee.type,
         price: coffee.price
-    });
+    }).key;
+
+    console.log(coffeeKey);
+
+    if (coffee.cart) {
+        cartRef.push({
+            coffeeId: coffeeKey,
+            qty: coffee.cart.qty,
+            comment: coffee.cart.comment
+        });
+    }
 });
