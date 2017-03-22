@@ -2,7 +2,7 @@
 export class Cart {
     
     constructor(
-                // public $key:string,
+                public coffeeId:string,
                 public coffeeName:string, 
                 public coffeeType:string,
                 public qty:number,

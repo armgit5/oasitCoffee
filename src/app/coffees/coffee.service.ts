@@ -22,14 +22,26 @@ export class CoffeeService {
     }
 
     addToCart(coffee, count, comment) {
-        this.cart.push({
-            coffeeName: coffee.name,
-            coffeeType: coffee.type,
-            qty: count,
-            price: coffee.price,
-            comment: comment
+        let alreadyInCart = false;
+
+        // Check to see if this coffee is already added
+        this.cart.forEach(cartCoffee => {
+            if (coffee.$key == cartCoffee.coffeeId) {
+                 cartCoffee.qty += count;
+                 alreadyInCart = true;
+            } 
         });
-        console.log(this.cart);
+
+        if (!alreadyInCart) {
+            this.cart.push({
+                coffeeId: coffee.$key,
+                coffeeName: coffee.name,
+                coffeeType: coffee.type,
+                qty: count,
+                price: coffee.price,
+                comment: comment
+            });
+        }
         
         this.fetchCounts(count);
     }
