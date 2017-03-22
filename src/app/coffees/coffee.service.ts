@@ -32,7 +32,7 @@ export class CoffeeService {
         console.log(coffee, count, comment);
         console.log(this.cart);
         
-        this.fetchCounts();
+        this.fetchCounts(count);
     }
 
     loadAllCoffees() {
@@ -44,8 +44,8 @@ export class CoffeeService {
         return this.coffeeCounts;
     }
 
-    fetchCounts() {
-        this.coffeeCounts++;
+    fetchCounts(count) {
+        this.coffeeCounts = this.coffeeCounts + count;
         return this.coffeeCountsChanged.emit(this.coffeeCounts);
     }
     
