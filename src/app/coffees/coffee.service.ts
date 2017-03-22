@@ -28,6 +28,7 @@ export class CoffeeService {
         this.cart.forEach(cartCoffee => {
             if (coffee.$key == cartCoffee.coffeeId) {
                  cartCoffee.qty += count;
+                 cartCoffee.comment = comment;
                  alreadyInCart = true;
             } 
         });

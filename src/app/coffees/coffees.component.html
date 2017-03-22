@@ -1,5 +1,3 @@
-
-
 <div class="container main">
   <div class="row row-offcanvas row-offcanvas-right">
 
@@ -12,7 +10,9 @@
             <div (filter)="onFilter($event)">
             </div>
 
-            <div class="col-sm-6 col-md-4" *ngFor="let coffee of coffees | coffeeFilter:filterArg">
+            <div class="col-sm-6 col-md-4" 
+                *ngFor="let coffee of coffees | coffeeFilter:filterArg"
+                style="padding: 5px">
                 <coffee-component [coffee]="coffee"></coffee-component>
             </div>
             

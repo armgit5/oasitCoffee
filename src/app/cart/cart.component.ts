@@ -13,7 +13,7 @@ export class CartComponent implements OnInit {
 
 
     cartItems = this.coffeeService.cart;
-    total: number = 0;
+    total: number;
 
     constructor(private coffeeService: CoffeeService) {
         
@@ -24,10 +24,20 @@ export class CartComponent implements OnInit {
     }
 
     calculateTotal() {
+        this.total = 0;
         this.cartItems.forEach(element => {
             console.log(element.qty, element.price);
             this.total = this.total + element.qty * element.price;
         });
+    }
+
+    update() {
+
+    }
+
+    delete(cartItem) {
+        this.cartItems.splice(this.cartItems.indexOf(cartItem), 1);
+        this.calculateTotal();
     }
 
 }

@@ -9,6 +9,8 @@
             <th>Qty</th>
             <th>Comment</th>
             <th>Cost</th>
+            <th>Update</th>
+            <th>Delete</th>
             <th></th>
         </tr>
         <tr *ngFor="let cartItem of cartItems">
@@ -16,7 +18,9 @@
             <td><input type="text" value={{cartItem.coffeeType}}></td>
             <td><input type="number" value={{cartItem.qty}}></td>
             <td><input type="text" value={{cartItem.comment}}></td> 
-            <td><input type="number" value={{cartItem.price}}></td>           
+            <td><input type="number" value={{cartItem.price}}></td>
+            <td><button class="btn btn-success pull-right" type="button" (click)="update()">Update</button></td>
+            <td><button class="btn btn-danger pull-right" type="button" (click)="delete(cartItem)">Delete</button></td>           
         </tr>
          
         <tr>
