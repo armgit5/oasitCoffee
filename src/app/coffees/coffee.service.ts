@@ -25,13 +25,13 @@ export class CoffeeService {
         let alreadyInCart = false;
 
         // Check to see if this coffee is already added
-        this.cart.forEach(cartCoffee => {
-            if (coffee.$key == cartCoffee.coffeeId) {
-                 cartCoffee.qty += count;
-                 cartCoffee.comment = comment;
-                 alreadyInCart = true;
-            } 
-        });
+        // this.cart.forEach(cartCoffee => {
+        //     if (coffee.$key == cartCoffee.coffeeId) {
+        //          cartCoffee.qty += count;
+        //          cartCoffee.comment = comment;
+        //          alreadyInCart = true;
+        //     } 
+        // });
 
         if (!alreadyInCart) {
             this.cart.push({

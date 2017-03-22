@@ -38,6 +38,7 @@ export class CartComponent implements OnInit {
     delete(cartItem) {
         this.cartItems.splice(this.cartItems.indexOf(cartItem), 1);
         this.calculateTotal();
+        this.coffeeService.fetchCounts(-cartItem.qty);
     }
 
 }
