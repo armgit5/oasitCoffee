@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 // import { cartData } from './cartData';
 import { coffeesData } from '../coffees/coffeesData';
+import { CoffeeService } from '../coffees/coffee.service';
 
 @Component({
   selector: 'cart',
@@ -10,17 +11,14 @@ import { coffeesData } from '../coffees/coffeesData';
 export class CartComponent implements OnInit {
 
 
-    // cartItems = cartData.cart;
+    cartItems = this.coffeeService.cart;
     total: number;
 
-    constructor() {
+    constructor(private coffeeService: CoffeeService) {
         
     }
 
     ngOnInit() {
-        // this.cartItems.forEach(element => {
-        //     console.log(element.comment);
-        // });
         this.total = 40.23;
     }
 }

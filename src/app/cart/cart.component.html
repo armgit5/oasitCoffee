@@ -5,16 +5,18 @@
     <table class="table">
         <tr>
             <th>Coffee</th>
-            <th>Comment</th>
+            <th>Type</th>
             <th>Qty</th>
+            <th>Comment</th>
             <th>Cost</th>
             <th></th>
         </tr>
         <tr *ngFor="let cartItem of cartItems">
-            <td><input type="text" value={{cartItem.coffeeId}}></td>           
-            <td><input type="text" value={{cartItem.comment}}></td>
+            <td><input type="text" value={{cartItem.coffeeName}}></td>           
+            <td><input type="text" value={{cartItem.coffeeType}}></td>
             <td><input type="number" value={{cartItem.qty}}></td>
-            <td><input type="number" value={{cartItem.coffeeId}}></td>            
+            <td><input type="text" value={{cartItem.comment}}></td> 
+            <td><input type="number" value={{cartItem.price}}></td>           
         </tr>
          
         <tr>

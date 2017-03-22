@@ -29,7 +29,6 @@ export class CoffeeService {
             price: coffee.price,
             comment: comment
         });
-        console.log(coffee, count, comment);
         console.log(this.cart);
         
         this.fetchCounts(count);
