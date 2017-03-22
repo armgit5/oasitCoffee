@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 // import { cartData } from './cartData';
 import { coffeesData } from '../coffees/coffeesData';
 import { CoffeeService } from '../coffees/coffee.service';
+import { element } from 'protractor/globals';
 
 @Component({
   selector: 'cart',
@@ -12,13 +13,21 @@ export class CartComponent implements OnInit {
 
 
     cartItems = this.coffeeService.cart;
-    total: number;
+    total: number = 0;
 
     constructor(private coffeeService: CoffeeService) {
         
     }
 
     ngOnInit() {
-        this.total = 40.23;
+        this.calculateTotal();
     }
+
+    calculateTotal() {
+        this.cartItems.forEach(element => {
+            console.log(element.qty, element.price);
+            this.total = this.total + element.qty * element.price;
+        });
+    }
+
 }
