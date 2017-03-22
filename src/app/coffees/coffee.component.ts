@@ -17,6 +17,7 @@ export class CoffeeComponent implements OnInit {
 
     coffeeCount = 1;
     cart = cartData.cart;
+    comment:string = "";
 
     constructor(private coffeeService: CoffeeService) {
       
@@ -27,20 +28,18 @@ export class CoffeeComponent implements OnInit {
     }
 
     plus() {
-      console.log("plus");
       this.coffeeCount++;
     }
 
     minus() {
-      console.log("minus");
       if (this.coffeeCount > 1) {
         this.coffeeCount--;
       } 
     }
 
     add() {
-      this.coffeeService.addToCart(this.coffee.$key);
-      this.coffeeService.addCoffeeCounts();
-      this.coffeeService.fetchCounts();
+      this.coffeeService.addToCart(this.coffee, this.coffeeCount, this.comment);
+      // this.coffeeService.addCoffeeCounts();
+      // this.coffeeService.fetchCounts();
     }
 }

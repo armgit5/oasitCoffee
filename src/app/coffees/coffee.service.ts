@@ -6,11 +6,13 @@ import { cartData } from '../cart/cartData';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable, FirebaseRef } from 'angularfire2';
 import { Coffee } from './coffee';
 import { Observable } from 'rxjs';
+import { Cart } from '../cart/cart';
 
 @Injectable()
 export class CoffeeService {
 
-    cart = cartData.cart;
+    // cart = cartData.cart;
+    cart: Cart[] = [];
     private coffeeCounts:number = 0;
     coffeeCountsChanged = new EventEmitter<number>();
     sdkDb: any;
@@ -19,15 +21,18 @@ export class CoffeeService {
         this.sdkDb = fb.database().ref();
     }
 
-    addToCart(coffeeId) {
-        console.log("add");
+    addToCart(coffee, count, comment) {
         this.cart.push({
-            id:9,
-            coffeeId: coffeeId,
-            qty: 9,
-            comment: "add less sugar test..."
+            coffeeName: coffee.name,
+            coffeeType: coffee.type,
+            qty: count,
+            price: coffee.price,
+            comment: comment
         });
-        return this.cart.length;
+        console.log(coffee, count, comment);
+        console.log(this.cart);
+        
+        this.fetchCounts();
     }
 
     loadAllCoffees() {
@@ -35,15 +40,12 @@ export class CoffeeService {
                 .map(Coffee.fromJsonList);
     }
 
-    addCoffeeCounts() {
-        this.coffeeCounts++;
-    }
-
     getCoffeeCounts() {
         return this.coffeeCounts;
     }
 
     fetchCounts() {
+        this.coffeeCounts++;
         return this.coffeeCountsChanged.emit(this.coffeeCounts);
     }
     
