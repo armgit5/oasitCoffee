@@ -28,6 +28,7 @@
             <textarea class="form-control" style="min-width: 100%" [(ngModel)]='comment'></textarea>
 
             <button class="btn btn-success pull-right" type="button" (click)="add()">Add to cart</button>
+            <div *ngIf="added">Coffee has been added</div>
         </div>
         </div>
     </div>

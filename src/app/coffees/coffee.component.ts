@@ -15,6 +15,8 @@ export class CoffeeComponent implements OnInit {
     @Input()
     coffee: Coffee;
 
+    added: boolean = false;
+
     coffeeCount = 1;
     cart = cartData.cart;
     comment:string = "";
@@ -37,8 +39,17 @@ export class CoffeeComponent implements OnInit {
       } 
     }
 
+    addCoffeeAlert() {
+      this.added = true;
+      setTimeout(() => {
+        this.added = false;
+      }, 1000);
+    }
+
     add() {
+      this.addCoffeeAlert();
       this.coffeeService.addToCart(this.coffee, this.coffeeCount, this.comment);
+
       // this.coffeeService.addCoffeeCounts();
       // this.coffeeService.fetchCounts();
     }
