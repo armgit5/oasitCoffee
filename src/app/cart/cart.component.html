@@ -1,31 +1,63 @@
-
-
+<form [formGroup]="cartForm" (ngSubmit)="onSubmit()">
 <h2>Coffee Cart</h2>
 <div>
-    <table class="table">
+   
+        <ul class="list-group" formArrayName="cartCoffees">
+         <table class="table">
         <tr>
             <th>Coffee</th>
             <th>Type</th>
             <th>Qty</th>
             <th>Comment</th>
             <th>Cost</th>
-            <th>Update</th>
             <th>Delete</th>
             <th></th>
         </tr>
-        <tr *ngFor="let cartItem of cartItems">
-            <td><input type="text" value={{cartItem.coffeeName}}></td>           
-            <td><input type="text" value={{cartItem.coffeeType}}></td>
-            <td><input type="number" value={{cartItem.qty}}></td>
-            <td><input type="text" value={{cartItem.comment}}></td> 
-            <td><input type="number" value={{cartItem.price}}></td>
-            <td><button class="btn btn-success pull-right" type="button" (click)="update()">Update</button></td>
-            <td><button class="btn btn-danger pull-right" type="button" (click)="delete(cartItem)">Delete</button></td>           
-        </tr>
-         
-        <tr>
+        
+        <div *ngFor="let coffees of cartForm.controls['cartCoffees'].controls; let i = index">
+            <tr formGroupName="{{i}}">
+                <td>
+                    <input type="text" 
+                            class="form-control"
+                            formControlName="coffeeName">
+                </td>           
+                <td>
+                    <input type="text" 
+                            class="form-control"
+                            formControlName="coffeeType">
+                </td>
+                <td>
+                    <input type="number" 
+                            class="form-control"
+                            formControlName="qty">
+                </td>
+            
+                <td>
+                    <input type="text" 
+                            class="form-control"
+                            formControlName="comment">
+                </td> 
+                <td>
+                    <input type="number" 
+                            class="form-control"
+                            formControlName="price">
+                </td>
+                
+                <td><button class="btn btn-danger pull-right" type="button" (click)="delete(i)">Delete</button></td> 
+            </tr>          
+        </div>
+        </table>
+        </ul>
+
+        
+     <tr>
             <td>Total:</td>
             <td>{{total}}</td>
         </tr>
-    </table>
+
+        <tr>
+            <button type="submit" class="btn btn-success">Save</button>
+        </tr>
+
 </div>
+</form>

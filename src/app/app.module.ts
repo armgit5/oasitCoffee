@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from "@angular/router";
 import { routeConfig,navigatableComponents } from "./app.routing";
@@ -29,7 +29,8 @@ import 'rxjs/add/operator/do';
     FormsModule,
     HttpModule,
     RouterModule.forRoot(routeConfig),
-    AngularFireModule.initializeApp(firebaseConfig, authConfig)
+    AngularFireModule.initializeApp(firebaseConfig, authConfig),
+    ReactiveFormsModule
   ],
   providers: [CoffeeService],
   bootstrap: [AppComponent]
