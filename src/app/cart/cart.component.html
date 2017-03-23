@@ -1,7 +1,6 @@
 <form [formGroup]="cartForm" (ngSubmit)="onSubmit()">
-<h2>Coffee Cart</h2>
-<div>
-   
+    <h2>Coffee Cart</h2>
+    <div>
         <ul class="list-group" formArrayName="cartCoffees">
             <table class="table">
                 <tr>
@@ -47,21 +46,19 @@
                         
                         <td><button class="btn btn-danger pull-right" type="button" (click)="delete(i)">Delete</button></td> 
                     </tr> 
-                      
+                        
             </div>
             </table>   
-       
-        </ul>
-
         
-     <tr>
-            <td>Total:</td>
-            <td>{{total}}</td>
-        </tr>
-
-        <tr>
+        </ul>
+        <div><input type="text" 
+                class="form-control"
+                formControlName="customerName"></div>
+        <div>Total: {{total}}</div>
+        
+        <div>
             <button type="submit" class="btn btn-success">Save</button>
-        </tr>
+        </div>
 
-</div>
+    </div>
 </form>
