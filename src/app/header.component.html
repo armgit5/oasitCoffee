@@ -10,7 +10,11 @@
             <a class="navbar-brand" [routerLink]="['/']">OASIT</a>
             </div>
 
+
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a [routerLink]="['/queue']">Queue</a></li>
+                </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a [routerLink]="['/cart']">
                         <i class="fa fa-shopping-cart" aria-hidden="true"></i> Coffee Cart

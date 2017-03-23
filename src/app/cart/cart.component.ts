@@ -4,6 +4,7 @@ import { coffeesData } from '../coffees/coffeesData';
 import { CoffeeService } from '../coffees/coffee.service';
 import { element } from 'protractor/globals';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
+import { QueueService } from '../queue/queue.service';
 
 @Component({
   selector: 'cart',
@@ -18,7 +19,8 @@ export class CartComponent implements OnInit {
     total: number;
 
     constructor(private coffeeService: CoffeeService,
-                private formBuilder: FormBuilder) {
+                private formBuilder: FormBuilder,
+                private queueService: QueueService) {
         
     }
 
@@ -67,7 +69,8 @@ export class CartComponent implements OnInit {
     }
 
     onSubmit() {
-        console.log(this.cartForm.value);
+        // console.log(this.cartForm.value);
+        this.queueService.addQueue(this.cartForm.value);
     }
 
 }

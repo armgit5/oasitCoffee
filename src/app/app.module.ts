@@ -14,6 +14,8 @@ import { firebaseConfig, authConfig } from '../environments/firebase.config';
 import { CoffeeService } from './coffees/coffee.service';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
+import { QueueComponent } from './queue/queue.component';
+import { QueueService } from './queue/queue.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import 'rxjs/add/operator/do';
     CoffeePipe,
     HeaderComponent,
     CategoryComponent,
-    CoffeeComponent
+    CoffeeComponent,
+    QueueComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,7 @@ import 'rxjs/add/operator/do';
     AngularFireModule.initializeApp(firebaseConfig, authConfig),
     ReactiveFormsModule
   ],
-  providers: [CoffeeService],
+  providers: [CoffeeService, QueueService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
