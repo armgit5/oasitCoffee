@@ -58,21 +58,12 @@ export class CartComponent implements OnInit {
         });
     }
 
-    update(cartItem) {
-        console.log(cartItem);
-    }
-
-    valuechange(newValue, coffeeId) {
-        
-        console.log(newValue, coffeeId)
-    }
-
     delete(index) {
-        // this.cartItems.splice(this.cartItems.indexOf(cartItem), 1);
         (<FormArray>this.cartForm.controls['cartCoffees']).removeAt(index);
+        
+        this.coffeeService.fetchCounts(-(this.cartItems[index]).qty);
+        this.cartItems.splice(index, 1);
         this.calculateTotal();
-        console.log((<FormArray>this.cartForm.controls['cartCoffees']).controls);
-        // this.coffeeService.fetchCounts(-cartItem.qty);
     }
 
     onSubmit() {
