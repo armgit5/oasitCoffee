@@ -18,6 +18,9 @@ export class CartComponent implements OnInit {
     cartItems = this.coffeeService.cart;
     total: number;
 
+    newTotal: number = 0;
+    newCount: number = 0;
+
     constructor(private coffeeService: CoffeeService,
                 private formBuilder: FormBuilder,
                 private queueService: QueueService) {
@@ -27,6 +30,20 @@ export class CartComponent implements OnInit {
     ngOnInit() {
         this.calculateTotal();
         this.initForm();
+
+        // update cart in real time when qty changes
+        this.cartForm.valueChanges.subscribe(data => {
+            this.newTotal = 0;
+            this.newCount = 0;
+            data.cartCoffees.forEach(coffee => {
+                this.newTotal += coffee.qty * coffee.price;
+                this.newCount += coffee.qty;
+            });
+            console.log(this.newTotal, this.newCount);
+            this.coffeeService.updateFetchCounts(this.newCount);
+            this.total = this.newTotal;
+        });
+        
     }
 
     private initForm() {
@@ -50,7 +67,6 @@ export class CartComponent implements OnInit {
             cartCoffees: cartCoffees
         });
 
-
     }   
 
     calculateTotal() {
@@ -63,9 +79,9 @@ export class CartComponent implements OnInit {
     delete(index) {
         (<FormArray>this.cartForm.controls['cartCoffees']).removeAt(index);
         
-        this.coffeeService.fetchCounts(-(this.cartItems[index]).qty);
+        // this.coffeeService.fetchCounts(-(this.cartItems[index]).qty);
         this.cartItems.splice(index, 1);
-        this.calculateTotal();
+        // this.calculateTotal();
     }
 
     onSubmit() {

@@ -60,5 +60,11 @@ export class CoffeeService {
         this.coffeeCounts = this.coffeeCounts + count;
         return this.coffeeCountsChanged.emit(this.coffeeCounts);
     }
+
+    // update and fetch counts when qty changes in cart
+    updateFetchCounts(newCount) {
+        this.coffeeCounts = newCount;
+        this.fetchCounts(0);
+    }
     
 }
