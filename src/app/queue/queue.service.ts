@@ -4,17 +4,13 @@ import { Queue } from './queue';
 @Injectable()
 export class QueueService {
 
-  queue: Queue;
+  queues: Queue[] = [];
 
   constructor() { }
 
   addQueue(cart) {
-    console.log(cart.customerName);
-    // console.log(cart.cartCoffees);
-    
-    cart.cartCoffees.forEach(cartCoffee => {
-      console.log(cartCoffee);
-    });
-    
+    let queue = new Queue(cart.customerName, cart.cartCoffees);
+    this.queues.push(queue);
+    console.log(this.queues);   
   }
 }
