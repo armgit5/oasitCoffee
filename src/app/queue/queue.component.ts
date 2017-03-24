@@ -9,14 +9,16 @@ import { Queue } from './queue';
 })
 export class QueueComponent implements OnInit {
 
-  queue: Queue;
+  queues: Queue[];
 
   constructor(private queueService: QueueService) { }
 
   ngOnInit() {
     // this.queue.customerName = this.queueService.queue.customerName;
+    this.queueService.getQueue().subscribe(
+      queues => this.queues = queues
+    );
   }
-
 
 
 }

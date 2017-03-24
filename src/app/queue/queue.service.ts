@@ -1,16 +1,30 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Queue } from './queue';
+import { Http } from '@angular/http';
+import { FirebaseRef, AngularFire } from 'angularfire2';
+import {Observable, Subject} from 'rxjs/Rx';
 
 @Injectable()
 export class QueueService {
 
   queues: Queue[] = [];
 
-  constructor() { }
+  sdkDb: any;
 
-  addQueue(cart) {
-    let queue = new Queue(cart.customerName, cart.cartCoffees);
-    this.queues.push(queue);
-    console.log(this.queues);   
+  constructor(private http: Http, @Inject(FirebaseRef) fb, private af: AngularFire) {
+      this.sdkDb = fb.database().ref();
+    
   }
+  
+  addQueue(cart) {
+    // push queue to firebase without key
+    let queue = {customerName: cart.customerName, cartCoffees: cart.cartCoffees};  
+    this.sdkDb.child("queue").push(queue);
+  }
+
+  getQueue(): Observable<Queue[]> {
+    return this.af.database.list('queue');  
+  }
+
+
 }

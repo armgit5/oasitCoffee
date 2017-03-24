@@ -1,1 +1,8 @@
-{{queue}}
+
+<div *ngFor="let queue of queues">
+    {{queue.customerName}}
+
+    <div *ngFor="let cartCoffee of queue.cartCoffees">
+        {{cartCoffee.coffeeName}}
+    </div>
+</div>
