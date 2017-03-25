@@ -1,8 +1,28 @@
 
+<table class="table">
+    <tr>
+        <th>Coffee</th>
+        <th>Type</th>
+        <th>Qty</th>
+        <th>Comment</th>
+        <th>Delete</th>
+    </tr>
+</table>
+     
 <div *ngFor="let queue of queues">
+    
     {{queue.customerName}}
 
-    <div *ngFor="let cartCoffee of queue.cartCoffees">
-        {{cartCoffee.coffeeName}}
-    </div>
+    <table class="table">
+    <tr *ngFor="let cartCoffee of queue.cartCoffees">
+        <td>{{cartCoffee.coffeeName}}</td>
+        <td>{{cartCoffee.coffeeType}}</td>
+        <td>{{cartCoffee.qty}}</td>
+        <td>{{cartCoffee.comment}}</td>
+        <td><button class="btn btn-danger pull-right" type="button" (click)="delete(i)">Delete</button>
+    </tr>
+    </table>
 </div>
+
+<br>
+

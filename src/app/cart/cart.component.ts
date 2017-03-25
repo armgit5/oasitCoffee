@@ -5,6 +5,7 @@ import { CoffeeService } from '../coffees/coffee.service';
 import { element } from 'protractor/globals';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { QueueService } from '../queue/queue.service';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'cart',
@@ -23,7 +24,8 @@ export class CartComponent implements OnInit {
 
     constructor(private coffeeService: CoffeeService,
                 private formBuilder: FormBuilder,
-                private queueService: QueueService) {
+                private queueService: QueueService,
+                private router: Router) {
         
     }
 
@@ -32,7 +34,11 @@ export class CartComponent implements OnInit {
         this.initForm();
 
         // update cart in real time when qty changes
+        this.updateCartRealTime();
+           
+    }
 
+    updateCartRealTime() {
         this.cartForm.valueChanges.subscribe(data => {
             this.newTotal = 0;
             this.newCount = 0;
@@ -45,12 +51,10 @@ export class CartComponent implements OnInit {
             console.log(this.newTotal, this.newCount);
             this.coffeeService.updateFetchCounts(this.newCount);
             this.total = this.newTotal;
-            //
-            // need to update coffee service cart coffee qty
-            this.coffeeService.cartCoffees = cartCoffes;
-
-        });
         
+            //update coffee service cart coffee qty
+            this.coffeeService.cartCoffees = cartCoffes;
+        });
     }
 
     private initForm() {
@@ -91,9 +95,17 @@ export class CartComponent implements OnInit {
         // this.calculateTotal();
     }
 
+    setToZero() {
+        this.coffeeService.cartCoffees = [];
+        this.coffeeService.updateFetchCounts(0);
+    }
+
     onSubmit() {
-        // console.log(this.cartForm.value);
         this.queueService.addQueue(this.cartForm.value);
+        //update coffee service cart coffees and cart items to []
+        this.setToZero();
+
+        this.router.navigate(['queue']);
     }
 
 }
