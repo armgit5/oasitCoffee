@@ -12,7 +12,7 @@ import { Cart } from '../cart/cart';
 export class CoffeeService {
 
     // cart = cartData.cart;
-    cart: Cart[] = [];
+    cartCoffees: Cart[] = [];
     private coffeeCounts:number = 0;
     coffeeCountsChanged = new EventEmitter<number>();
     sdkDb: any;
@@ -34,7 +34,7 @@ export class CoffeeService {
         // });
 
         if (!alreadyInCart) {
-            this.cart.push({
+            this.cartCoffees.push({
                 coffeeId: coffee.$key,
                 coffeeName: coffee.name,
                 coffeeType: coffee.type,
@@ -46,6 +46,8 @@ export class CoffeeService {
         
         this.fetchCounts(count);
     }
+
+
 
     loadAllCoffees() {
         return this.af.database.list('coffees')

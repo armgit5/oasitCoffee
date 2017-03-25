@@ -15,7 +15,7 @@ export class CartComponent implements OnInit {
 
     cartForm: FormGroup;
 
-    cartItems = this.coffeeService.cart;
+    cartItems = this.coffeeService.cartCoffees;
     total: number;
 
     newTotal: number = 0;
@@ -32,16 +32,23 @@ export class CartComponent implements OnInit {
         this.initForm();
 
         // update cart in real time when qty changes
+
         this.cartForm.valueChanges.subscribe(data => {
             this.newTotal = 0;
             this.newCount = 0;
+            let cartCoffes = [];
             data.cartCoffees.forEach(coffee => {
                 this.newTotal += coffee.qty * coffee.price;
                 this.newCount += coffee.qty;
+                cartCoffes.push(coffee);
             });
             console.log(this.newTotal, this.newCount);
             this.coffeeService.updateFetchCounts(this.newCount);
             this.total = this.newTotal;
+            //
+            // need to update coffee service cart coffee qty
+            this.coffeeService.cartCoffees = cartCoffes;
+
         });
         
     }
