@@ -19,9 +19,10 @@
         <td>{{cartCoffee.coffeeType}}</td>
         <td>{{cartCoffee.qty}}</td>
         <td>{{cartCoffee.comment}}</td>
-        <td><button class="btn btn-danger pull-right" type="button" (click)="delete(i)">Delete</button>
     </tr>
     </table>
+
+    <td><button class="btn btn-danger pull-right" type="button" (click)="deleteQueue(queue.$key)">Delete</button>
 </div>
 
 <br>

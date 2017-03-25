@@ -20,5 +20,9 @@ export class QueueComponent implements OnInit {
     );
   }
 
+  deleteQueue($key) {
+    this.queueService.deleteQueue($key);
+  }
+
 
 }

@@ -26,5 +26,10 @@ export class QueueService {
     return this.af.database.list('queue');  
   }
 
+  deleteQueue($key) {
+    console.log(`queue/${$key}`);
+    this.af.database.object(`queue/${$key}`).remove();
+  }
+
 
 }
