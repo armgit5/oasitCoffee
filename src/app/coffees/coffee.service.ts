@@ -47,11 +47,13 @@ export class CoffeeService {
         this.fetchCounts(count);
     }
 
-
-
     loadAllCoffees() {
         return this.af.database.list('coffees')
                 .map(Coffee.fromJsonList);
+    }
+
+    loadCoffee($key) {
+        return this.af.database.object(`coffees/${$key}`); 
     }
 
     getCoffeeCounts() {
