@@ -32,6 +32,16 @@
         </div>
       </div>
 
+      <div>  
+        <input type="file" multiple (change)="fileChange(input)" #input />
+      </div>  
+      <div *ngFor="let file_src of file_srcs; let i = index">  
+        <img [attr.src]='file_src' alt=""/>
+        
+        <p>{{ debug_size_before[i] }} bytes <b>Before</b> </p>
+        <p>{{ debug_size_after[i] }} bytes <b>After</b></p>
+      </div>
+
       <div class="row">
         <div class="col-xs-12">
           <div class="form-group">
