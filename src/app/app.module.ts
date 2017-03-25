@@ -16,6 +16,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import { QueueComponent } from './queue/queue.component';
 import { QueueService } from './queue/queue.service';
+import { CoffeeEditComponent } from './coffee-edit/coffee-edit.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { QueueService } from './queue/queue.service';
     HeaderComponent,
     CategoryComponent,
     CoffeeComponent,
-    QueueComponent
+    QueueComponent,
+    CoffeeEditComponent
   ],
   imports: [
     BrowserModule,

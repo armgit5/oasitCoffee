@@ -4,6 +4,7 @@ import {Coffee} from "./coffee";
 import { cartData } from '../cart/cartData';
 import { CoffeeService } from './coffee.service';
 import { Observable } from "rxjs/Rx";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'coffee-component',
@@ -21,7 +22,8 @@ export class CoffeeComponent implements OnInit {
     cart = cartData.cart;
     comment:string = "";
 
-    constructor(private coffeeService: CoffeeService) {
+    constructor(private coffeeService: CoffeeService,
+                private router: Router) {
       
     }
 
@@ -49,8 +51,9 @@ export class CoffeeComponent implements OnInit {
     add() {
       this.addCoffeeAlert();
       this.coffeeService.addToCart(this.coffee, this.coffeeCount, this.comment);
+    }
 
-      // this.coffeeService.addCoffeeCounts();
-      // this.coffeeService.fetchCounts();
+    editCoffee() {
+      this.router.navigate(['/coffee-edit', this.coffee.$key]);
     }
 }
