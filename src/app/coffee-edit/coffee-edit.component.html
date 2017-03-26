@@ -33,19 +33,18 @@
       </div>
 
       <!--Image upload-->
-      <div>
+     <div>
      
-      <img-cropper [image]="data1" [settings]="cropperSettings1" (onCrop)="cropped($event)"></img-cropper>
-      <span class="result" *ngIf="data1.image" >
-          <img [src]="data1.image" 
-          [width]="croppedWidth" 
-          [height]="croppedHeight">
-          {{data1.image.length}}
-      </span>
-      
+     <img-cropper [image]="data1" [settings]="cropperSettings1" (onCrop)="cropped($event)"></img-cropper>
+     <span class="result" *ngIf="data1.image" >
+        <img [src]="data1.image" 
+        [width]="cropperSettings1.croppedWidth" 
+        [height]="cropperSettings1.croppedWidth">
+        {{data1.image.length}}
+    </span>
+    
 
-      </div>
-
+    </div>
 
       <div class="row">
         <div class="col-xs-12">

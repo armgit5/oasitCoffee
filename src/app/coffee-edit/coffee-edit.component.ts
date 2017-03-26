@@ -20,7 +20,7 @@ export class CoffeeEditComponent implements OnInit {
   cropperSettings1:CropperSettings;
   croppedWidth:number;
   croppedHeight:number;
-  
+
   @ViewChild('cropper', undefined) cropper:ImageCropperComponent;
 
   coffeeForm: FormGroup;
@@ -33,25 +33,16 @@ export class CoffeeEditComponent implements OnInit {
               private formBuilder: FormBuilder,
               private changeDetectorRef: ChangeDetectorRef) { 
 
-     this.name = 'Angular2'
+      this.name = 'Angular2'
       this.cropperSettings1 = new CropperSettings();
       this.cropperSettings1.width = 200;
       this.cropperSettings1.height = 200;
 
-      this.cropperSettings1.croppedWidth = 200;
-      this.cropperSettings1.croppedHeight = 200;
+      this.cropperSettings1.croppedWidth = 350;
+      this.cropperSettings1.croppedHeight = 350;
 
       this.cropperSettings1.canvasWidth = 500;
       this.cropperSettings1.canvasHeight = 300;
-
-      this.cropperSettings1.minWidth = 10;
-      this.cropperSettings1.minHeight = 10;
-
-      this.cropperSettings1.rounded = false;
-      this.cropperSettings1.keepAspect = false;
-
-      this.cropperSettings1.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
-      this.cropperSettings1.cropperDrawSettings.strokeWidth = 2;
 
       this.data1 = {};
 
@@ -80,12 +71,12 @@ export class CoffeeEditComponent implements OnInit {
     });
   }
 
-  
   cropped(bounds:Bounds) {
     this.croppedHeight =bounds.bottom-bounds.top;
     this.croppedWidth = bounds.right-bounds.left;
+    console.log("cropped " + this.data1.image);
   }
-  
+
   fileChangeListener($event) {
     var image:any = new Image();
     var file:File = $event.target.files[0];
@@ -94,7 +85,7 @@ export class CoffeeEditComponent implements OnInit {
     myReader.onloadend = function (loadEvent:any) {
         image.src = loadEvent.target.result;
         that.cropper.setImage(image);
-
+        console.log("file changed " + image);
     };
 
     myReader.readAsDataURL(file);
