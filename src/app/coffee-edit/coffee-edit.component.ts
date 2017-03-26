@@ -1,8 +1,8 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { Coffee } from '../coffees/coffee';
-import { AngularFire } from 'angularfire2';
+import { AngularFire, FirebaseApp } from 'angularfire2';
 import { CoffeeService } from '../coffees/coffee.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {ImageCropperComponent, CropperSettings, Bounds} from 'ng2-img-cropper';
@@ -20,6 +20,8 @@ export class CoffeeEditComponent implements OnInit {
   cropperSettings1:CropperSettings;
   croppedWidth:number;
   croppedHeight:number;
+  sdkDb: any;
+  image: string;
 
   @ViewChild('cropper', undefined) cropper:ImageCropperComponent;
 
@@ -31,7 +33,8 @@ export class CoffeeEditComponent implements OnInit {
               private af: AngularFire,
               private coffeeService: CoffeeService,
               private formBuilder: FormBuilder,
-              private changeDetectorRef: ChangeDetectorRef) { 
+              private changeDetectorRef: ChangeDetectorRef,
+              @Inject(FirebaseApp) firebaseApp: any) { 
 
       this.name = 'Angular2'
       this.cropperSettings1 = new CropperSettings();
@@ -46,6 +49,11 @@ export class CoffeeEditComponent implements OnInit {
 
       this.data1 = {};
 
+      const storageRef = firebaseApp.storage().ref().child('image/6186.jpg');
+      storageRef.getDownloadURL().then(url => {
+        this.image = url;
+        console.log(url);
+      });
   }
 
   ngOnInit() {
@@ -61,6 +69,7 @@ export class CoffeeEditComponent implements OnInit {
           );
         }
     });
+
   }
 
   private initForm() {
