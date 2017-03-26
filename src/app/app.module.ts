@@ -17,6 +17,7 @@ import 'rxjs/add/operator/do';
 import { QueueComponent } from './queue/queue.component';
 import { QueueService } from './queue/queue.service';
 import { CoffeeEditComponent } from './coffee-edit/coffee-edit.component';
+import { ImageCropperComponent } from 'ng2-img-cropper';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { CoffeeEditComponent } from './coffee-edit/coffee-edit.component';
     CategoryComponent,
     CoffeeComponent,
     QueueComponent,
-    CoffeeEditComponent
+    CoffeeEditComponent,
+    ImageCropperComponent
   ],
   imports: [
     BrowserModule,

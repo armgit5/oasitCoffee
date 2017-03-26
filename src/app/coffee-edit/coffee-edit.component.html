@@ -2,7 +2,7 @@
 
 <form [formGroup]="coffeeForm" (ngSubmit)="onSubmit()">
 
-    <div class="thumbnail" style="height: 100%">
+  
     <img src={{coffee.url}} alt="..." class="img-responsive">
     
     <div class="row">
@@ -32,15 +32,20 @@
         </div>
       </div>
 
-      <div>  
-        <input type="file" multiple (change)="fileChange(input)" #input />
-      </div>  
-      <div *ngFor="let file_src of file_srcs; let i = index">  
-        <img [attr.src]='file_src' alt=""/>
-        
-        <p>{{ debug_size_before[i] }} bytes <b>Before</b> </p>
-        <p>{{ debug_size_after[i] }} bytes <b>After</b></p>
+      <!--Image upload-->
+      <div>
+     
+      <img-cropper [image]="data1" [settings]="cropperSettings1" (onCrop)="cropped($event)"></img-cropper>
+      <span class="result" *ngIf="data1.image" >
+          <img [src]="data1.image" 
+          [width]="croppedWidth" 
+          [height]="croppedHeight">
+          {{data1.image.length}}
+      </span>
+      
+
       </div>
+
 
       <div class="row">
         <div class="col-xs-12">
@@ -55,5 +60,4 @@
         </div>
       </div>
     
-    </div>
 </form>

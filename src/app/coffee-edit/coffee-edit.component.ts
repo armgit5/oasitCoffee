@@ -1,11 +1,11 @@
-import { Component, OnInit, ChangeDetectorRef} from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { Coffee } from '../coffees/coffee';
 import { AngularFire } from 'angularfire2';
 import { CoffeeService } from '../coffees/coffee.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
+import {ImageCropperComponent, CropperSettings, Bounds} from 'ng2-img-cropper';
 
 @Component({
   selector: 'app-coffee-edit',
@@ -15,7 +15,13 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class CoffeeEditComponent implements OnInit {
 
   // http://raydaq.com/articles/resize-images-angular2
-  public file_srcs: string[] = [];
+  name:string;
+  data1:any;
+  cropperSettings1:CropperSettings;
+  croppedWidth:number;
+  croppedHeight:number;
+  
+  @ViewChild('cropper', undefined) cropper:ImageCropperComponent;
 
   coffeeForm: FormGroup;
   private subscription: Subscription;
@@ -25,7 +31,31 @@ export class CoffeeEditComponent implements OnInit {
               private af: AngularFire,
               private coffeeService: CoffeeService,
               private formBuilder: FormBuilder,
-              private changeDetectorRef: ChangeDetectorRef) { }
+              private changeDetectorRef: ChangeDetectorRef) { 
+
+     this.name = 'Angular2'
+      this.cropperSettings1 = new CropperSettings();
+      this.cropperSettings1.width = 200;
+      this.cropperSettings1.height = 200;
+
+      this.cropperSettings1.croppedWidth = 200;
+      this.cropperSettings1.croppedHeight = 200;
+
+      this.cropperSettings1.canvasWidth = 500;
+      this.cropperSettings1.canvasHeight = 300;
+
+      this.cropperSettings1.minWidth = 10;
+      this.cropperSettings1.minHeight = 10;
+
+      this.cropperSettings1.rounded = false;
+      this.cropperSettings1.keepAspect = false;
+
+      this.cropperSettings1.cropperDrawSettings.strokeColor = 'rgba(255,255,255,1)';
+      this.cropperSettings1.cropperDrawSettings.strokeWidth = 2;
+
+      this.data1 = {};
+
+  }
 
   ngOnInit() {
     // Load coffee from firebase
@@ -50,101 +80,25 @@ export class CoffeeEditComponent implements OnInit {
     });
   }
 
-  // The next two lines are just to show the resize debug
-  // they can be removed
-  public debug_size_before: string[] = [];
-  public debug_size_after: string[] = [];
   
-  // This is called when the user selects new files from the upload button
-  fileChange(input){
-    this.readFiles(input.files);
+  cropped(bounds:Bounds) {
+    this.croppedHeight =bounds.bottom-bounds.top;
+    this.croppedWidth = bounds.right-bounds.left;
   }
   
-  readFile(file, reader, callback){
-    // Set a callback funtion to fire after the file is fully loaded
-    reader.onload = () => {
-      // callback with the results
-      callback(reader.result);
-    }
-    
-    // Read the file
-    reader.readAsDataURL(file);
-  }
-  
-  readFiles(files, index=0){
-    // Create the file reader
-    let reader = new FileReader();
-    
-    // If there is a file
-    if (index in files) {
-      // Start reading this file
-      this.readFile(files[index], reader, (result) =>{
-        // Create an img element and add the image file data to it
-        var img = document.createElement("img");
-        img.src = result;
-        
-        // Send this img to the resize function (and wait for callback)
-        this.resize(img, 250, 250, (resized_jpeg, before, after)=>{
-          // For debugging (size in bytes before and after)
-          this.debug_size_before.push(before);
-          this.debug_size_after.push(after);
+  fileChangeListener($event) {
+    var image:any = new Image();
+    var file:File = $event.target.files[0];
+    var myReader:FileReader = new FileReader();
+    var that = this;
+    myReader.onloadend = function (loadEvent:any) {
+        image.src = loadEvent.target.result;
+        that.cropper.setImage(image);
 
-          // Add the resized jpeg img source to a list for preview
-          // This is also the file you want to upload. (either as a
-          // base64 string or img.src = resized_jpeg if you prefer a file). 
-          this.file_srcs.push(resized_jpeg);
-          
-          // Read the next file;
-          this.readFiles(files, index+1);
-        });
-      });
-    }else{
-      // When all files are done This forces a change detection
-      this.changeDetectorRef.detectChanges();
-    }
-  }
-
-  
-  resize(img, MAX_WIDTH:number, MAX_HEIGHT:number, callback){
-    // This will wait until the img is loaded before calling this function
-    return img.onload = () => {
-      console.log("img loaded");
-      // Get the images current width and height
-      var width = img.width;
-      var height = img.height;
-      
-      // Set the WxH to fit the Max values (but maintain proportions)
-      if (width > height) {
-          if (width > MAX_WIDTH) {
-              height *= MAX_WIDTH / width;
-              width = MAX_WIDTH;
-          }
-      } else {
-          if (height > MAX_HEIGHT) {
-              width *= MAX_HEIGHT / height;
-              height = MAX_HEIGHT;
-          }
-      }
-      
-      // create a canvas object
-      var canvas = document.createElement("canvas");
-    
-      // Set the canvas to the new calculated dimensions
-      canvas.width = width;
-      canvas.height = height;
-      var ctx = canvas.getContext("2d");  
-
-      ctx.drawImage(img, 0, 0,  width, height); 
-      
-      // Get this encoded as a jpeg
-      // IMPORTANT: 'jpeg' NOT 'jpg'
-      var dataUrl = canvas.toDataURL('image/jpeg');
-      
-      // callback with the results
-      callback(dataUrl, img.src.length, dataUrl.length);
     };
-  }
-  
+
+    myReader.readAsDataURL(file);
+    }
 
   onSubmit() {
     console.log('submit');

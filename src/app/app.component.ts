@@ -20,6 +20,6 @@ export class AppComponent {
     cartItems = cartData.cart;
 
     constructor(private af: AngularFire) {
-
+    
     }
 }
