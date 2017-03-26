@@ -2,9 +2,6 @@
 
 <form [formGroup]="coffeeForm" (ngSubmit)="onSubmit()">
 
-  
-    <img src={{coffee.url}} alt="..." class="img-responsive">
-    
     <div class="row">
         <div class="col-xs-12">
           <div class="form-group">
@@ -18,19 +15,13 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="form-group">
-            <label for="image-url">Image Url</label>
-            <input
-              type="text"
-              id="image-url"
-              class="form-control"
-              formControlName="imagePath"
-              #imageUrl>
-          </div>
-        </div>
-      </div>
+      image start
+      
+        <img [src]="image" 
+        [width]="cropperSettings1.croppedWidth" 
+        [height]="cropperSettings1.croppedWidth">
+  
+    img end
 
       <!--Image upload-->
      <div>
@@ -58,5 +49,7 @@
           </div>
         </div>
       </div>
+    
+    <button class="btn btn-danger pull-right" type="button" (click)="test()">Test</button>
     
 </form>
