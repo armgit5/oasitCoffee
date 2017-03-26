@@ -21,7 +21,7 @@ export class CoffeeEditComponent implements OnInit {
   croppedWidth:number;
   croppedHeight:number;
   sdkDb: any;
-  image: string;
+  imageUrl: string;
   storageRef: any;
   firebaseApp: any;
 
@@ -54,7 +54,7 @@ export class CoffeeEditComponent implements OnInit {
 
       this.firebaseApp = firebaseApp;
 
-    
+      this.imageUrl = "https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/images%2F-KfgNGPXpr5QuABGbS8y?alt=media&token=19f88df4-a805-4c05-932a-7ab7bdd4b56d";
      
   } 
 
