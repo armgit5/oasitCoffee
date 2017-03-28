@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef, ViewChild, Inject } from '@angula
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { Coffee } from '../coffees/coffee';
-import { AngularFire, FirebaseApp } from 'angularfire2';
+import { AngularFire, FirebaseApp, FirebaseRef } from 'angularfire2';
 import { CoffeeService } from '../coffees/coffee.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {ImageCropperComponent, CropperSettings, Bounds} from 'ng2-img-cropper';
@@ -15,18 +15,23 @@ import {ImageCropperComponent, CropperSettings, Bounds} from 'ng2-img-cropper';
 export class CoffeeEditComponent implements OnInit {
 
   // http://raydaq.com/articles/resize-images-angular2
+  // Image cropping
   name:string;
   data1:any;
   cropperSettings1:CropperSettings;
   croppedWidth:number;
   croppedHeight:number;
-  sdkDb: any;
-  imageUrl: string;
-  storageRef: any;
-  firebaseApp: any;
-
+  imageUrl: string = "";
   @ViewChild('cropper', undefined) cropper:ImageCropperComponent;
 
+  // FirebaseApp
+  sdkDb: any;
+  storageRef: any;
+  firebaseApp: any;
+  $imageSub: any;
+  alreadyUploaded: boolean = false;
+
+  // Coffee
   coffeeForm: FormGroup;
   private coffeeId: string = "";
   private subscription: Subscription;
@@ -37,8 +42,10 @@ export class CoffeeEditComponent implements OnInit {
               private coffeeService: CoffeeService,
               private formBuilder: FormBuilder,
               private changeDetectorRef: ChangeDetectorRef,
-              @Inject(FirebaseApp) firebaseApp: any) { 
+              @Inject(FirebaseApp) firebaseApp: any,
+              @Inject(FirebaseRef) fb) { 
 
+      // Initialize image cropping
       this.name = 'Angular2'
       this.cropperSettings1 = new CropperSettings();
       this.cropperSettings1.width = 200;
@@ -53,9 +60,7 @@ export class CoffeeEditComponent implements OnInit {
       this.data1 = {};
 
       this.firebaseApp = firebaseApp;
-
-      this.imageUrl = "https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/images%2F-KfgNGPXpr5QuABGbS8y?alt=media&token=19f88df4-a805-4c05-932a-7ab7bdd4b56d";
-      // console.log("old image url" + this.imageUrl);
+      this.sdkDb = fb.database();
   } 
 
   ngOnInit() {
@@ -72,10 +77,6 @@ export class CoffeeEditComponent implements OnInit {
               console.log(this.coffee.$key);
               this.coffeeId = this.coffee.$key;
 
-              this.storageRef = this.firebaseApp.storage().ref().child('images/' + this.coffee.$key);
-              this.storageRef.getDownloadURL().then(function(url) {
-                console.log(url);
-              });
             }
           );
         }
@@ -94,8 +95,6 @@ export class CoffeeEditComponent implements OnInit {
   cropped(bounds:Bounds) {
     this.croppedHeight =bounds.bottom-bounds.top;
     this.croppedWidth = bounds.right-bounds.left;
-    // console.log("cropped " + this.data1.image);
-    // this.imageUrl = "https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/images%2F-KfgNGPXpr5QuABGbS8y1?alt=media&token=48c168ec-25c7-4eb7-bc09-f5a96a78185d";
   }
 
   fileChangeListener($event) {
@@ -112,32 +111,122 @@ export class CoffeeEditComponent implements OnInit {
     myReader.readAsDataURL(file);
   }
   
+  testUpload() {
+    let image = this.data1.image.split("base64,");
+    this.firebaseApp.storage().ref().child('images/' + this.coffee.$key)
+        .putString(image[1], 'base64').then(snapshot => {
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+            case firebase.storage.TaskState.PAUSED: // or 'paused'
+            console.log('Upload is paused');
+            break;
+            case firebase.storage.TaskState.RUNNING: // or 'running'
+            console.log('Upload is running');
+            break;
+        }
+        let downloadURL = snapshot.downloadURL;
+        this.imageUrl = downloadURL;
+        
+        console.log("successfully added an image and update key");
 
-  test() {
-    console.log('submit');
-    let test = this.data1.image.split("base64,");
-    // console.log(test[1]);
-    this.storageRef = this.firebaseApp.storage().ref().child('images/' + this.coffee.$key + 1);
-    let uploadTask = this.storageRef.putString(test[1], 'base64').then(snapshot => {
-      // Observe state change events such as progress, pause, and resume
-      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-      let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log('Upload is ' + progress + '% done');
-      switch (snapshot.state) {
-        case firebase.storage.TaskState.PAUSED: // or 'paused'
-          console.log('Upload is paused');
-          break;
-        case firebase.storage.TaskState.RUNNING: // or 'running'
-          console.log('Upload is running');
-          break;
-      }
-      let downloadURL = snapshot.downloadURL;
-      this.imageUrl = downloadURL;
-      console.log(downloadURL);
     }).catch(error => {
-      // Handle unsuccessful uploads
+        // Handle unsuccessful uploads
+        console.log("error uploading: " + error);
     });
   }
 
+  upload() {
+    console.log('submit');
+            
+    this.imageStorageInsert(this.data1.image, this.coffee.$key);
+    
+  }
+
+  private imageStorageInsert(inputImage, $key) {
+
+    this.alreadyUploaded = false;
+
+    this.$imageSub = this.af.database.object(`coffees/${$key}`);
+    this.$imageSub.subscribe(
+      data => {
+        
+        if (!this.alreadyUploaded) {
+          
+           let oldImageKey = data.imageKey;
+            let newImageKey = this.addOneToImageKey(oldImageKey);
+            console.log(inputImage);
+            this.addImageToStorage(inputImage, newImageKey, oldImageKey, $key);
+        }
+      }
+    );
+
+  //  this.sdkDb.ref(`coffees/${$key}`).once('value').then(function(snapshot) {
+  //     let oldImageKey = snapshot.val().imageKey;
+      
+  //     let newImageKey = this.addOneToImageKey(snapshot.val().imageKey);
+  //     console.log("old key " + snapshot.val().imageKey);
+  //     // this.addImageToStorage(inputImage, newImageKey, oldImageKey, $key); 
+  //   }
+  //   );
+
+  }
+
+  private addOneToImageKey(oldImageKey): string {
+    let newNum = Number(oldImageKey.substr(oldImageKey.length-1)) + 1;
+    let newImageKey = oldImageKey.slice(0, -1) + newNum;
+    return newImageKey;
+  }
+
+  private addImageToStorage(inputImage, newImageKey, oldImageKey, coffeeId) {
+    let image = inputImage.split("base64,");
+    this.firebaseApp.storage().ref().child('images/' + newImageKey)
+        .putString(image[1], 'base64').then(snapshot => {
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+            case firebase.storage.TaskState.PAUSED: // or 'paused'
+            console.log('Upload is paused');
+            break;
+            case firebase.storage.TaskState.RUNNING: // or 'running'
+            console.log('Upload is running');
+            break;
+        }
+        let downloadURL = snapshot.downloadURL;
+        this.imageUrl = downloadURL;
+        
+        this.alreadyUploaded = true;
+        console.log("successfully added an image and update key");
+        
+        console.log("unsubscribe");
+
+        // update coffee $key
+        this.af.database.object(`coffees/${coffeeId}`).update({
+          imageKey: newImageKey
+        });
+
+       
+
+        // this.deteleImageInStorage(oldImageKey);
+    }).catch(error => {
+        // Handle unsuccessful uploads
+        console.log("error uploading: " + error);
+    });
+  }
+
+   private deteleImageInStorage(imageKey) {
+    this.firebaseApp.storage().ref().child('images/' + imageKey)
+      .delete().then(function() {
+        // File deleted successfully
+        console.log("successfully deleted the image");
+      }).catch(function(error) {
+        // Uh-oh, an error occurred!
+        console.log("error deleting the image");
+      });;
+  }
 
 }

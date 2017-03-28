@@ -3,7 +3,7 @@ import {Injectable, Inject, EventEmitter} from "@angular/core";
 import {Http} from "@angular/http";
 import {xhrHeaders} from "./xhr-headers";
 import { cartData } from '../cart/cartData';
-import { AngularFire, FirebaseListObservable, FirebaseObjectObservable, FirebaseRef } from 'angularfire2';
+import { AngularFire, FirebaseListObservable, FirebaseObjectObservable, FirebaseRef, FirebaseApp } from 'angularfire2';
 import { Coffee } from './coffee';
 import { Observable } from 'rxjs';
 import { Cart } from '../cart/cart';
@@ -12,13 +12,23 @@ import { Cart } from '../cart/cart';
 export class CoffeeService {
 
     // cart = cartData.cart;
+    // coffee variables
     cartCoffees: Cart[] = [];
     private coffeeCounts:number = 0;
     coffeeCountsChanged = new EventEmitter<number>();
+
+    // firebase viriables
     sdkDb: any;
+    firebaseApp: any;
+    storageRef: any;
     
-    constructor(private http: Http, @Inject(FirebaseRef) fb, private af: AngularFire) {
+    constructor(private http: Http, 
+                @Inject(FirebaseRef) fb, 
+                private af: AngularFire,
+                @Inject(FirebaseApp) firebaseApp: any
+                ) {
         this.sdkDb = fb.database().ref();
+        this.firebaseApp = firebaseApp;
     }
 
     addToCart(coffee, count, comment) {
@@ -70,5 +80,6 @@ export class CoffeeService {
         this.coffeeCounts = newCount;
         this.fetchCounts(0);
     }
-    
+
+   
 }
