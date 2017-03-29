@@ -113,7 +113,7 @@ export class CoffeeEditComponent implements OnInit {
   
   testUpload() {
     let image = this.data1.image.split("base64,");
-    this.firebaseApp.storage().ref().child('images/' + this.coffee.$key)
+    this.firebaseApp.storage().ref().child('image/' + this.coffee.$key + 1)
         .putString(image[1], 'base64').then(snapshot => {
         // Observe state change events such as progress, pause, and resume
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
@@ -152,22 +152,22 @@ export class CoffeeEditComponent implements OnInit {
     this.$imageSub = this.af.database.object(`coffees/${$key}`);
     this.$imageSub.subscribe(
       data => {
-        
+        console.log(!this.alreadyUploaded);
         if (!this.alreadyUploaded) {
-          
-           let oldImageKey = data.imageKey;
+            let oldImageKey = data.imageKey;
             let newImageKey = this.addOneToImageKey(oldImageKey);
-            console.log(inputImage);
             this.addImageToStorage(inputImage, newImageKey, oldImageKey, $key);
         }
       }
     );
 
+  // try one shot
+
   //  this.sdkDb.ref(`coffees/${$key}`).once('value').then(function(snapshot) {
-  //     let oldImageKey = snapshot.val().imageKey;
-      
-  //     let newImageKey = this.addOneToImageKey(snapshot.val().imageKey);
-  //     console.log("old key " + snapshot.val().imageKey);
+  //     var oldImageKey = snapshot.val().imageKey;
+  //     console.log("old key " + oldImageKey);
+  //     var newImageKey = this.addOneToImageKey(oldImageKey);
+  //     console.log("old key " + oldImageKey);
   //     // this.addImageToStorage(inputImage, newImageKey, oldImageKey, $key); 
   //   }
   //   );
@@ -178,11 +178,13 @@ export class CoffeeEditComponent implements OnInit {
     let newNum = Number(oldImageKey.substr(oldImageKey.length-1)) + 1;
     let newImageKey = oldImageKey.slice(0, -1) + newNum;
     return newImageKey;
+    // console.log("add one " + oldImageKey);
+    // return "";
   }
 
   private addImageToStorage(inputImage, newImageKey, oldImageKey, coffeeId) {
     let image = inputImage.split("base64,");
-    this.firebaseApp.storage().ref().child('images/' + newImageKey)
+    this.firebaseApp.storage().ref().child('image/' + newImageKey)
         .putString(image[1], 'base64').then(snapshot => {
         // Observe state change events such as progress, pause, and resume
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
@@ -204,10 +206,11 @@ export class CoffeeEditComponent implements OnInit {
         
         console.log("unsubscribe");
 
-        // update coffee $key
+        // update and delete coffee $key
         this.af.database.object(`coffees/${coffeeId}`).update({
           imageKey: newImageKey
         });
+        this.deteleImageInStorage(oldImageKey);
 
        
 
@@ -219,7 +222,7 @@ export class CoffeeEditComponent implements OnInit {
   }
 
    private deteleImageInStorage(imageKey) {
-    this.firebaseApp.storage().ref().child('images/' + imageKey)
+    this.firebaseApp.storage().ref().child('image/' + imageKey)
       .delete().then(function() {
         // File deleted successfully
         console.log("successfully deleted the image");
