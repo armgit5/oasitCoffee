@@ -4,6 +4,7 @@ import { cartData } from '../cart/cartData';
 import { CoffeeService } from './coffee.service';
 import { Observable } from "rxjs/Rx";
 import { Coffee } from './coffee';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'coffee',
@@ -20,10 +21,15 @@ export class CoffeesComponent {
         this.filterArg = filter;
     }
     
-    constructor(private coffeeService: CoffeeService) {
+    constructor(private coffeeService: CoffeeService,
+                private router: Router) {
       console.log('calling');
       this.coffeeService.loadAllCoffees().subscribe(
         coffees => this.coffees = coffees
       );
+    }
+
+    newCoffee() {
+      this.router.navigate(['/coffee/new']);
     }
 }

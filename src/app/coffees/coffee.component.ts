@@ -54,6 +54,6 @@ export class CoffeeComponent implements OnInit {
     }
 
     editCoffee() {
-      this.router.navigate(['/coffee-edit', this.coffee.$key]);
+      this.router.navigate(['/coffee', this.coffee.$key, "edit"]);
     }
 }

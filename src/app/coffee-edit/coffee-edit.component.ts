@@ -17,7 +17,7 @@ export class CoffeeEditComponent implements OnInit {
   // http://raydaq.com/articles/resize-images-angular2
   // Image cropping
   name:string;
-  data1:any;
+  private data1:any;
   cropperSettings1:CropperSettings;
   croppedWidth:number;
   croppedHeight:number;
@@ -25,17 +25,22 @@ export class CoffeeEditComponent implements OnInit {
   @ViewChild('cropper', undefined) cropper:ImageCropperComponent;
 
   // FirebaseApp
-  sdkDb: any;
-  storageRef: any;
-  firebaseApp: any;
-  $imageSub: any;
-  alreadyUploaded: boolean = false;
+  private sdkDb: any;
+  private storageRef: any;
+  private firebaseApp: any;
+  private $imageSub: any;
+  private alreadyUploaded: boolean = false;
+  private storageFolderName: string = "images/";
 
   // Coffee
   coffeeForm: FormGroup;
   private coffeeId: string = "";
   private subscription: Subscription;
   private coffee: Coffee;
+
+  // other
+  private isNew = true;
+
   constructor(private router: Router,
               private route: ActivatedRoute,
               private af: AngularFire,
@@ -68,6 +73,7 @@ export class CoffeeEditComponent implements OnInit {
     this.subscription = this.route.params.subscribe(
       (params: any) => {
         if (params.hasOwnProperty('id')) {
+          this.isNew = false;
           this.coffeeService.loadCoffee(params['id']).subscribe(
             coffee => {
               this.coffee = coffee;
@@ -79,17 +85,22 @@ export class CoffeeEditComponent implements OnInit {
 
             }
           );
+        } else {
+          this.isNew = true;
         }
     });
 
   }
 
   private initForm() {
-    this.coffeeForm = this.formBuilder.group({
-      name: [this.coffee.name, Validators.required],
-      imagePath: [this.coffee.url, Validators.required],
-      price: [this.coffee.price, Validators.required]
-    });
+    if (!this.isNew) {
+      this.coffeeForm = this.formBuilder.group({
+        name: [this.coffee.name, Validators.required],
+        imagePath: [this.coffee.url, Validators.required],
+        price: [this.coffee.price, Validators.required]
+      });
+    }
+    
   }
 
   cropped(bounds:Bounds) {
@@ -113,7 +124,7 @@ export class CoffeeEditComponent implements OnInit {
   
   testUpload() {
     let image = this.data1.image.split("base64,");
-    this.firebaseApp.storage().ref().child('image/' + this.coffee.$key + 1)
+    this.firebaseApp.storage().ref().child(this.storageFolderName + this.coffee.$key + 1)
         .putString(image[1], 'base64').then(snapshot => {
         // Observe state change events such as progress, pause, and resume
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
@@ -131,6 +142,7 @@ export class CoffeeEditComponent implements OnInit {
         this.imageUrl = downloadURL;
         
         console.log("successfully added an image and update key");
+        this.updateImageKey(this.coffee.$key + 1);
 
     }).catch(error => {
         // Handle unsuccessful uploads
@@ -140,23 +152,20 @@ export class CoffeeEditComponent implements OnInit {
 
   upload() {
     console.log('submit');
-            
     this.imageStorageInsert(this.data1.image, this.coffee.$key);
-    
   }
 
   private imageStorageInsert(inputImage, $key) {
 
     this.alreadyUploaded = false;
 
-    this.$imageSub = this.af.database.object(`coffees/${$key}`);
+    this.$imageSub = this.af.database.object('coffees/' + $key);
     this.$imageSub.subscribe(
       data => {
-        console.log(!this.alreadyUploaded);
         if (!this.alreadyUploaded) {
             let oldImageKey = data.imageKey;
             let newImageKey = this.addOneToImageKey(oldImageKey);
-            this.addImageToStorage(inputImage, newImageKey, oldImageKey, $key);
+            this.addImageToStorage(inputImage, newImageKey, oldImageKey);
         }
       }
     );
@@ -182,9 +191,9 @@ export class CoffeeEditComponent implements OnInit {
     // return "";
   }
 
-  private addImageToStorage(inputImage, newImageKey, oldImageKey, coffeeId) {
+  private addImageToStorage(inputImage, newImageKey, oldImageKey) {
     let image = inputImage.split("base64,");
-    this.firebaseApp.storage().ref().child('image/' + newImageKey)
+    this.firebaseApp.storage().ref().child(this.storageFolderName + newImageKey)
         .putString(image[1], 'base64').then(snapshot => {
         // Observe state change events such as progress, pause, and resume
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
@@ -207,12 +216,8 @@ export class CoffeeEditComponent implements OnInit {
         console.log("unsubscribe");
 
         // update and delete coffee $key
-        this.af.database.object(`coffees/${coffeeId}`).update({
-          imageKey: newImageKey
-        });
+        this.updateImageKey(newImageKey);
         this.deteleImageInStorage(oldImageKey);
-
-       
 
         // this.deteleImageInStorage(oldImageKey);
     }).catch(error => {
@@ -221,8 +226,14 @@ export class CoffeeEditComponent implements OnInit {
     });
   }
 
+  private updateImageKey(newImageKey) {
+     this.af.database.object(`coffees/${this.coffee.$key}`).update({
+        imageKey: newImageKey
+      });
+  }
+
    private deteleImageInStorage(imageKey) {
-    this.firebaseApp.storage().ref().child('image/' + imageKey)
+    this.firebaseApp.storage().ref().child(this.storageFolderName + imageKey)
       .delete().then(function() {
         // File deleted successfully
         console.log("successfully deleted the image");

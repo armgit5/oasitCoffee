@@ -7,7 +7,16 @@ export const routeConfig = [
   { path: "", component: CoffeesComponent },
   { path: "cart", component: CartComponent},
   { path: "queue", component: QueueComponent},
-  { path: "coffee-edit/:id", component: CoffeeEditComponent},
+  { path: "coffee", children: [
+    {
+      path: 'new',
+      component: CoffeeEditComponent
+    },
+    {
+      path: ':id/edit',
+      component: CoffeeEditComponent
+    }
+  ]},
 ];
 
 export const navigatableComponents = [
