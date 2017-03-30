@@ -170,7 +170,7 @@ export class CoffeeEditComponent implements OnInit {
       }
     );
 
-  // try one shot
+  // try one shot 
 
   //  this.sdkDb.ref(`coffees/${$key}`).once('value').then(function(snapshot) {
   //     var oldImageKey = snapshot.val().imageKey;
@@ -232,7 +232,7 @@ export class CoffeeEditComponent implements OnInit {
       });
   }
 
-   private deteleImageInStorage(imageKey) {
+  private deteleImageInStorage(imageKey) {
     this.firebaseApp.storage().ref().child(this.storageFolderName + imageKey)
       .delete().then(function() {
         // File deleted successfully
@@ -240,7 +240,7 @@ export class CoffeeEditComponent implements OnInit {
       }).catch(function(error) {
         // Uh-oh, an error occurred!
         console.log("error deleting the image");
-      });;
+    });;
   }
 
 }

@@ -21,13 +21,14 @@ export class CoffeeService {
     sdkDb: any;
     firebaseApp: any;
     storageRef: any;
+    private storageFolderName: string = "images/";
     
     constructor(private http: Http, 
                 @Inject(FirebaseRef) fb, 
                 private af: AngularFire,
                 @Inject(FirebaseApp) firebaseApp: any
                 ) {
-        this.sdkDb = fb.database().ref();
+        this.sdkDb = fb.database();
         this.firebaseApp = firebaseApp;
     }
 
@@ -64,6 +65,37 @@ export class CoffeeService {
 
     loadCoffee($key) {
         return this.af.database.object(`coffees/${$key}`); 
+    }
+
+    deleteCoffee($key) {
+
+        // get coffee image key
+        this.sdkDb.ref(`coffees/${$key}`).once('value').then(snapshot => {
+            let imageKey = snapshot.val().imageKey;
+
+            // removing the coffee
+            this.af.database.object(`coffees/${$key}`).remove()
+            .then(() => {
+
+                // deleting image in storage
+                this.deteleImageInStorage(imageKey);
+            })
+            .catch(error => console.log("Error"));
+        });
+
+        
+    }
+
+    private deteleImageInStorage(imageKey) {
+        this.firebaseApp.storage().ref().child(this.storageFolderName + imageKey)
+        .delete().then(function() {
+            // File deleted successfully
+            console.log("successfully deleted the image");
+        }).catch(function(error) {
+            // Uh-oh, an error occurred!
+            console.log("error deleting the image");
+        });
+        console.log("delete image in storage " + imageKey);
     }
 
     getCoffeeCounts() {
