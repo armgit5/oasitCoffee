@@ -76,6 +76,7 @@ export class CoffeeEditComponent implements OnInit {
           this.coffeeService.loadCoffee(params['id']).subscribe(
             coffee => {
               this.coffee = coffee;
+              this.imageUrl = coffee.url;
               this.initForm();
             }
           );
@@ -98,7 +99,7 @@ export class CoffeeEditComponent implements OnInit {
     }
 
     this.coffeeForm = this.formBuilder.group({
-      coffeeName: [coffeeName, Validators.required],
+      name: [coffeeName, Validators.required],
       price: [price, Validators.required]
     });
     
@@ -121,6 +122,7 @@ export class CoffeeEditComponent implements OnInit {
     };
 
     myReader.readAsDataURL(file);
+
   }
 
   createCoffee() {
@@ -135,8 +137,11 @@ export class CoffeeEditComponent implements OnInit {
   }
 
   updateCoffee() {
-    console.log('submit');
-    this.imageStorageInsert(this.data1.image, this.coffee.$key);
+    console.log('edit');
+    this.updateNameAndOthers(this.coffee.$key);
+    if (this.data1.image != undefined) {
+      this.imageStorageInsert(this.data1.image, this.coffee.$key);
+    }
   }
 
   private imageStorageInsert(inputImage, $key) {
@@ -185,6 +190,7 @@ export class CoffeeEditComponent implements OnInit {
         } 
         this.updateImageKeyAndUrl(coffeeId, newImageKey, downloadURL);
         
+        
 
     }).catch(error => {
         // Handle unsuccessful uploads
@@ -197,6 +203,10 @@ export class CoffeeEditComponent implements OnInit {
         imageKey: newImageKey,
         url: downloadURL
       });
+  }
+
+  private updateNameAndOthers(coffeeId) {
+     this.af.database.object(`coffees/${coffeeId}`).update(this.coffeeForm.value);
   }
 
   private deteleImageInStorage(imageKey) {
