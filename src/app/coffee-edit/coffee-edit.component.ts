@@ -28,8 +28,7 @@ export class CoffeeEditComponent implements OnInit {
   private sdkDb: any;
   private storageRef: any;
   private firebaseApp: any;
-  private $imageSub: any;
-  private alreadyUploaded: boolean = false;
+  // private alreadyUploaded: boolean = false;
   private storageFolderName: string = "images/";
 
   // Coffee
@@ -53,14 +52,14 @@ export class CoffeeEditComponent implements OnInit {
       // Initialize image cropping
       this.name = 'Angular2'
       this.cropperSettings1 = new CropperSettings();
-      this.cropperSettings1.width = 200;
-      this.cropperSettings1.height = 200;
+      this.cropperSettings1.width = 350;
+      this.cropperSettings1.height = 350;
 
       this.cropperSettings1.croppedWidth = 350;
       this.cropperSettings1.croppedHeight = 350;
 
-      this.cropperSettings1.canvasWidth = 500;
-      this.cropperSettings1.canvasHeight = 300;
+      this.cropperSettings1.canvasWidth = 350;
+      this.cropperSettings1.canvasHeight = 350;
 
       this.data1 = {};
 
@@ -78,28 +77,30 @@ export class CoffeeEditComponent implements OnInit {
             coffee => {
               this.coffee = coffee;
               this.initForm();
-
-              // test downloading image from firebase
-              console.log(this.coffee.$key);
-              this.coffeeId = this.coffee.$key;
-
             }
           );
         } else {
           this.isNew = true;
+          this.initForm();
         }
     });
 
   }
 
   private initForm() {
+
+    let coffeeName = 'Arm';
+    let price = 1234;
+
     if (!this.isNew) {
-      this.coffeeForm = this.formBuilder.group({
-        name: [this.coffee.name, Validators.required],
-        imagePath: [this.coffee.url, Validators.required],
-        price: [this.coffee.price, Validators.required]
-      });
+      coffeeName = this.coffee.name;
+      price = this.coffee.price;
     }
+
+    this.coffeeForm = this.formBuilder.group({
+      coffeeName: [coffeeName, Validators.required],
+      price: [price, Validators.required]
+    });
     
   }
 
@@ -121,65 +122,29 @@ export class CoffeeEditComponent implements OnInit {
 
     myReader.readAsDataURL(file);
   }
-  
-  testUpload() {
-    let image = this.data1.image.split("base64,");
-    this.firebaseApp.storage().ref().child(this.storageFolderName + this.coffee.$key + 1)
-        .putString(image[1], 'base64').then(snapshot => {
-        // Observe state change events such as progress, pause, and resume
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
-        switch (snapshot.state) {
-            case firebase.storage.TaskState.PAUSED: // or 'paused'
-            console.log('Upload is paused');
-            break;
-            case firebase.storage.TaskState.RUNNING: // or 'running'
-            console.log('Upload is running');
-            break;
-        }
-        let downloadURL = snapshot.downloadURL;
-        this.imageUrl = downloadURL;
-        
-        console.log("successfully added an image and update key");
-        this.updateImageKey(this.coffee.$key + 1);
 
-    }).catch(error => {
-        // Handle unsuccessful uploads
-        console.log("error uploading: " + error);
-    });
+  createCoffee() {
+
+    // this.sdkDb.ref("coffees");
+    console.log(this.coffeeForm.value);
+    this.sdkDb.ref().child("coffees")
+    .push(this.coffeeForm.value).then(item => {
+            let coffeeId = item.key;  
+            this.addImageToStorage(coffeeId, this.data1.image, coffeeId, null);
+          });
   }
 
-  upload() {
+  updateCoffee() {
     console.log('submit');
     this.imageStorageInsert(this.data1.image, this.coffee.$key);
   }
 
   private imageStorageInsert(inputImage, $key) {
 
-    this.alreadyUploaded = false;
-
-    // subscription way
-
-    // this.$imageSub = this.af.database.object('coffees/' + $key);
-    // this.$imageSub.subscribe(
-    //   data => {
-    //     if (!this.alreadyUploaded) {
-    //         let oldImageKey = data.imageKey;
-    //         let newImageKey = this.addOneToImageKey(oldImageKey);
-    //         this.addImageToStorage(inputImage, newImageKey, oldImageKey);
-    //     }
-    //   }
-    // );
-
-  // one shot way
-
    this.sdkDb.ref(`coffees/${$key}`).once('value').then(snapshot => {
-      var oldImageKey = snapshot.val().imageKey;
-      console.log("old key " + oldImageKey);
-      var newImageKey = this.addOneToImageKey(oldImageKey);
-      console.log("old key " + oldImageKey + " " + newImageKey);
-      this.addImageToStorage(inputImage, newImageKey, oldImageKey); 
+      let oldImageKey = snapshot.val().imageKey;
+      let newImageKey = this.addOneToImageKey(oldImageKey);
+      this.addImageToStorage($key, inputImage, newImageKey, oldImageKey); 
     });
 
   }
@@ -190,12 +155,14 @@ export class CoffeeEditComponent implements OnInit {
     return newImageKey;
   }
 
-  private addImageToStorage(inputImage, newImageKey, oldImageKey) {
+  private addImageToStorage(coffeeId, inputImage, newImageKey, oldImageKey) {
+
+    // add new image to storage
     let image = inputImage.split("base64,");
     this.firebaseApp.storage().ref().child(this.storageFolderName + newImageKey)
         .putString(image[1], 'base64').then(snapshot => {
-        // Observe state change events such as progress, pause, and resume
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        
+        // Progress
         let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log('Upload is ' + progress + '% done');
         switch (snapshot.state) {
@@ -206,15 +173,18 @@ export class CoffeeEditComponent implements OnInit {
             console.log('Upload is running');
             break;
         }
+
+        // get imagedownload url
         let downloadURL = snapshot.downloadURL;
         this.imageUrl = downloadURL;
-        
-        // this.alreadyUploaded = true;
         console.log("successfully added an image and update key");
 
         // update and delete coffee $key
-        this.updateImageKey(newImageKey);
-        this.deteleImageInStorage(oldImageKey);
+        if (!this.isNew) {
+          this.deteleImageInStorage(oldImageKey);
+        } 
+        this.updateImageKeyAndUrl(coffeeId, newImageKey, downloadURL);
+        
 
     }).catch(error => {
         // Handle unsuccessful uploads
@@ -222,9 +192,10 @@ export class CoffeeEditComponent implements OnInit {
     });
   }
 
-  private updateImageKey(newImageKey) {
-     this.af.database.object(`coffees/${this.coffee.$key}`).update({
-        imageKey: newImageKey
+  private updateImageKeyAndUrl(coffeeId, newImageKey, downloadURL) {
+     this.af.database.object(`coffees/${coffeeId}`).update({
+        imageKey: newImageKey,
+        url: downloadURL
       });
   }
 
