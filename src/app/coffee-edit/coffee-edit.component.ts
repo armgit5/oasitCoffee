@@ -132,7 +132,8 @@ export class CoffeeEditComponent implements OnInit {
     this.sdkDb.ref().child("coffees")
     .push(this.coffeeForm.value).then(item => {
             let coffeeId = item.key;  
-            this.addImageToStorage(coffeeId, this.data1.image, coffeeId, null);
+            let newImageKey = this.addOneToImageKey(coffeeId);
+            this.addImageToStorage(coffeeId, this.data1.image, newImageKey, null);
           });
   }
 
@@ -142,19 +143,23 @@ export class CoffeeEditComponent implements OnInit {
     if (this.data1.image != undefined) {
       this.imageStorageInsert(this.data1.image, this.coffee.$key);
     }
+    let test = this.addOneToImageKey("-KgZQwY1d44h_vQXBgJNaNaN");
   }
 
   private imageStorageInsert(inputImage, $key) {
 
    this.sdkDb.ref(`coffees/${$key}`).once('value').then(snapshot => {
-      let oldImageKey = snapshot.val().imageKey;
+      let oldImageKey = snapshot.val().imageKey;     
       let newImageKey = this.addOneToImageKey(oldImageKey);
       this.addImageToStorage($key, inputImage, newImageKey, oldImageKey); 
     });
 
   }
 
-  private addOneToImageKey(oldImageKey): string {
+  private addOneToImageKey(oldImageKey): string {  
+    if (this.isNew) {
+      return oldImageKey + 1;
+    }
     let newNum = Number(oldImageKey.substr(oldImageKey.length-1)) + 1;
     let newImageKey = oldImageKey.slice(0, -1) + newNum;
     return newImageKey;
