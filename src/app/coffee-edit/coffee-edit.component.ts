@@ -159,27 +159,28 @@ export class CoffeeEditComponent implements OnInit {
 
     this.alreadyUploaded = false;
 
-    this.$imageSub = this.af.database.object('coffees/' + $key);
-    this.$imageSub.subscribe(
-      data => {
-        if (!this.alreadyUploaded) {
-            let oldImageKey = data.imageKey;
-            let newImageKey = this.addOneToImageKey(oldImageKey);
-            this.addImageToStorage(inputImage, newImageKey, oldImageKey);
-        }
-      }
-    );
+    // subscription way
 
-  // try one shot 
+    // this.$imageSub = this.af.database.object('coffees/' + $key);
+    // this.$imageSub.subscribe(
+    //   data => {
+    //     if (!this.alreadyUploaded) {
+    //         let oldImageKey = data.imageKey;
+    //         let newImageKey = this.addOneToImageKey(oldImageKey);
+    //         this.addImageToStorage(inputImage, newImageKey, oldImageKey);
+    //     }
+    //   }
+    // );
 
-  //  this.sdkDb.ref(`coffees/${$key}`).once('value').then(function(snapshot) {
-  //     var oldImageKey = snapshot.val().imageKey;
-  //     console.log("old key " + oldImageKey);
-  //     var newImageKey = this.addOneToImageKey(oldImageKey);
-  //     console.log("old key " + oldImageKey);
-  //     // this.addImageToStorage(inputImage, newImageKey, oldImageKey, $key); 
-  //   }
-  //   );
+  // one shot way
+
+   this.sdkDb.ref(`coffees/${$key}`).once('value').then(snapshot => {
+      var oldImageKey = snapshot.val().imageKey;
+      console.log("old key " + oldImageKey);
+      var newImageKey = this.addOneToImageKey(oldImageKey);
+      console.log("old key " + oldImageKey + " " + newImageKey);
+      this.addImageToStorage(inputImage, newImageKey, oldImageKey); 
+    });
 
   }
 
@@ -187,8 +188,6 @@ export class CoffeeEditComponent implements OnInit {
     let newNum = Number(oldImageKey.substr(oldImageKey.length-1)) + 1;
     let newImageKey = oldImageKey.slice(0, -1) + newNum;
     return newImageKey;
-    // console.log("add one " + oldImageKey);
-    // return "";
   }
 
   private addImageToStorage(inputImage, newImageKey, oldImageKey) {
@@ -210,16 +209,13 @@ export class CoffeeEditComponent implements OnInit {
         let downloadURL = snapshot.downloadURL;
         this.imageUrl = downloadURL;
         
-        this.alreadyUploaded = true;
+        // this.alreadyUploaded = true;
         console.log("successfully added an image and update key");
-        
-        console.log("unsubscribe");
 
         // update and delete coffee $key
         this.updateImageKey(newImageKey);
         this.deteleImageInStorage(oldImageKey);
 
-        // this.deteleImageInStorage(oldImageKey);
     }).catch(error => {
         // Handle unsuccessful uploads
         console.log("error uploading: " + error);
