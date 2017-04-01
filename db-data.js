@@ -100,6 +100,33 @@ var dbData = {
             qty: 5,
             comment: "add more sugar"
         }
+    ],
+
+    categories: [
+        {
+            id:1,
+            name: "Coffee"
+        },
+        {
+            id:2,
+            name: "Menu"
+        },
+        {
+            id:3,
+            name: "Special menu"
+        },
+        {
+            id:4,
+            name: "Frappe"
+        },
+        {
+            id:5,
+            name: "Foods"
+        },
+        {
+            id:6,
+            name: "Beers"
+        }
     ]
 
 

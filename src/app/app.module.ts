@@ -18,6 +18,7 @@ import { QueueComponent } from './queue/queue.component';
 import { QueueService } from './queue/queue.service';
 import { CoffeeEditComponent } from './coffee-edit/coffee-edit.component';
 import { ImageCropperComponent } from 'ng2-img-cropper';
+import { CategoryService } from './coffees/category/category.service';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { ImageCropperComponent } from 'ng2-img-cropper';
     AngularFireModule.initializeApp(firebaseConfig, authConfig),
     ReactiveFormsModule
   ],
-  providers: [CoffeeService, QueueService],
+  providers: [CoffeeService, QueueService, CategoryService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

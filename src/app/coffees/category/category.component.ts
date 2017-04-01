@@ -1,6 +1,8 @@
 import { Component, Output, EventEmitter, OnInit} from '@angular/core';
 import { categoriesData } from './categoriesData';
 import { Category } from './category';
+import { CategoryService } from './category.service';
+import { element } from 'protractor/globals';
 
 
 @Component({
@@ -12,7 +14,7 @@ import { Category } from './category';
 
                 <a class="list-group-item" [class.active]="allStatus" (click)=filterAll()>All</a>
                 <a class="list-group-item" *ngFor="let category of categories" 
-                     [class.active]="activeStatus[category.id]"  (click)=filter(category)>{{category.name}}</a>
+                     [class.active]="activeStatus[category.$key]"  (click)=filter(category)>{{category.name}}</a>
                 
               </div>
         </div><!--/span-->
@@ -24,15 +26,20 @@ import { Category } from './category';
 })
 export class CategoryComponent implements OnInit {
 
-    categories = categoriesData.categories;
+    // categories = categoriesData.categories;
 
     activeStatus = {};
     allStatus = true;
+    categories: Category[];
+
+    constructor(private categoryService: CategoryService) {
+
+    }
 
     ngOnInit() {
-         this.categories.forEach(element => {
-            this.activeStatus[element.id] = false;
-        });
+        this.categoryService.loadCategories().subscribe(categories => {
+            this.categories = categories;
+        });   
     }
 
     @Output("filter")
@@ -41,15 +48,19 @@ export class CategoryComponent implements OnInit {
     filter(category: Category) {
         this.allStatus = false;
         this.categories.forEach(element => {
-            this.activeStatus[element.id] = element.id == category.id;
+            if (element.$key == category.$key) {
+                this.activeStatus[element.$key] = true;
+            } else {
+                this.activeStatus[element.$key] = false;
+            } 
         });
-        this.filterOutput.emit(category.id);
+        this.filterOutput.emit(category.$key);
     }
 
     filterAll() {
         this.allStatus = true;
         this.categories.forEach(element => {
-            this.activeStatus[element.id] = false;
+            this.activeStatus[element.$key] = false;
         });
         this.filterOutput.emit();
     }

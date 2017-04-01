@@ -12,7 +12,6 @@ import { Subscription } from 'rxjs/Rx';
 @Injectable()
 export class CoffeeService {
 
-    // cart = cartData.cart;
     // coffee variables
     cartCoffees: Cart[] = [];
     private coffeeCounts:number = 0;
