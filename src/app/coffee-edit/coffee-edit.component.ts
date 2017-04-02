@@ -52,14 +52,16 @@ export class CoffeeEditComponent implements OnInit {
       // Initialize image cropping
       this.name = 'Angular2'
       this.cropperSettings1 = new CropperSettings();
-      this.cropperSettings1.width = 350;
-      this.cropperSettings1.height = 350;
+      this.cropperSettings1.width = 449;
+      this.cropperSettings1.height = 372;
 
-      this.cropperSettings1.croppedWidth = 350;
-      this.cropperSettings1.croppedHeight = 350;
+      this.cropperSettings1.canvasWidth = 449;
+      this.cropperSettings1.canvasHeight = 372;
 
-      this.cropperSettings1.canvasWidth = 350;
-      this.cropperSettings1.canvasHeight = 350;
+      this.cropperSettings1.croppedWidth = 240;
+      this.cropperSettings1.croppedHeight = 200;
+
+      
 
       this.data1 = {};
 
