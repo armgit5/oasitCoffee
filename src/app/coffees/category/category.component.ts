@@ -7,18 +7,12 @@ import { element } from 'protractor/globals';
 
 @Component({
     selector: 'category-selector',
-    template: `
-        
-        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
-            <div class="list-group" ShowOneContainer>
-
-                <a class="list-group-item" [class.active]="allStatus" (click)=filterAll()>All</a>
-                <a class="list-group-item" *ngFor="let category of categories" 
-                     [class.active]="activeStatus[category.$key]"  (click)=filter(category)>{{category.name}}</a>
-                
-              </div>
-        </div><!--/span-->
-
+    template: `     
+        <div class="list-group" ShowOneContainer>
+            <a class="list-group-item" [class.active]="allStatus" (click)=filterAll()>All</a>
+            <a class="list-group-item" *ngFor="let category of categories" 
+                    [class.active]="activeStatus[category.$key]"  (click)=filter(category)>{{category.name}}</a>
+        </div>
     `,
     styles: [`
        

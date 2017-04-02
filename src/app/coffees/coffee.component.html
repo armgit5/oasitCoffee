@@ -1,18 +1,15 @@
-
-
- 
-<div class="col-sm-6 col-md-4" style="padding: 5px">
+<!--<div class="col-sm-4 col-lg-4 col-md-4">-->
     <div class="thumbnail" style="height: 100%">
-    <img src={{coffee.url}} 
+    <img src={{coffee?.url}} 
         alt="..." 
         class="img-responsive" 
         style="height: 200px; width: 100%; display: block;">
     <div class="caption">
-        <h3>{{coffee.name}}</h3>
-        <p class="description">{{coffee.status}}</p>
+        <h3>{{coffee?.name}}</h3>
+        <p class="description">{{coffee?.status}}</p>
         <div>
         <div class="clearfix">
-            <div class="price pull-left">{{coffee.price | currency:'THB':true}}</div>
+            <div class="price pull-left">{{coffee?.price | currency:'THB':true}}</div>
             
             <div class="input-group">
                 <span class="input-group-btn">
@@ -37,7 +34,8 @@
         </div>
     </div>
     </div>
-</div>
+<!--</div>-->
+
 
 <!--<div class="row">
   <div class="col-sm-6 col-md-4">

@@ -1,18 +1,26 @@
 <div class="container main">
-  <div class="row row-offcanvas row-offcanvas-right">
+  <div class="row">
+    <div class="col-md-2 col-lg-3">
+      <!--<div class="col-lg-1"></div>-->
+      <!--<div class="col-md-12 col-lg-11">-->
+        <category-selector (filter)="onFilter($event)"></category-selector>
+        <a (click)="newCoffee()">New Coffee</a>
+      <!--</div>-->
+      
+      
+    </div>
 
-    <category-selector (filter)="onFilter($event)"></category-selector>
-    <a (click)="newCoffee()">New Coffee</a>
-    <div class="col-xs-12 col-sm-9">
+    
+    <div class="col-md-10 col-lg-9">
       
       <div class="row">
 
             <div (filter)="onFilter($event)">
             </div>
 
-            <div class="col-sm-6 col-md-4" 
+            <div class="col-md-4 col-lg-4" 
                 *ngFor="let coffee of coffees | coffeeFilter:filterArg"
-                style="padding: 5px">
+                style="margin: 0px">
                 <coffee-component [coffee]="coffee"></coffee-component>
             </div>
             
