@@ -1,17 +1,24 @@
-<!--<div class="col-sm-4 col-lg-4 col-md-4">-->
+
     <div class="thumbnail" style="height: 100%">
-    <img src={{coffee?.url}} 
-        alt="..." 
-        class="img-responsive" 
-        style="height: 200px; width: 100%; display: block;">
-    <div class="caption">
-        <h3>{{coffee?.name}}</h3>
-        <p class="description">{{coffee?.status}}</p>
-        <div>
-        <div class="clearfix">
-            <div class="price pull-left">{{coffee?.price | currency:'THB':true}}</div>
-            
-            <div class="input-group">
+      
+            <div class="col">
+            <img src={{coffee?.url}} 
+                alt="..." 
+                class="img-responsive" 
+                style="min-height: 200px; 
+                        width: 100%; 
+                        display: block;
+                        padding: 0px;
+                        margin: 0px">
+            </div>
+      
+        <div class="caption">
+            <h3 style="margin: 0px">{{coffee?.name}}</h3>
+            <p class="description">{{coffee?.status}}</p>
+        
+        <div class="row">
+            <div class="col-md-6">{{coffee?.price | currency:'THB':true}}</div>
+            <div class="input-group col-md-6" style="padding-right: 5px">
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-default btn-number" (click)="minus()">
                         <span class="glyphicon glyphicon-minus"></span>
@@ -24,29 +31,18 @@
                     </button>
                 </span>
             </div>
-            
+        </div>
+
+        <div class="row" style="padding: 5px">
             <textarea class="form-control" style="min-width: 100%" [(ngModel)]='comment'></textarea>
+        </div>
+        <div class="row">
             <a (click)="editCoffee()">Edit Coffee</a>
             <a (click)="deleteCoffee()">Delete Coffee</a>
             <button class="btn btn-success pull-right" type="button" (click)="add()">Add to cart</button>
             <div *ngIf="added">Coffee has been added</div>
         </div>
+
         </div>
+       
     </div>
-    </div>
-<!--</div>-->
-
-
-<!--<div class="row">
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <img alt="100%x200" data-src="holder.js/100%x200" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTkyIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDE5MiAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzEwMCV4MjAwCkNyZWF0ZWQgd2l0aCBIb2xkZXIuanMgMi42LjAuCkxlYXJuIG1vcmUgYXQgaHR0cDovL2hvbGRlcmpzLmNvbQooYykgMjAxMi0yMDE1IEl2YW4gTWFsb3BpbnNreSAtIGh0dHA6Ly9pbXNreS5jbwotLT48ZGVmcz48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwhW0NEQVRBWyNob2xkZXJfMTViMmQ1Y2MzNDkgdGV4dCB7IGZpbGw6I0FBQUFBQTtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0IH0gXV0+PC9zdHlsZT48L2RlZnM+PGcgaWQ9ImhvbGRlcl8xNWIyZDVjYzM0OSI+PHJlY3Qgd2lkdGg9IjE5MiIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNFRUVFRUUiLz48Zz48dGV4dCB4PSI3MC4wNTQ2ODc1IiB5PSIxMDQuNSI+MTkyeDIwMDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">
-      <div class="caption">
-        <h3>Thumbnail label</h3>
-        <p>...</p>
-        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-      </div>
-    </div>
-  </div>
-</div>-->
-
