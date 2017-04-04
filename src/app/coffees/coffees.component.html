@@ -3,7 +3,7 @@
     <div class="col-md-3 col-lg-3">
     
         <!--<category-selector (filter)="onFilter($event)"></category-selector>-->
-        <!--<a (click)="newCoffee()">New Coffee</a>-->
+        <a (click)="newCoffee()">New Coffee</a>
      
         <div class="refinement-group" data-reactid="69">
           <span data-reactid="70">
@@ -29,7 +29,7 @@
 
             <div class="col-md-4 col-lg-4" 
                 *ngFor="let coffee of coffees | coffeeFilter:filterArg"
-                style="margin: 0px">
+                style="background-color: white">
                 <coffee-component [coffee]="coffee"></coffee-component>
             </div>
             

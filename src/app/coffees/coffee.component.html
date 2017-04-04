@@ -1,5 +1,4 @@
-
-    <!--<div class="thumbnail" style="height: 100%; width: 100%">
+<!--<div class="thumbnail" style="height: 100%; width: 100%">
       
             <div class="col">
             <img src={{coffee?.url}} 
@@ -61,22 +60,23 @@
        
     </div>-->
 
-
+<div class="product-title">
 <div class="img-middle" data-reactid="1590">
     <a href="https://www.overstock.com/Home-Garden/Simple-Living-Seneca-Reclaimed-Double-X-Design-Cocktail-Table/8847268/product.html?refccid=JQMEVJHJPI3YZ6SN2G2HGHU3HE&amp;searchidx=0" class="product-link" data-reactid="1591">
     <img alt="Simple Living Seneca Reclaimed Double 'X' Design Cocktail Table" 
-    src="https://ak1.ostkcdn.com/images/products/8847268/P16076522.jpg" 
+    src= {{coffee?.url}} 
     class="img-responsive product-img" 
     data-reactid="1592"></a>
-    <i class="qv-icon os-button btn-sm btn-action" data-reactid="1593">Quick View</i>
+    <!--<i class="qv-icon os-button btn-sm btn-action" data-reactid="1593">Hot</i>-->
 </div>
 
 <div class="product-info">
 <a href="https://www.overstock.com/Home-Garden/Simple-Living-Seneca-Reclaimed-Double-X-Design-Cocktail-Table/8847268/product.html?refccid=OAKBHB6IKIC3Z7SASDV6CX7ITQ&amp;searchidx=0" data-reactid="1602">
-<div class="product-title " data-reactid="1603">Simple Living Seneca Reclaimed Double 'X' Design Cocktail Table</div>
+<div class="product-title" data-reactid="1603">{{coffee?.name}}</div>
 <div class="product-price-wrapper" data-reactid="1604">
-    <div class="product-price standard" data-reactid="1605">Today: THB 5499.76</div>
+    <div class="product-price standard" data-reactid="1605">{{ coffee?.price | currency:'THB':true}}</div>
     <div class="you-save MSRP" data-reactid="1606"></div>
 </div>
 </a>
+</div>
 </div>

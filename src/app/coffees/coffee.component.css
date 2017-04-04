@@ -7,12 +7,35 @@
     position: relative;
 }
 
-.product-tile .product-info {
+.product-info {
     color: #444;
     font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
     font-size: 14px;
     line-height: 1.7;
     min-height: 130px;
     max-height: 160px;
+    width: 100%;
+}
+
+.product-info a {
+    color: #444;
+    display: block;
+    text-decoration: none!important;
+    padding: 5px;
+    padding-top: 10px;
+    padding-bottom: 15px;
+}
+
+
+.product-price {
+    color: #000;
+    font-size: 12px;
+    font-weight: 700;
+    max-height: 50px;
+    min-height: 25px;
+
+}
+
+.product-price-wrapper {
     width: 100%;
 }
