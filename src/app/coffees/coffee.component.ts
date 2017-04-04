@@ -9,7 +9,7 @@ import { Router } from "@angular/router";
 @Component({
   selector: 'coffee-component',
   templateUrl: './coffee.component.html',
-  styleUrls: ['./coffees.component.css']
+  styleUrls: ['./coffee.component.css']
 })
 export class CoffeeComponent implements OnInit {
 
