@@ -60,7 +60,7 @@
        
     </div>-->
 
-<div class="product-title">
+<div class="product-title" id="product-boarder">
 <div class="img-middle" data-reactid="1590">
     <a href="https://www.overstock.com/Home-Garden/Simple-Living-Seneca-Reclaimed-Double-X-Design-Cocktail-Table/8847268/product.html?refccid=JQMEVJHJPI3YZ6SN2G2HGHU3HE&amp;searchidx=0" class="product-link" data-reactid="1591">
     <img alt="Simple Living Seneca Reclaimed Double 'X' Design Cocktail Table" 
@@ -71,12 +71,24 @@
 </div>
 
 <div class="product-info">
-<a href="https://www.overstock.com/Home-Garden/Simple-Living-Seneca-Reclaimed-Double-X-Design-Cocktail-Table/8847268/product.html?refccid=OAKBHB6IKIC3Z7SASDV6CX7ITQ&amp;searchidx=0" data-reactid="1602">
-<div class="product-title" data-reactid="1603">{{coffee?.name}}</div>
-<div class="product-price-wrapper" data-reactid="1604">
-    <div class="product-price standard" data-reactid="1605">{{ coffee?.price | currency:'THB':true}}</div>
-    <div class="you-save MSRP" data-reactid="1606"></div>
-</div>
+<a href="#">
+    <div class="col-md-6 pull-left" style="padding: 0px">
+        <div class="product-title pull-left">{{coffee?.name}}</div>
+    </div>
+    <div class="col-md-6 pull-right" style="padding: 0px">
+        <div class="product-title">Test</div>
+    </div>
+
+    <div class="product-comment" style="padding: 0px">
+        <textarea class="form-control" 
+            style="min-width: 100%" 
+            [(ngModel)]='comment'
+            placeholder="please leave a comment here..."></textarea>
+    </div>
+    <div class="product-price-wrapper" data-reactid="1604">
+        <div class="product-price standard" data-reactid="1605">{{ coffee?.price | currency:'THB':true}}</div>
+        <div class="you-save MSRP" data-reactid="1606"></div>
+    </div>
 </a>
 </div>
 </div>

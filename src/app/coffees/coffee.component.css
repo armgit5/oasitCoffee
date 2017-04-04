@@ -7,6 +7,14 @@
     position: relative;
 }
 
+.product-info a .product-title {
+    margin-bottom: 5px;
+}
+
+.product-info a .product-comment {
+    margin-bottom: 5px;
+}
+
 .product-info {
     color: #444;
     font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
@@ -29,7 +37,7 @@
 
 .product-price {
     color: #000;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 700;
     max-height: 50px;
     min-height: 25px;
@@ -38,4 +46,9 @@
 
 .product-price-wrapper {
     width: 100%;
+}
+
+#product-boarder {
+    border-bottom: thin solid #444;
+    margin-bottom: 5px;
 }
