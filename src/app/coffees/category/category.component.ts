@@ -7,13 +7,7 @@ import { element } from 'protractor/globals';
 
 @Component({
     selector: 'category-selector',
-    template: `     
-        <div class="list-group" ShowOneContainer>
-            <a class="list-group-item" [class.active]="allStatus" (click)=filterAll()>All</a>
-            <a class="list-group-item" *ngFor="let category of categories" 
-                    [class.active]="activeStatus[category.$key]"  (click)=filter(category)>{{category.name}}</a>
-        </div>
-    `,
+    templateUrl: './category.component.html',
     styles: [`
        
     `]
