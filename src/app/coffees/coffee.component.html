@@ -72,7 +72,6 @@
 </div>
 
 <div class="product-info">
-
     <div class="col-md-6 pull-left" style="padding: 0px">
         <div class="product-title pull-left">{{coffee?.name}}</div>
     </div>
@@ -96,19 +95,6 @@
                 <i class="fa fa-plus-square fa-2x"></i>
             </a>
         </div>
-
-        <!--<span class="input-group-btn">
-            <button type="button" class="btn btn-default btn-number" (click)="minus()">
-                <span class="glyphicon glyphicon-minus"></span>
-            </button>
-        </span>-->
-        
-        <!--<span class="input-group-btn">
-            <button type="button" class="btn btn-default btn-number" (click)="plus()">
-                <span class="glyphicon glyphicon-plus"></span>
-            </button>
-        </span>-->
-          
     </div>
 
     <div class="product-comment" style="padding: 0px">
@@ -117,9 +103,20 @@
             [(ngModel)]='comment'
             placeholder="please leave a comment here..."></textarea>
     </div>
-    <div class="product-price-wrapper" data-reactid="1604">
-        <div class="product-price standard" data-reactid="1605">{{ coffee?.price | currency:'THB':true}}</div>
-        <div class="you-save MSRP" data-reactid="1606"></div>
+    <div class="product-price-wrapper">
+        <div class="col-md-6" style="padding: 0px;">
+            <div class="product-price standard">{{ coffee?.price | currency:'THB':true}}</div>
+        </div>
+        <div class="col-md-6" style="padding: 0px; text-align: right">
+            <!--<a class="btn" (click)="add()" style="padding: 0; text-align: right;">
+                <i class="fa fa-coffee fa-2x" style="font-weight: bold;">Add</i>
+            </a>-->
+            <button type="button" 
+                class="btn btn-success" 
+                (click)="add()">
+                <i class="fa fa-coffee" style="font-weight: bold;"> Add</i>
+            </button>
+        </div>
     </div>
 
 </div>
