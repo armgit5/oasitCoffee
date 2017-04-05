@@ -76,8 +76,39 @@
     <div class="col-md-6 pull-left" style="padding: 0px">
         <div class="product-title pull-left">{{coffee?.name}}</div>
     </div>
-    <div class="col-md-6 pull-right" style="padding: 0px; text-align: right;">
-        <div class="product-title">Test</div>
+    <div class="col-md-6 pull-right"
+        style="padding: 0px; text-align: right; margin-top: 5px; margin-bottom: 2px">
+         
+        <div class="col-md-4" style="padding: 0; padding-top: 2px">
+            <a class="btn" (click)="minus()" style="padding: 0">
+                <i class="fa fa-minus-square fa-2x"></i>
+            </a>
+        </div>
+        <div class="col-md-4" style="padding: 0">
+            <input type="text" name="quant[1]" 
+                class="form-control input-number" 
+                value={{coffeeCount}} 
+                min="1"
+                style="text-align: center;">
+        </div>
+        <div class="col-md-4" style="padding: 0; padding-top: 2px; padding-right: 1px">
+            <a class="btn" (click)="plus()" style="padding: 0">
+                <i class="fa fa-plus-square fa-2x"></i>
+            </a>
+        </div>
+
+        <!--<span class="input-group-btn">
+            <button type="button" class="btn btn-default btn-number" (click)="minus()">
+                <span class="glyphicon glyphicon-minus"></span>
+            </button>
+        </span>-->
+        
+        <!--<span class="input-group-btn">
+            <button type="button" class="btn btn-default btn-number" (click)="plus()">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
+        </span>-->
+          
     </div>
 
     <div class="product-comment" style="padding: 0px">

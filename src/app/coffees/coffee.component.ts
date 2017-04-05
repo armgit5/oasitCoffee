@@ -33,12 +33,14 @@ export class CoffeeComponent implements OnInit {
 
     plus() {
       this.coffeeCount++;
+      // console.log("plus");
     }
 
     minus() {
       if (this.coffeeCount > 1) {
         this.coffeeCount--;
       } 
+      // console.log("minus");
     }
 
     addCoffeeAlert() {
