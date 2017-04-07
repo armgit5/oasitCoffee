@@ -18,7 +18,7 @@ export class CoffeePipe implements PipeTransform {
                     // console.log(array[i].type, args.types.indexOf(array[i].type) >= 0);
                     console.log(args.$key != null);
                     if (args.$key != null) {
-                        if (array[i].category === args.$key && array[i].type, args.types.indexOf(array[i].type) >= 0) {
+                        if (array[i].category === args.$key && args.types.indexOf(array[i].type) >= 0) {
                             this.output.push(array[i]);
                         }
                     } else {
