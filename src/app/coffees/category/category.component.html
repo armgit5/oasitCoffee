@@ -5,11 +5,10 @@
 </div>
 
 <div>
-    <!--<input type="hidden" name="toggle" [(ngModel)]="user.toggle">-->
       <div class="checkbox" *ngFor="let type of types">
         <label>
           <input type="checkbox" [checked]="true" 
-              (change)="boxChanges($event.target.checked, type)">
+              (change)="boxChanges($event.target.checked, type.name)">
           {{ type.name }}
         </label>
       </div>

@@ -20,10 +20,9 @@ export class CoffeesComponent {
     // typesArg: any[] = [];
 
     onFilter(filter) {
-        console.log(filter);
         this.filterArg = filter;
-        // console.log("filter arg " + this.filterArg);
-        
+        console.log("filter arg ", this.filterArg);
+
     }
     
     constructor(private coffeeService: CoffeeService,

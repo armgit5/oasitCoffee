@@ -19,8 +19,8 @@ export class CategoryComponent implements OnInit {
     activeStatus = {};
     allStatus = true;
     categories: Category[];
-    // types: any[];
-    types: any[] = []; 
+    types: any[];
+    typesOuput: any[] = []; 
     category: Category;
 
     @Output("filter")
@@ -38,25 +38,26 @@ export class CategoryComponent implements OnInit {
         });   
 
         this.categoryService.loadTypes().subscribe(types => {
-            types.forEach(type => {
-                this.types.push(type.name);
+            this.types = types;
+            this.types.forEach(type => {
+                this.typesOuput.push(type.name);
             });
             // console.log(this.typesOuput);
         });
 
-        this.category = new Category(null, this.types);
+        this.category = new Category(null, this.typesOuput);
 
     }
 
     boxChanges($event, boxName) {
         if ($event) {
-            this.types.push(boxName);
+            this.typesOuput.push(boxName);
         } else {
             // console.log(this.typesOuput.indexOf(boxName), boxName);
-            this.types.splice(this.types.indexOf(boxName), 1);
+            this.typesOuput.splice(this.typesOuput.indexOf(boxName), 1);
         }
         // console.log(this.typesOuput);
-        this.category.types = this.types;
+        this.category.types = this.typesOuput;
         this.filterOutput.emit(this.category);
     }
 
