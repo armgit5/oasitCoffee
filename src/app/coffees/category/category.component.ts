@@ -19,22 +19,51 @@ export class CategoryComponent implements OnInit {
     activeStatus = {};
     allStatus = true;
     categories: Category[];
+    // types: any[];
+    types: any[] = []; 
+    category: Category;
+
+    @Output("filter")
+    filterOutput = new EventEmitter();
 
     constructor(private categoryService: CategoryService) {
-
+    
     }
+
+
 
     ngOnInit() {
         this.categoryService.loadCategories().subscribe(categories => {
             this.categories = categories;
         });   
+
+        this.categoryService.loadTypes().subscribe(types => {
+            types.forEach(type => {
+                this.types.push(type.name);
+            });
+            // console.log(this.typesOuput);
+        });
+
+        this.category = new Category(null, this.types);
+
     }
 
-    @Output("filter")
-    filterOutput = new EventEmitter();
+    boxChanges($event, boxName) {
+        if ($event) {
+            this.types.push(boxName);
+        } else {
+            // console.log(this.typesOuput.indexOf(boxName), boxName);
+            this.types.splice(this.types.indexOf(boxName), 1);
+        }
+        // console.log(this.typesOuput);
+        this.category.types = this.types;
+        this.filterOutput.emit(this.category);
+    }
+
+   
 
     filter(category: Category) {
-        console.log("filtering");
+        // console.log("filtering");
         this.allStatus = false;
         this.categories.forEach(element => {
             if (element.$key == category.$key) {
@@ -43,7 +72,8 @@ export class CategoryComponent implements OnInit {
                 this.activeStatus[element.$key] = false;
             } 
         });
-        this.filterOutput.emit(category.$key);
+        this.category.$key = category.$key;
+        this.filterOutput.emit(this.category);
     }
 
     filterAll() {
@@ -51,7 +81,8 @@ export class CategoryComponent implements OnInit {
         this.categories.forEach(element => {
             this.activeStatus[element.$key] = false;
         });
-        this.filterOutput.emit();
+        this.category.$key = null;
+        this.filterOutput.emit(this.category);
     }
     
    

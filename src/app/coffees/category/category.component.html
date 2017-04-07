@@ -3,3 +3,15 @@
  style="padding:5px">
  <a  [class.active]="activeStatus[category.$key]"  (click)=filter(category)>{{category.name | uppercase}}</a>
 </div>
+
+<div>
+    <!--<input type="hidden" name="toggle" [(ngModel)]="user.toggle">-->
+      <div class="checkbox" *ngFor="let type of types">
+        <label>
+          <input type="checkbox" [checked]="true" 
+              (change)="boxChanges($event.target.checked, type)">
+          {{ type.name }}
+        </label>
+      </div>
+</div>
+

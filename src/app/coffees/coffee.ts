@@ -5,7 +5,7 @@ export class Coffee {
                 public $key:string,
                 public url:string, 
                 public name:string, 
-                public category:number,
+                public category:string,
                 public type:string, 
                 public price:number,
                 public comment:string

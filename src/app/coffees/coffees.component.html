@@ -1,32 +1,24 @@
 <div class="container main">
   <div class="row">
     <div class="col-md-2 col-lg-2">
-    
-        <!--<category-selector (filter)="onFilter($event)"></category-selector>-->
-       
-     
         <div class="refinement-group" style="border-right: 1px solid #DDD">
           
           <h3 class="refinement-heading top" style="color: #999;">MENUS</h3>
          
           <category-selector (filter)="onFilter($event)"></category-selector>
         </div>
-
     </div>
-
     
     <div class="col-md-10 col-lg-10">
       
       <div class="row">
-
-            <div (filter)="onFilter($event)">
-            </div>
-
+            <!--coffee component-->
             <div class="col-md-4 col-lg-4" 
                 *ngFor="let coffee of coffees | coffeeFilter:filterArg"
                 style="background-color: white">
                 <coffee-component [coffee]="coffee"></coffee-component>
             </div>
+            <!--add new coffee-->
             <div class="col-md-4 col-lg-4" style="margin-top:10px;">
                <a (click)="newCoffee()"
                 style="color: #444;">

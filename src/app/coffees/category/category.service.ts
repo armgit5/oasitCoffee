@@ -14,4 +14,8 @@ export class CategoryService {
     return this.af.database.list('categories');
   }
 
+  loadTypes() {
+    return this.af.database.list('types');
+  }
+
 }
