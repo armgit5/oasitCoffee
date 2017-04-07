@@ -1,0 +1,5 @@
+ <ul>
+    <li [class.active]="allStatus" (click)=filterAll()>All</li>
+    <li  *ngFor="let category of categories" 
+            [class.active]="activeStatus[category.$key]"  (click)=filter(category)>{{category.name}}</li>
+</ul>
