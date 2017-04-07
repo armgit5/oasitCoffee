@@ -127,6 +127,21 @@ var dbData = {
             id:6,
             name: "Beers"
         }
+    ],
+
+    types: [
+        {
+            id:1,
+            name: "Hot"
+        },
+        {
+            id:2,
+            name: "Cold"
+        },
+        {
+            id:3,
+            name: "Shake"
+        }
     ]
 
 

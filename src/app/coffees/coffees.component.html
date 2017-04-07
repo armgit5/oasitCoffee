@@ -1,21 +1,21 @@
 <div class="container main">
   <div class="row">
-    <div class="col-md-3 col-lg-3">
+    <div class="col-md-2 col-lg-2">
     
         <!--<category-selector (filter)="onFilter($event)"></category-selector>-->
        
      
         <div class="refinement-group" style="border-right: 1px solid #DDD">
           
-          <h3 class="refinement-heading top" data-reactid="71">Menus</h3>
+          <h3 class="refinement-heading top" style="color: #999;">MENUS</h3>
          
-          <category-selector></category-selector>
+          <category-selector (filter)="onFilter($event)"></category-selector>
         </div>
 
     </div>
 
     
-    <div class="col-md-9 col-lg-9">
+    <div class="col-md-10 col-lg-10">
       
       <div class="row">
 
@@ -30,7 +30,7 @@
             <div class="col-md-4 col-lg-4" style="margin-top:10px;">
                <a (click)="newCoffee()"
                 style="color: #444;">
-                <i class="fa fa-plus-square-o fa-2x"></i> <u>New Coffee</u>
+                <i class="fa fa-plus-square-o fa-2x"></i>&nbsp; <u>New Coffee</u>
               </a>         
             </div>
             
@@ -43,7 +43,7 @@
   <hr>
 
   <footer>
-    <p>© Company 2014</p>
+    <p>© Arm Company 2017</p>
   </footer>
 
 </div><!--/.container-->

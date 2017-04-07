@@ -62,18 +62,17 @@
 
 <div class="product-title" id="product-boarder">
 <div class="img-middle">
-    
     <img alt="Simple Living Seneca Reclaimed Double 'X' Design Cocktail Table" 
     src= {{coffee?.url}} 
     class="img-responsive product-img" 
     data-reactid="1592"
     align="middle">
-    <!--<i class="qv-icon os-button btn-sm btn-action" data-reactid="1593">Hot</i>-->
 </div>
 
 <div class="product-info">
+    <div style="font-size: 11px;">({{coffee?.type}})</div>
     <div class="col-md-6 pull-left" style="padding: 0px">
-        <div class="product-title pull-left">{{coffee?.name}}</div>
+        <div class="product-title pull-left">{{coffee?.name}} </div>    
     </div>
     <div class="col-md-6 pull-right"
         style="padding: 0px; text-align: right; margin-top: 5px; margin-bottom: 2px">
@@ -108,9 +107,6 @@
             <div class="product-price standard">{{ coffee?.price | currency:'THB':true}}</div>
         </div>
         <div class="col-md-6" style="padding: 0px; text-align: right">
-            <!--<a class="btn" (click)="add()" style="padding: 0; text-align: right;">
-                <i class="fa fa-coffee fa-2x" style="font-weight: bold;">Add</i>
-            </a>-->
             <button type="button" 
                 class="btn btn-success" 
                 (click)="add()">

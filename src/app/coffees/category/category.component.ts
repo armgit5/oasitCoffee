@@ -34,6 +34,7 @@ export class CategoryComponent implements OnInit {
     filterOutput = new EventEmitter();
 
     filter(category: Category) {
+        console.log("filtering");
         this.allStatus = false;
         this.categories.forEach(element => {
             if (element.$key == category.$key) {
