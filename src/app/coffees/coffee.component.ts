@@ -53,6 +53,7 @@ export class CoffeeComponent implements OnInit {
     add() {
       this.addCoffeeAlert();
       this.coffeeService.addToCart(this.coffee, this.coffeeCount, this.comment);
+      this.coffeeCount = 1;
     }
 
     editCoffee() {

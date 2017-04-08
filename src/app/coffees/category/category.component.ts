@@ -14,57 +14,58 @@ import { element } from 'protractor/globals';
 })
 export class CategoryComponent implements OnInit {
 
-    // categories = categoriesData.categories;
-
     activeStatus = {};
     allStatus = true;
     categories: Category[];
     types: any[];
     typesOuput: any[] = []; 
-    category: Category;
+    category: Category = new Category(null, []);
 
     @Output("filter")
     filterOutput = new EventEmitter();
 
     constructor(private categoryService: CategoryService) {
-    
+        
     }
 
-
-
     ngOnInit() {
+
         this.categoryService.loadCategories().subscribe(categories => {
             this.categories = categories;
         });   
 
+        this.typesOuput = [];
         this.categoryService.loadTypes().subscribe(types => {
             this.types = types;
-            this.types.forEach(type => {
-                this.typesOuput.push(type.name);
-            });
-            // console.log(this.typesOuput);
         });
-
-        this.category = new Category(null, this.typesOuput);
-
+    
     }
 
-    boxChanges($event, boxName) {
-        if ($event) {
-            this.typesOuput.push(boxName);
-        } else {
-            // console.log(this.typesOuput.indexOf(boxName), boxName);
-            this.typesOuput.splice(this.typesOuput.indexOf(boxName), 1);
-        }
-        // console.log(this.typesOuput);
-        this.category.types = this.typesOuput;
+    private emitCategory() {
         this.filterOutput.emit(this.category);
     }
 
-   
+    boxChanges($event, boxName) {
+
+        // Load all types
+        this.typesOuput = [];
+        this.types.forEach(type => {
+            this.typesOuput.push(type.name);
+        });
+
+        // Filter types
+        if ($event) {
+            this.typesOuput.push(boxName);
+        } else {
+            this.typesOuput.splice(this.typesOuput.indexOf(boxName), 1);
+        }
+
+        this.category.types = this.typesOuput;
+        this.emitCategory();
+    }
+
 
     filter(category: Category) {
-        // console.log("filtering");
         this.allStatus = false;
         this.categories.forEach(element => {
             if (element.$key == category.$key) {
@@ -74,7 +75,7 @@ export class CategoryComponent implements OnInit {
             } 
         });
         this.category.$key = category.$key;
-        this.filterOutput.emit(this.category);
+        this.emitCategory();
     }
 
     filterAll() {
@@ -83,8 +84,7 @@ export class CategoryComponent implements OnInit {
             this.activeStatus[element.$key] = false;
         });
         this.category.$key = null;
-        this.filterOutput.emit(this.category);
+        this.emitCategory();
     }
-    
    
 }

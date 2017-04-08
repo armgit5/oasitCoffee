@@ -4,6 +4,7 @@
  <a  [class.active]="activeStatus[category.$key]"  (click)=filter(category)>{{category.name | uppercase}}</a>
 </div>
 
+<h5 style="color: #999;">TYPES</h5>
 <div>
       <div class="checkbox" *ngFor="let type of types">
         <label>

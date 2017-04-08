@@ -15,9 +15,7 @@ import { Category } from './category/category';
 export class CoffeesComponent {
 
     coffees: Coffee[];
-
     filterArg: Category;
-    // typesArg: any[] = [];
 
     onFilter(filter) {
         this.filterArg = filter;
@@ -26,18 +24,11 @@ export class CoffeesComponent {
     }
     
     constructor(private coffeeService: CoffeeService,
-                // private categoryService: CategoryService,
                 private router: Router) {
       console.log('calling');
       this.coffeeService.loadAllCoffees().subscribe(
         coffees => this.coffees = coffees
       );
-
-      // this.categoryService.loadTypes().subscribe(types => {
-      //   types.forEach(type => {
-      //     this.typesArg.push(type.name);
-      //   });
-      // });
     }
 
     newCoffee() {
