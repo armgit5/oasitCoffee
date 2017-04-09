@@ -19,6 +19,7 @@ import { QueueService } from './queue/queue.service';
 import { CoffeeEditComponent } from './coffee-edit/coffee-edit.component';
 import { ImageCropperComponent } from 'ng2-img-cropper';
 import { CategoryService } from './coffees/category/category.service';
+import { ModalModule } from 'ngx-bootstrap';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { CategoryService } from './coffees/category/category.service';
     HttpModule,
     RouterModule.forRoot(routeConfig),
     AngularFireModule.initializeApp(firebaseConfig, authConfig),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ModalModule.forRoot()
   ],
   providers: [CoffeeService, QueueService, CategoryService],
   bootstrap: [AppComponent]

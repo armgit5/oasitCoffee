@@ -2,7 +2,6 @@ import { Component, Output, EventEmitter, OnInit, OnDestroy} from '@angular/core
 import { categoriesData } from './categoriesData';
 import { Category } from './category';
 import { CategoryService } from './category.service';
-import { element } from 'protractor/globals';
 import { Subscription } from 'rxjs/Rx';
 
 

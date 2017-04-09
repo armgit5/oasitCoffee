@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 // import { cartData } from './cartData';
 import { coffeesData } from '../coffees/coffeesData';
 import { CoffeeService } from '../coffees/coffee.service';
-import { element } from 'protractor/globals';
+// import { element } from 'protractor/globals';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { QueueService } from '../queue/queue.service';
 import { Router } from "@angular/router";
