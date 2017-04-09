@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, Inject, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { Coffee } from '../coffees/coffee';
@@ -12,7 +12,7 @@ import {ImageCropperComponent, CropperSettings, Bounds} from 'ng2-img-cropper';
   templateUrl: './coffee-edit.component.html',
   styleUrls: ['./coffee-edit.component.css']
 })
-export class CoffeeEditComponent implements OnInit {
+export class CoffeeEditComponent implements OnInit, OnDestroy {
 
   // http://raydaq.com/articles/resize-images-angular2
   // Image cropping
@@ -34,7 +34,7 @@ export class CoffeeEditComponent implements OnInit {
   // Coffee
   coffeeForm: FormGroup;
   private coffeeId: string = "";
-  private subscription: Subscription;
+  private $subscription: Subscription;
   private coffee: Coffee;
 
   // other
@@ -71,7 +71,7 @@ export class CoffeeEditComponent implements OnInit {
 
   ngOnInit() {
     // Load coffee from firebase
-    this.subscription = this.route.params.subscribe(
+    this.$subscription = this.route.params.subscribe(
       (params: any) => {
         if (params.hasOwnProperty('id')) {
           this.isNew = false;
@@ -225,6 +225,10 @@ export class CoffeeEditComponent implements OnInit {
         // Uh-oh, an error occurred!
         console.log("error deleting the image");
     });;
+  }
+
+  ngOnDestroy() {
+    this.$subscription.unsubscribe();
   }
 
 }

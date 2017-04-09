@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { coffeesData } from './coffeesData';
 import { cartData } from '../cart/cartData';
 import { CoffeeService } from './coffee.service';
-import { Observable } from "rxjs/Rx";
+import { Observable, Subscription } from 'rxjs/Rx';
 import { Coffee } from './coffee';
 import { Router } from '@angular/router';
 // import { CategoryService } from './category/category.service';
@@ -16,6 +16,7 @@ export class CoffeesComponent {
 
     coffees: Coffee[];
     filterArg: Category;
+    $coffee: Subscription;
 
     onFilter(filter) {
         this.filterArg = filter;
@@ -25,13 +26,20 @@ export class CoffeesComponent {
     
     constructor(private coffeeService: CoffeeService,
                 private router: Router) {
-      console.log('calling');
-      this.coffeeService.loadAllCoffees().subscribe(
+      this.$coffee = this.coffeeService.loadAllCoffees().subscribe(
         coffees => this.coffees = coffees
       );
     }
 
+    onNgInit() {
+      
+    }
+
     newCoffee() {
       this.router.navigate(['/coffee/new']);
+    }
+
+    onNgDestroy() {
+      this.$coffee.unsubscribe();
     }
 }

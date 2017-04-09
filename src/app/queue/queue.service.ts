@@ -8,7 +8,6 @@ import {Observable, Subject} from 'rxjs/Rx';
 export class QueueService {
 
   queues: Queue[] = [];
-
   sdkDb: any;
 
   constructor(private http: Http, @Inject(FirebaseRef) fb, private af: AngularFire) {
