@@ -1,8 +1,9 @@
-import { Component, Output, EventEmitter, OnInit} from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, OnDestroy} from '@angular/core';
 import { categoriesData } from './categoriesData';
 import { Category } from './category';
 import { CategoryService } from './category.service';
 import { element } from 'protractor/globals';
+import { Subscription } from 'rxjs/Rx';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { element } from 'protractor/globals';
        
     `]
 })
-export class CategoryComponent implements OnInit {
+export class CategoryComponent implements OnInit, OnDestroy {
 
     activeStatus = {};
     allStatus = true;
@@ -20,6 +21,7 @@ export class CategoryComponent implements OnInit {
     types: any[];
     typesOuput: any[] = []; 
     category: Category = new Category(null, []);
+    $category: Subscription;
 
     @Output("filter")
     filterOutput = new EventEmitter();
@@ -34,24 +36,25 @@ export class CategoryComponent implements OnInit {
             this.categories = categories;
         });   
 
-        this.typesOuput = [];
-        this.categoryService.loadTypes().subscribe(types => {
+
+        this.$category = this.categoryService.loadTypes().subscribe(types => {
             this.types = types;
+            
+            this.types.forEach(type => {
+                this.typesOuput.push(type.name);
+            });
         });
     
+        this.category.types = this.typesOuput;
     }
+    
 
     private emitCategory() {
         this.filterOutput.emit(this.category);
     }
 
-    boxChanges($event, boxName) {
 
-        // Load all types
-        this.typesOuput = [];
-        this.types.forEach(type => {
-            this.typesOuput.push(type.name);
-        });
+    boxChanges($event, boxName) {
 
         // Filter types
         if ($event) {
@@ -87,4 +90,7 @@ export class CategoryComponent implements OnInit {
         this.emitCategory();
     }
    
+    ngOnDestroy() {
+        this.$category.unsubscribe();
+    }
 }
