@@ -1,6 +1,6 @@
 
 
-<div class="container">
+<!--<div class="container">
 <div class="col-md-5">
     <div class="form-area">  
         <form [formGroup]="coffeeForm" (ngSubmit)="onSubmit()">
@@ -45,5 +45,57 @@
         </form>
     </div>
 </div>
-</div>
+</div>-->
+<div class="col-md-5">
+<div _ngcontent-c3="" class="product-title" id="product-boarder">
+  <div _ngcontent-c3="" class="img-middle" align="middle">
+      <img *ngIf="!uploaded" _ngcontent-c3="" align="middle" alt="Simple Living Seneca Reclaimed Double 'X' Design Cocktail Table" class="img-responsive product-img" data-reactid="1592" src="https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/images%2F-KgsGInhDKPxR-COlCGB1?alt=media&amp;token=9c37b0f9-104b-40e3-86e7-e3162c68c91b">  
+      <img [src]="data1.image" *ngIf="data1.image && uploaded"
+      [width]="cropperSettings1.croppedWidth" 
+      [height]="cropperSettings1.croppedHeight">
+  </div>
 
+  <div _ngcontent-c3="" class="product-info">
+      <div _ngcontent-c3="" style="font-size: 11px;">(Hot)</div>
+      <div _ngcontent-c3="" class="col-md-6 pull-left" style="padding: 0px">
+          <div _ngcontent-c3="" class="product-title pull-left">Americano </div>    
+      </div>
+      <div _ngcontent-c3="" class="col-md-6 pull-right" style="padding: 0px; text-align: right; margin-top: 5px; margin-bottom: 2px">
+          
+          <div _ngcontent-c3="" class="col-md-4" style="padding: 0; padding-top: 2px">
+              <a _ngcontent-c3="" class="btn" style="padding: 0">
+                  <i _ngcontent-c3="" class="fa fa-minus-square fa-2x"></i>
+              </a>
+          </div>
+          <div _ngcontent-c3="" class="col-md-4" style="padding: 0">
+              <input _ngcontent-c3="" class="form-control input-number" min="1" name="quant[1]" style="text-align: center;" type="text">
+          </div>
+          <div _ngcontent-c3="" class="col-md-4" style="padding: 0; padding-top: 2px; padding-right: 1px">
+              <a _ngcontent-c3="" class="btn" style="padding: 0">
+                  <i _ngcontent-c3="" class="fa fa-plus-square fa-2x"></i>
+              </a>
+          </div>
+      </div>
+
+      <div _ngcontent-c3="" class="product-comment" style="padding: 0px">
+          <textarea _ngcontent-c3="" class="form-control ng-untouched ng-pristine ng-valid" placeholder="please leave a comment here..." style="min-width: 100%" ng-reflect-model=""></textarea>
+      </div>
+      <div _ngcontent-c3="" class="product-price-wrapper">
+          <div _ngcontent-c3="" class="col-md-6" style="padding: 0px;">
+              <div _ngcontent-c3="" class="product-price standard">THB55.00</div>
+          </div>
+          <div _ngcontent-c3="" class="col-md-6" style="padding: 0px; text-align: right">
+              <button _ngcontent-c3="" class="btn btn-success" type="button">
+                  <i _ngcontent-c3="" class="fa fa-coffee" style="font-weight: bold;"> Add</i>
+              </button>
+          </div>
+      </div>
+
+  </div>
+  </div>
+</div>
+<div class="col-md-7">
+    <span>
+      <img-cropper [image]="data1" [settings]="cropperSettings1" (onCrop)="cropped($event)"></img-cropper>
+    </span>
+</div>

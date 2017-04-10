@@ -23,6 +23,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   croppedHeight:number;
   imageUrl: string = "";
   @ViewChild('cropper', undefined) cropper:ImageCropperComponent;
+  uploaded = false;
 
   // FirebaseApp
   private sdkDb: any;
@@ -52,11 +53,11 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
       // Initialize image cropping
       this.name = 'Angular2'
       this.cropperSettings1 = new CropperSettings();
-      this.cropperSettings1.width = 449;
-      this.cropperSettings1.height = 372;
+      this.cropperSettings1.width = 400;
+      this.cropperSettings1.height = 333;
 
-      this.cropperSettings1.canvasWidth = 449;
-      this.cropperSettings1.canvasHeight = 372;
+      this.cropperSettings1.canvasWidth = 400;
+      this.cropperSettings1.canvasHeight = 333;
 
       this.cropperSettings1.croppedWidth = 240;
       this.cropperSettings1.croppedHeight = 200;
@@ -110,6 +111,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   cropped(bounds:Bounds) {
     this.croppedHeight =bounds.bottom-bounds.top;
     this.croppedWidth = bounds.right-bounds.left;
+    this.uploaded = true;
   }
 
   fileChangeListener($event) {
