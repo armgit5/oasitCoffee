@@ -114,15 +114,20 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
 
     let coffeeName = '';
     let price = null;
+    let category = '';
+    let type = '';
 
     if (!this.isNew) {
       coffeeName = this.coffee.name;
       price = this.coffee.price;
+  
     }
 
     this.coffeeForm = this.formBuilder.group({
       name: [coffeeName, Validators.required],
-      price: [price, Validators.required]
+      price: [price, Validators.required],
+      category: [category, Validators.required],
+      type: [type, Validators.required]
     });
     
   }
