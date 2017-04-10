@@ -57,9 +57,9 @@
       [height]="cropperSettings1.croppedHeight">
   </div>
 
-  <div class="product-info">
+  <div class="product-info" style="margin-top:5px;">
       
-      <div class="row" style="padding:0px">
+      <div class="row" style="padding:0px;margin-bottom:3px">
         <div class="col-md-4">Category</div>
         <div class="col-md-8" style="padding:0px">
           <select class="form-control" id="category" formControlName="category">
@@ -76,17 +76,40 @@
         </div>      
       </div>
       
-      <div class="col-md-8 pull-left" style="padding: 0px">
-          <div class="product-title pull-left form-group" style="margin:0px">
-            <input class="form-control ng-touched ng-dirty ng-invalid" 
-              formControlName="name" 
-              id="name" 
-              placeholder="Name..." 
-              type="text"
-              style="padding-left:5px"> 
-          </div>    
+      <div class="row" style="padding:0px;margin-bottom:3px">
+        <div class="col-md-4">Name</div>
+        <div class="col-md-8" style="padding:0px">
+            <div class="product-title form-group" style="margin:0px">
+              <input class="form-control ng-touched ng-dirty ng-invalid" 
+                formControlName="name" 
+                id="name" 
+                placeholder="Name..." 
+                type="text"
+                style="padding-left:5px"> 
+            </div>    
+        </div>
       </div>
-      <div class="col-md-4 pull-right" style="padding: 0px; text-align: right; margin-top: 0px; margin-bottom: 2px" disabled="">
+
+      <div class="row" style="padding:0px;margin-bottom:3px">
+        <div class="col-md-4">Price</div>
+        <div class="col-md-8" style="padding:0px">
+            <div class="product-title form-group" style="margin:0px">
+              <input class="form-control ng-touched ng-dirty ng-invalid" 
+                formControlName="price" 
+                id="price" 
+                placeholder="Price..." 
+                type="text"
+                style="padding-left:5px"> 
+            </div>    
+        </div>
+      </div>
+
+      <div class="row">
+            <button class="btn btn-success" type="submit">
+                <i class="fa fa-coffee" style="font-weight: bold;" > Upload</i>
+            </button>
+      </div>
+      <!--<div class="col-md-4 pull-right" style="padding: 0px; text-align: right; margin-top: 0px; margin-bottom: 2px" disabled="">
           
           <div class="col-md-4" style="padding: 0; padding-top: 2px; padding-right:5px">
               <a class="btn" style="padding:0px;color:#444;">
@@ -107,12 +130,12 @@
                   <i class="fa fa-plus-square fa-2x"></i>
               </a>
           </div>
-      </div>
+      </div>-->
 
-      <div class="product-comment" style="padding: 0px">
+      <!--<div class="product-comment" style="padding: 0px">
           <textarea class="form-control ng-untouched ng-pristine ng-valid" disabled="" placeholder="please leave a comment here..." style="min-width: 100%"></textarea>
-      </div>
-      <div class="product-price-wrapper" style="margin-top:2px">
+      </div>-->
+      <!--<div class="product-price-wrapper" style="margin-top:2px">
           <div class="col-md-8" style="padding: 0px">
             <div class="col-md-2" style="margin-top:5px;padding:0px">THB</div>
             <div class="col-md-10" style="padding:0px">
@@ -131,7 +154,7 @@
                   <i class="fa fa-coffee" style="font-weight: bold;" > Upload</i>
               </button>
           </div>
-      </div>
+      </div>-->
 
   </div>
 
