@@ -68,6 +68,10 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
 
       this.firebaseApp = firebaseApp;
       this.sdkDb = fb.database();
+
+      // for testing
+      // const storageRef = firebaseApp.storage().ref().child('images/-KgsGiSv3bOdKv2Oc4221');
+      // storageRef.getDownloadURL().then(url => console.log(url));
   } 
 
   ngOnInit() {
@@ -173,20 +177,9 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
 
     // add new image to storage
     let image = inputImage.split("base64,");
-    this.firebaseApp.storage().ref().child(this.storageFolderName + newImageKey)
-        .putString(image[1], 'base64').then(snapshot => {
-        
-        // Progress
-        let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
-        switch (snapshot.state) {
-            case firebase.storage.TaskState.PAUSED: // or 'paused'
-            console.log('Upload is paused');
-            break;
-            case firebase.storage.TaskState.RUNNING: // or 'running'
-            console.log('Upload is running');
-            break;
-        }
+    console.log(coffeeId, image, newImageKey, oldImageKey, this.storageFolderName);
+    let storageRef = this.firebaseApp.storage().ref().child(this.storageFolderName + newImageKey);
+    storageRef.putString(image[1], 'base64').then(snapshot => {
 
         // get imagedownload url
         let downloadURL = snapshot.downloadURL;
@@ -198,8 +191,6 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
           this.deteleImageInStorage(oldImageKey);
         } 
         this.updateImageKeyAndUrl(coffeeId, newImageKey, downloadURL);
-        
-        
 
     }).catch(error => {
         // Handle unsuccessful uploads
@@ -211,11 +202,18 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
      this.af.database.object(`coffees/${coffeeId}`).update({
         imageKey: newImageKey,
         url: downloadURL
+      }).catch(error => {
+          // Handle unsuccessful uploads
+          console.log("error updating img key and url: " + error);
       });
   }
 
   private updateNameAndOthers(coffeeId) {
-     this.af.database.object(`coffees/${coffeeId}`).update(this.coffeeForm.value);
+     this.af.database.object(`coffees/${coffeeId}`).update(this.coffeeForm.value)
+        .catch(error => {
+          // Handle unsuccessful uploads
+          console.log("error update name and others: " + error);
+        });
   }
 
   private deteleImageInStorage(imageKey) {
@@ -226,7 +224,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
       }).catch(function(error) {
         // Uh-oh, an error occurred!
         console.log("error deleting the image");
-    });;
+    });
   }
 
   ngOnDestroy() {
