@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, Inject, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { Coffee } from '../coffees/coffee';
@@ -24,6 +24,9 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   imageUrl: string = "";
   @ViewChild('cropper', undefined) cropper:ImageCropperComponent;
   uploaded = false;
+
+  @Output("hideModal")
+  hideOutput = new EventEmitter();
 
   // FirebaseApp
   private sdkDb: any;
@@ -62,8 +65,6 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
       this.cropperSettings1.croppedWidth = 240;
       this.cropperSettings1.croppedHeight = 200;
 
-      
-
       this.data1 = {};
 
       this.firebaseApp = firebaseApp;
@@ -97,8 +98,8 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
 
   private initForm() {
 
-    let coffeeName = 'Arm';
-    let price = 1234;
+    let coffeeName = '';
+    let price = null;
 
     if (!this.isNew) {
       coffeeName = this.coffee.name;
@@ -134,18 +135,23 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   }
 
   createCoffee() {
-
-    // this.sdkDb.ref("coffees");
     console.log(this.coffeeForm.value);
-    this.sdkDb.ref().child("coffees")
-    .push(this.coffeeForm.value).then(item => {
-            let coffeeId = item.key;  
-            let newImageKey = this.addOneToImageKey(coffeeId);
-            this.addImageToStorage(coffeeId, this.data1.image, newImageKey, null);
-          });
+
+    if (this.isNew) {
+      this.sdkDb.ref().child("coffees")
+        .push(this.coffeeForm.value).then(item => {
+                let coffeeId = item.key;  
+                let newImageKey = this.addOneToImageKey(coffeeId);
+                this.addImageToStorage(coffeeId, this.data1.image, newImageKey, null);
+              });
+    } else {
+      this.updateCoffee();
+    }
+    
+    
   }
 
-  updateCoffee() {
+  private updateCoffee() {
     console.log('edit');
     this.updateNameAndOthers(this.coffee.$key);
     if (this.data1.image != undefined) {
@@ -162,6 +168,11 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
       this.addImageToStorage($key, inputImage, newImageKey, oldImageKey); 
     });
 
+  }
+
+  private clearDataAndReturn() {
+    this.data1 = {};
+    this.hideOutput.emit();
   }
 
   private addOneToImageKey(oldImageKey): string {  
@@ -206,6 +217,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
           // Handle unsuccessful uploads
           console.log("error updating img key and url: " + error);
       });
+      this.clearDataAndReturn();
   }
 
   private updateNameAndOthers(coffeeId) {

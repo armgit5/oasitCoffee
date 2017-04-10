@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { coffeesData } from './coffeesData';
 import { cartData } from '../cart/cartData';
 import { CoffeeService } from './coffee.service';
@@ -17,6 +17,7 @@ export class CoffeesComponent {
     coffees: Coffee[];
     filterArg: Category;
     $coffee: Subscription;
+    @ViewChild('staticModal') button; 
 
     onFilter(filter) {
         this.filterArg = filter;
@@ -41,5 +42,13 @@ export class CoffeesComponent {
 
     onNgDestroy() {
       this.$coffee.unsubscribe();
+    }
+
+    hide() {
+      this.button.hide();
+    }
+
+    hideModal() {
+      this.hide();
     }
 }

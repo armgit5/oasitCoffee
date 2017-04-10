@@ -55,12 +55,12 @@
     <div class="modal-content" style="width:750px;height:450px;margin:0px;margin-left:-15%">
       <div class="modal-header">
         <h4 class="modal-title pull-left">ADD NEW COFFEE</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hide()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <app-coffee-edit></app-coffee-edit>
+        <app-coffee-edit (hideModal)="hideModal()"></app-coffee-edit>
       </div>
     </div>
   </div>
