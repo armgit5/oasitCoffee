@@ -21,8 +21,7 @@ export class CoffeesComponent {
 
     onFilter(filter) {
         this.filterArg = filter;
-        console.log("filter arg ", this.filterArg);
-
+        // console.log("filter arg ", this.filterArg);
     }
     
     constructor(private coffeeService: CoffeeService,

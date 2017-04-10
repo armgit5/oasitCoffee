@@ -58,9 +58,26 @@
   </div>
 
   <div class="product-info">
-      <div style="font-size: 11px;">(Hot)</div>
+      
+      <div class="row" style="padding:0px">
+        <div class="col-md-4">Category</div>
+        <div class="col-md-8" style="padding:0px">
+          <select>
+            <option *ngFor="let category of categories" value="">{{category.name}}</option>
+          </select>
+        </div>      
+      </div>
+      <div class="row" style="padding:0px;margin-bottom:3px">
+        <div class="col-md-4">Type</div>
+        <div class="col-md-8" style="padding:0px">
+          <select>
+            <option *ngFor="let type of types" value="">{{type.name}}</option>
+          </select>
+        </div>      
+      </div>
+      
       <div class="col-md-8 pull-left" style="padding: 0px">
-          <div class="product-title pull-left form-group">
+          <div class="product-title pull-left form-group" style="margin:0px">
             <input class="form-control ng-touched ng-dirty ng-invalid" 
               formControlName="name" 
               id="name" 

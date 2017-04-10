@@ -6,6 +6,7 @@ import { AngularFire, FirebaseApp, FirebaseRef } from 'angularfire2';
 import { CoffeeService } from '../coffees/coffee.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {ImageCropperComponent, CropperSettings, Bounds} from 'ng2-img-cropper';
+import { CategoryService } from '../coffees/category/category.service';
 
 @Component({
   selector: 'app-coffee-edit',
@@ -40,6 +41,10 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   private coffeeId: string = "";
   private $subscription: Subscription;
   private coffee: Coffee;
+  categories: any[];
+  private $categories: Subscription;
+  types: any[];
+  private $types: Subscription;
 
   // other
   private isNew = true;
@@ -50,6 +55,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
               private coffeeService: CoffeeService,
               private formBuilder: FormBuilder,
               private changeDetectorRef: ChangeDetectorRef,
+              private categoryService: CategoryService,
               @Inject(FirebaseApp) firebaseApp: any,
               @Inject(FirebaseRef) fb) { 
 
@@ -69,6 +75,14 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
 
       this.firebaseApp = firebaseApp;
       this.sdkDb = fb.database();
+
+      this.$categories = this.categoryService.loadCategories().subscribe(categories => {
+            this.categories = categories;
+      });   
+
+      this.$types = this.categoryService.loadTypes().subscribe(types => {
+        this.types = types;
+      });
 
       // for testing
       // const storageRef = firebaseApp.storage().ref().child('images/-KgsGiSv3bOdKv2Oc4221');
@@ -241,6 +255,8 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.$subscription.unsubscribe();
+    this.$categories.unsubscribe();
+    this.$types.unsubscribe();
   }
 
 }
