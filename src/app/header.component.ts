@@ -7,22 +7,8 @@ import { Observable } from "rxjs/Observable";
     selector: 'my-header',
     templateUrl: './header.component.html',
     styles: [`
-        header {
-        }
-    
-        ul {
-          text-align: center;  
-        }
         
-        li {
-            float: none;
-            display: inline-block;
-        }
         
-        .router-link-active {
-            background-color: #337ab7;
-            color: white;
-        }
     `]
 })
 export class HeaderComponent implements OnInit {

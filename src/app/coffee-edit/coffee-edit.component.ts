@@ -192,6 +192,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   private clearDataAndReturn() {
     this.data1 = {};
     this.hideOutput.emit();
+    this.imageUrl 
   }
 
   private addOneToImageKey(oldImageKey): string {  

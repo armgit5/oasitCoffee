@@ -1,9 +1,9 @@
 
 .container.main {
-    padding-top: 60px;
+    padding-top: 100px;
 }
 
-.thumbnail{        
+/*.thumbnail{        
     width: 250px; 
     height: 300px;
     overflow: auto;
@@ -16,4 +16,4 @@ img {
 
 body {
     color: white;
-}
+}*/
