@@ -67,12 +67,12 @@ export class CoffeeComponent implements OnInit {
 
     over() {
       this.mouseOver = true;
-      console.log('over');
+      // console.log('over');
     }
 
     out() {
       this.mouseOver = false;
-      console.log('out');
+      // console.log('out');
     }
 
 

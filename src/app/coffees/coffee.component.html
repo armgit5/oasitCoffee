@@ -63,7 +63,7 @@
 <div [ngClass]="!mouseOver ? 'product-title' : 'product-title custom'" 
         id="product-boarder" 
         (mouseover)='over()'
-        (mouseout)='out()'>
+        (mouseleave)='out()'>
 <div class="img-middle">
     <img alt="Simple Living Seneca Reclaimed Double 'X' Design Cocktail Table" 
     src= {{coffee?.url}} 
@@ -110,10 +110,11 @@
             <div class="product-price standard">{{ coffee?.price | currency:'THB':true}}</div>
         </div>
         <div class="col-md-6" 
-        style="padding: 0px; text-align: right">
+            style="padding: 0px; text-align: right">
             <button type="button" 
-                class="btn btn-success" 
-                (click)="add()">
+                class="btn btn-default" 
+                (click)="add()"
+                *ngIf="mouseOver">
                 <i class="fa fa-coffee" style="font-weight: bold;"> Add</i>
             </button>
             <!--<button class="btn btn-danger pull-right" type="button" (click)="deleteCoffee()">
