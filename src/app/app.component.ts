@@ -12,7 +12,6 @@ import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'a
                 <router-outlet></router-outlet>
               </div>
              
-             <button class="btn btn-success">Success</button>
             `,
   styleUrls: ['./app.component.css']
 
