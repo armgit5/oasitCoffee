@@ -1,7 +1,15 @@
-<div style="padding:5px"><a [class.active]="allStatus" (click)=filterAll()>ALL </a></div>
+<div style="padding:5px">
+  <a [class.active]="allStatus" 
+  (click)=filterAll()
+  style="color:black">ALL
+  </a>
+</div>
+
 <div *ngFor="let category of categories"
  style="padding:5px">
- <a  [class.active]="activeStatus[category.$key]"  (click)=filter(category)>{{category.name | uppercase}}</a>
+ <a [class.active]="activeStatus[category.$key]" 
+ (click)=filter(category)
+ style="color:black">{{category.name | uppercase}}</a>
 </div>
 
 <h5 style="color: #999;">TYPES</h5>

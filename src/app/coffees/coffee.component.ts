@@ -15,7 +15,7 @@ export class CoffeeComponent implements OnInit {
 
     @Input()
     coffee: Coffee;
-
+    mouseOver: boolean = false;
     added: boolean = false;
 
     coffeeCount = 1;
@@ -64,4 +64,16 @@ export class CoffeeComponent implements OnInit {
       console.log("delete coffee " + this.coffee.$key);
       this.coffeeService.deleteCoffee(this.coffee.$key);
     }
+
+    over() {
+      this.mouseOver = true;
+      console.log('over');
+    }
+
+    out() {
+      this.mouseOver = false;
+      console.log('out');
+    }
+
+
 }
