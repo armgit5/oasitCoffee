@@ -10,7 +10,12 @@ import { Type } from './type';
     selector: 'category-selector',
     templateUrl: './category.component.html',
     styles: [`
-       
+       .active {
+            font-weight: bold;
+            font-size: 16px;
+            text-decoration: underline;
+            // background-color: yellow;
+       }
     `]
 })
 export class CategoryComponent implements OnInit, OnDestroy {
