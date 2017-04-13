@@ -3,6 +3,7 @@ import { categoriesData } from './categoriesData';
 import { Category } from './category';
 import { CategoryService } from './category.service';
 import { Subscription } from 'rxjs/Rx';
+import { Type } from './type';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
     activeStatus = {};
     allStatus = true;
     categories: Category[];
-    types: any[];
+    types: Type[];
     typesOuput: any[] = []; 
     category: Category = new Category(null, []);
     $category: Subscription;
@@ -34,19 +35,21 @@ export class CategoryComponent implements OnInit, OnDestroy {
         this.categoryService.loadCategories().subscribe(categories => {
             this.categories = categories;
         });   
-
-
         this.$category = this.categoryService.loadTypes().subscribe(types => {
             this.types = types;
-            
-            this.types.forEach(type => {
-                this.typesOuput.push(type.name);
-            });
+            this.loadAllTypes();
         });
     
-        this.category.types = this.typesOuput;
     }
     
+    private loadAllTypes() {
+        this.typesOuput = [];
+        this.types.forEach(type => {
+            this.typesOuput.push(type.name);
+            type.status = true;
+        });
+        this.category.types = this.typesOuput;
+    }
 
     private emitCategory() {
         this.filterOutput.emit(this.category);
@@ -76,6 +79,12 @@ export class CategoryComponent implements OnInit, OnDestroy {
                 this.activeStatus[element.$key] = false;
             } 
         });
+
+        // this.typesOuput = [];
+        this.loadAllTypes();
+        
+        this.types.forEach(type => console.log(type.status));
+
         this.category.$key = category.$key;
         this.emitCategory();
     }
@@ -85,6 +94,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
         this.categories.forEach(element => {
             this.activeStatus[element.$key] = false;
         });
+        // this.typesOuput = [];
+        this.loadAllTypes();
         this.category.$key = null;
         this.emitCategory();
     }

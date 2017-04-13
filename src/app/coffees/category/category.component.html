@@ -16,7 +16,7 @@
 <div>
       <div class="checkbox" *ngFor="let type of types">
         <label>
-          <input type="checkbox" [checked]="true" 
+          <input type="checkbox" [(ngModel)]="type.status"
               (change)="boxChanges($event.target.checked, type.name)">
           {{ type.name }}
         </label>
