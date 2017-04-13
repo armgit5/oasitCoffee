@@ -48,7 +48,10 @@ export class CategoryComponent implements OnInit, OnDestroy {
         });   
         this.$category = this.categoryService.loadTypes().subscribe(types => {
             this.types = types;
-            this.loadAllTypes();
+            this.types.forEach(type => {
+                this.typesOuput.push(type.name);
+                type.status = true;
+            });
         });
     
     }
