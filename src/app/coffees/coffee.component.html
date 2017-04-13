@@ -61,69 +61,76 @@
     </div>-->
 
 <div [ngClass]="!mouseOver ? 'product-title' : 'product-title custom'" 
-        id="product-boarder" 
-        (mouseover)='over()'
-        (mouseleave)='out()'>
-<div class="img-middle">
-    <img alt="Simple Living Seneca Reclaimed Double 'X' Design Cocktail Table" 
-    src= {{coffee?.url}} 
-    class="img-responsive product-img "
-    align="middle" 
-    style="border-radius: 6px;">
-</div>
-
-<div class="product-info">
-    <div style="font-size: 11px;">({{coffee?.type}})</div>
-    <div class="col-md-6 pull-left" style="padding: 0px">
-        <div class="product-title pull-left">{{coffee?.name}} </div>    
+    id="product-boarder" 
+    (mouseover)='over()'
+    (mouseleave)='out()'>
+    <div class="x-container" *ngIf="mouseOver">
+        <i class="fa fa-times-rectangle-o" aria-hidden="true"></i>
     </div>
-    <div class="col-md-6 pull-right"
-        style="padding: 0px; text-align: right; margin-top: 5px; margin-bottom: 2px">
-         
-        <div class="col-md-3" style="padding: 0; padding-top: 2px">
-            <a class="btn" (click)="minus()" style="padding: 0">
-                <i class="fa fa-minus-square fa-2x"></i>
-            </a>
-        </div>
-        <div class="col-md-6" style="padding: 0">
-            <input type="text" name="quant[1]" 
-                class="form-control input-number" 
-                value={{coffeeCount}} 
-                min="1"
-                style="text-align: center;">
-        </div>
-        <div class="col-md-3" style="padding: 0; padding-top: 2px; padding-right: 1px">
-            <a class="btn" (click)="plus()" style="padding: 0">
-                <i class="fa fa-plus-square fa-2x"></i>
-            </a>
-        </div>
+    <div class="pencil-container" *ngIf="mouseOver">
+        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+    </div>
+    <div class="img-middle">
+        <img alt="Simple Living Seneca Reclaimed Double 'X' Design Cocktail Table" 
+        src= {{coffee?.url}} 
+        class="img-responsive product-img "
+        align="middle" 
+        style="border-radius: 6px;">
     </div>
 
-    <div class="product-comment" style="padding: 0px">
-        <textarea class="form-control" 
-            style="min-width: 100%" 
-            [(ngModel)]='comment'
-            placeholder="please leave a comment here..."></textarea>
-    </div>
-    <div class="product-price-wrapper">
-        <div class="col-md-6" style="padding: 0px;">
-            <div class="product-price standard">{{ coffee?.price | currency:'THB':true}}</div>
+    <div class="product-info">
+        
+        <div style="font-size: 11px;">({{coffee?.type}})</div>
+        <div class="col-md-6 pull-left" style="padding: 0px">
+            <div class="product-title pull-left">{{coffee?.name}} </div>    
         </div>
-        <div class="col-md-6" 
-            style="padding: 0px; text-align: right">
-            <button type="button" 
-                class="btn btn-default" 
-                (click)="add()"
-                *ngIf="mouseOver">
-                <i class="fa fa-coffee" style="font-weight: bold;"> Add</i>
-            </button>
-            <!--<button class="btn btn-danger pull-right" type="button" (click)="deleteCoffee()">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </button>-->
+        <div class="col-md-6 pull-right"
+            style="padding: 0px; text-align: right; margin-top: 5px; margin-bottom: 2px">
+            
+            <div class="col-md-3" style="padding: 0; padding-top: 2px">
+                <a class="btn" (click)="minus()" style="padding: 0">
+                    <i class="fa fa-minus-square fa-2x"></i>
+                </a>
+            </div>
+            <div class="col-md-6" style="padding: 0">
+                <input type="text" name="quant[1]" 
+                    class="form-control input-number" 
+                    value={{coffeeCount}} 
+                    min="1"
+                    style="text-align: center;">
+            </div>
+            <div class="col-md-3" style="padding: 0; padding-top: 2px; padding-right: 1px">
+                <a class="btn" (click)="plus()" style="padding: 0">
+                    <i class="fa fa-plus-square fa-2x"></i>
+                </a>
+            </div>
         </div>
-    </div>
 
-</div>
+        <div class="product-comment" style="padding: 0px">
+            <textarea class="form-control" 
+                style="min-width: 100%" 
+                [(ngModel)]='comment'
+                placeholder="please leave a comment here..."></textarea>
+        </div>
+        <div class="product-price-wrapper">
+            <div class="col-md-6" style="padding: 0px;">
+                <div class="product-price standard">{{ coffee?.price | currency:'THB':true}}</div>
+            </div>
+            <div class="col-md-6" 
+                style="padding: 0px; text-align: right">
+                <button type="button" 
+                    class="btn btn-default" 
+                    (click)="add()"
+                    *ngIf="mouseOver">
+                    <i class="fa fa-shopping-cart" style="font-weight: bold;"> Add</i>
+                </button>
+                <!--<button class="btn btn-default pull-right" type="button" (click)="deleteCoffee()">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>-->
+            </div>
+        </div>
+
+    </div>
 </div>
 
 
