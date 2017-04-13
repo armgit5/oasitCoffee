@@ -104,11 +104,7 @@
         </div>
       </div>
 
-      <div class="row">
-            <button class="btn btn-success" type="submit">
-                <i class="fa fa-coffee" style="font-weight: bold;" > Upload</i>
-            </button>
-      </div>
+      
       <!--<div class="col-md-4 pull-right" style="padding: 0px; text-align: right; margin-top: 0px; margin-bottom: 2px" disabled="">
           
           <div class="col-md-4" style="padding: 0; padding-top: 2px; padding-right:5px">
@@ -165,5 +161,10 @@
     <span>
       <img-cropper [image]="data1" [settings]="cropperSettings1" (onCrop)="cropped($event)"></img-cropper>
     </span>
+</div>
+<div class="row" style="padding: 5px;padding-right: 20px">
+    <button class="btn btn-default pull-right" type="submit">
+        <i class="fa fa-coffee" style="font-weight: bold;" > Upload</i>
+    </button>
 </div>
 </form>

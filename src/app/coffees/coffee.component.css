@@ -4,6 +4,7 @@
     overflow: hidden;
     padding-bottom: 100%;
     position: absolute;
+    z-index: 0;
 }
 
 .img-middle .img-responsive {
@@ -66,18 +67,18 @@
     padding-bottom: 23px;
 }
 
-.x-container {
-    cursor: pointer;
+.product-info .x-container {
+    /*cursor: pointer;*/
     padding-top: 10px;
     padding-right: 20px;
     position: absolute;
     right: 0;
     top: 0;
-    z-index: 2;
+    /*z-index: 2;*/
     color: red;
 }
 
-.pencil-container {
+.product-info .pencil-container {
     cursor: pointer;
     padding-top: 25px;
     padding-right: 20px;

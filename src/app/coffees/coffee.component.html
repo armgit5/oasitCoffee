@@ -60,16 +60,14 @@
        
     </div>-->
 
+    
+
 <div [ngClass]="!mouseOver ? 'product-title' : 'product-title custom'" 
     id="product-boarder" 
     (mouseover)='over()'
     (mouseleave)='out()'>
-    <div class="x-container" *ngIf="mouseOver">
-        <i class="fa fa-times-rectangle-o" aria-hidden="true"></i>
-    </div>
-    <div class="pencil-container" *ngIf="mouseOver">
-        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-    </div>
+    
+    
     <div class="img-middle">
         <img alt="Simple Living Seneca Reclaimed Double 'X' Design Cocktail Table" 
         src= {{coffee?.url}} 
@@ -79,6 +77,14 @@
     </div>
 
     <div class="product-info">
+        <div *ngIf="mouseOver">
+        <div class="x-container" (click)="deleteCoffee()">
+            <i class="fa fa-times-rectangle-o" aria-hidden="true"></i>
+        </div>
+        <div class="pencil-container"  (click)="deleteCoffee()">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+        </div>
+        </div>
         
         <div style="font-size: 11px;">({{coffee?.type}})</div>
         <div class="col-md-6 pull-left" style="padding: 0px">
