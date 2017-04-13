@@ -12,9 +12,15 @@ import { Type } from './type';
     styles: [`
        .active {
             font-weight: bold;
-            font-size: 16px;
             text-decoration: underline;
-            // background-color: yellow;
+       }
+       a {
+           font-family: sanrif;
+           font-size: 16px;
+       }
+       span {
+           font-family: sanrif;
+           font-size: 16px;
        }
     `]
 })
