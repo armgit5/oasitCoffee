@@ -8,7 +8,7 @@ import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'a
   selector: 'app-root',
   template: `
               <div class="container main">
-                <my-header [count]="cartItems.length"></my-header>
+                <my-header [count]="cartItems.length" #myHeader></my-header>
                 <router-outlet></router-outlet>
               </div>
              

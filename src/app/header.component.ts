@@ -47,7 +47,7 @@ export class HeaderComponent implements OnInit {
         }  
     }
 
-    out() {
+    menuOut() {
         document.getElementById("mySidenav").style.width = "0";
         document.getElementById("mySidenav").style.paddingLeft = "0%";
         document.getElementById("mySidenav").style.paddingRight = "0%";

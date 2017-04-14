@@ -54,4 +54,5 @@ export class CoffeesComponent {
     hideModal() {
       this.hide();
     }
+   
 }
