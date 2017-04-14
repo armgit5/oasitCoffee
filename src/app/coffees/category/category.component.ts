@@ -15,12 +15,13 @@ import { Type } from './type';
             text-decoration: underline;
        }
        a {
-           font-family: sanrif;
-           font-size: 16px;
+           font-family: "Helvetica Neue", "Helvetica";
+           font-size: 14px;
+           
        }
        span {
-           font-family: sanrif;
-           font-size: 16px;
+           font-family: "Helvetica Neue", "Helvetica";
+           font-size: 14px;
        }
     `]
 })

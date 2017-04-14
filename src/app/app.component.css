@@ -1,19 +1,10 @@
 
 .container.main {
-    padding-top: 125px;
+    padding-top: 85px;
 }
 
-/*.thumbnail{        
-    width: 250px; 
-    height: 300px;
-    overflow: auto;
+html, body {
+    font-family: "Helvetica Neue", "Helvetica", "Hiragino Kaku Gothic Pro", arial, sans-serif;
+    color: #211922;
+    font-size: 12px;
 }
-
-img {
-    width: 252px;
-    height: 158px;
-}
-
-body {
-    color: white;
-}*/
