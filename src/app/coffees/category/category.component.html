@@ -1,8 +1,8 @@
-
+<div style="border-bottom: thin solid #444;">
 <div style="padding:5px">
   <a [class.active]="allStatus" 
   (click)=filterAll()
-  style="color: #444">All
+  style="color: #444">ALL
   </a>
 </div>
 
@@ -10,18 +10,18 @@
  style="padding:5px">
  <a [class.active]="activeStatus[category.$key]" 
  (click)=filter(category)
- style="color:#444">{{category.name}}</a>
+ style="color:#444">{{category.name | uppercase}}</a>
 </div>
 
-
+</div>
 <!--<h5 style="color: #777;">TYPES</h5>-->
 
-<div>
+<div style="border-bottom: thin solid #444;">
       <div class="checkbox" *ngFor="let type of types">
         <label>
           <input type="checkbox" [(ngModel)]="type.status"
               (change)="boxChanges($event.target.checked, type.name)">
-          <span style="color:#999">{{ type.name }}</span>
+          <span style="font-weight: 200;">{{ type.name | uppercase}}</span>
         </label>
       </div>
 </div>

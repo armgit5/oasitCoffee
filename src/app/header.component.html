@@ -20,7 +20,8 @@
                     <img src="https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/bee1_85V_icon.ico?alt=media&token=b806fa13-ff6e-4277-9a05-9902a6fb67f6">
                     </div>-->
                     <div class="brand">  
-                       <span style="font-size:30px;cursor:pointer;color:white;margin-left:25px;" onclick="openNav()">&#9776;</span>
+                       <span style="font-size:30px;cursor:pointer;color:white;margin-left:25px;" 
+                       (click)="openNav()">&#9776;</span>
                     </div>
                     <div class="brand">  O.A.SIT 
                         <p style="font-size: 12px">SUANPHUENG</p>
@@ -87,7 +88,14 @@
 
 </div> 
 
-<div id="mySidenav" class="sidenav" style="width: 25%; margin-top: 50px;">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+<div id="mySidenav" 
+    class="sidenav" 
+    style="margin-top: 55px; 
+        font-weight: 200; 
+        text-align: left; 
+        
+        padding-top:35px;
+       "
+    (mouseleave)='out()'>
   <category-selector (filter)="onFilter($event)"></category-selector>
 </div>

@@ -5,7 +5,7 @@ import { CoffeeService } from './coffee.service';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { Coffee } from './coffee';
 import { Router } from '@angular/router';
-// import { CategoryService } from './category/category.service';
+import { CategoryService } from './category/category.service';
 import { Category } from './category/category';
 
 @Component({
@@ -21,14 +21,18 @@ export class CoffeesComponent {
 
     onFilter(filter) {
         this.filterArg = filter;
-        // console.log("filter arg ", this.filterArg);
     }
     
     constructor(private coffeeService: CoffeeService,
-                private router: Router) {
+                private router: Router,
+                private categoryService: CategoryService) {
       this.$coffee = this.coffeeService.loadAllCoffees().subscribe(
         coffees => this.coffees = coffees
       );
+      this.categoryService.categoryChanged.subscribe(filterArg => {
+        this.filterArg = filterArg;
+        console.log(filterArg);
+      })
     }
 
     onNgInit() {

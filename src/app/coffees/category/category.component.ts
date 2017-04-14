@@ -11,7 +11,6 @@ import { Type } from './type';
     templateUrl: './category.component.html',
     styles: [`
        .active {
-            font-weight: bold;
             text-decoration: underline;
        }
        a {

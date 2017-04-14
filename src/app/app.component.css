@@ -3,8 +3,9 @@
     padding-top: 85px;
 }
 
-html, body {
+html, body, .container.main {
     font-family: "Helvetica Neue", "Helvetica", "Hiragino Kaku Gothic Pro", arial, sans-serif;
     color: #211922;
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: 300;
 }

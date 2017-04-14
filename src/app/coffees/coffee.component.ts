@@ -5,6 +5,7 @@ import { cartData } from '../cart/cartData';
 import { CoffeeService } from './coffee.service';
 import { Observable } from "rxjs/Rx";
 import { Router } from "@angular/router";
+import { CategoryService } from './category/category.service';
 
 @Component({
   selector: 'coffee-component',
@@ -24,7 +25,7 @@ export class CoffeeComponent implements OnInit {
 
     constructor(private coffeeService: CoffeeService,
                 private router: Router) {
-      
+  
     }
 
     ngOnInit() {

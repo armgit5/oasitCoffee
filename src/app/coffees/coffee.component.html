@@ -73,7 +73,7 @@
         src= {{coffee?.url}} 
         class="img-responsive product-img "
         align="middle" 
-        style="border-radius: 6px;">
+        style="border-radius: 8px;">
     </div>
 
     <div class="product-info">
@@ -87,7 +87,7 @@
         </div>
         
         <div style="font-size: 11px;">({{coffee?.type}})</div>
-        <div class="col-md-6 pull-left" style="padding: 0px">
+        <div class="col-md-6 pull-left" style="padding: 0px;font-weight: 200;">
             <div class="product-title pull-left">{{coffee?.name}} </div>    
         </div>
         <div class="col-md-6 pull-right"
@@ -120,7 +120,7 @@
         </div>
         <div class="product-price-wrapper">
             <div class="col-md-6" style="padding: 0px;">
-                <div class="product-price standard">{{ coffee?.price | currency:'THB':true}}</div>
+                <div class="product-price standard" style="font-weight: 400;">{{ coffee?.price | currency:'THB':true}}</div>
             </div>
             <div class="col-md-6" 
                 style="padding: 0px; text-align: right">
@@ -128,7 +128,7 @@
                     class="btn btn-default" 
                     (click)="add()"
                     *ngIf="mouseOver">
-                    <i class="fa fa-shopping-cart" style="font-weight: bold;"> Add</i>
+                    <i class="fa fa-shopping-cart" style="font-weight: bold;font-weight: 500;"> Add</i>
                 </button>
                 <!--<button class="btn btn-default pull-right" type="button" (click)="deleteCoffee()">
                     <span class="glyphicon glyphicon-remove"></span>
