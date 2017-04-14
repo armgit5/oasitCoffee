@@ -61,10 +61,13 @@
 }
 
 #product-boarder {
-    border-bottom: thin solid #444;
+    border: thin solid #999;
+    border-radius: 6px;
     margin-bottom: 5px;
     margin-top: 10px;
     padding-bottom: 23px;
+    padding-left: 2px;
+    padding-right: 2px;
 }
 
 .product-info .x-container {
