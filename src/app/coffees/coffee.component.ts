@@ -22,6 +22,8 @@ export class CoffeeComponent implements OnInit {
     coffeeCount = 1;
     cart = cartData.cart;
     comment:string = "";
+    public alerts: any = [];
+
 
     constructor(private coffeeService: CoffeeService,
                 private router: Router) {
@@ -55,6 +57,11 @@ export class CoffeeComponent implements OnInit {
       this.addCoffeeAlert();
       this.coffeeService.addToCart(this.coffee, this.coffeeCount, this.comment);
       this.coffeeCount = 1;
+      this.alerts.push({
+        type: 'md-local',
+        msg: `${this.coffee.name} is added to cart`,
+        timeout: 2000
+      });
     }
 
     editCoffee() {

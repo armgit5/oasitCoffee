@@ -60,7 +60,7 @@
        
     </div>-->
 
-    
+
 
 <div [ngClass]="!mouseOver ? 'product-title' : 'product-title custom'" 
     id="product-boarder" 
@@ -137,6 +137,13 @@
         </div>
 
     </div>
+      
 </div>
+
+<div *ngFor="let alert of alerts">
+  <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout"><span [innerHtml]="alert.msg"></span></alert>
+</div>
+
+
 
 
