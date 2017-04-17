@@ -7,6 +7,7 @@ import { Coffee } from './coffee';
 import { Router } from '@angular/router';
 import { CategoryService } from './category/category.service';
 import { Category } from './category/category';
+import { CoffeeOutput } from './coffee-output';
 
 @Component({
   selector: 'coffee',
@@ -17,6 +18,10 @@ export class CoffeesComponent {
     coffees: Coffee[];
     filterArg: Category;
     $coffee: Subscription;
+
+    // isNew: boolean = true;
+    // inputId: string = "";
+
     @ViewChild('staticModal') button; 
 
     onFilter(filter) {
@@ -40,7 +45,11 @@ export class CoffeesComponent {
     }
 
     newCoffee() {
-      this.router.navigate(['/coffee/new']);
+      // this.router.navigate(['/coffee/new']);
+      
+      // this.editCoffeeOutput.emit(outputData);
+      this.coffeeService.editCoffee(true, "");
+      this.button.show();
     }
 
     onNgDestroy() {
@@ -53,6 +62,11 @@ export class CoffeesComponent {
 
     hideModal() {
       this.hide();
+    }
+
+    onEdit(coffeeOutput) {
+      console.log('edit');
+      this.button.show();
     }
    
 }

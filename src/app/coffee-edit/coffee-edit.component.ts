@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, Inject, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, Inject, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { Coffee } from '../coffees/coffee';
@@ -26,6 +26,11 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   @ViewChild('cropper', undefined) cropper:ImageCropperComponent;
   uploaded = false;
 
+  @Input() 
+  isNew: boolean;
+  @Input() 
+  inputId: string;  
+
   @Output("hideModal")
   hideOutput = new EventEmitter();
 
@@ -45,9 +50,6 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   private $categories: Subscription;
   types: any[];
   private $types: Subscription;
-
-  // other
-  private isNew = true;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -91,23 +93,42 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // Load coffee from firebase
-    this.$subscription = this.route.params.subscribe(
-      (params: any) => {
-        if (params.hasOwnProperty('id')) {
+    // this.$subscription = this.route.params.subscribe(
+    //   (params: any) => {
+    //     if (params.hasOwnProperty('id')) {
+    //       this.isNew = false;
+    //       this.coffeeService.loadCoffee(params['id']).subscribe(
+    //         coffee => {
+    //           this.coffee = coffee;
+    //           this.imageUrl = coffee.url;
+    //           this.initForm();
+    //         });
+    //     } else {
+    //       this.isNew = true;
+    //       this.initForm();
+    //     }
+    // });
+    this.isNew = true;
+    this.initForm();
+
+    this.$subscription = this.coffeeService.editCoffeeData.subscribe(
+      (data: any) => {
+        console.log(!data.isNew);
+       if (!data.isNew) {
           this.isNew = false;
-          this.coffeeService.loadCoffee(params['id']).subscribe(
+          this.coffeeService.loadCoffee(data.coffeeId).subscribe(
             coffee => {
               this.coffee = coffee;
               this.imageUrl = coffee.url;
               this.initForm();
-            }
-          );
-        } else {
-          this.isNew = true;
-          this.initForm();
-        }
+              // console.log('not new');
+          });
+       } else {
+         this.isNew = true;
+         this.initForm();
+       }
     });
-
+    
   }
 
   private initForm() {
@@ -117,10 +138,10 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
     let category = '';
     let type = '';
 
+    // console.log(this.isNew);
     if (!this.isNew) {
       coffeeName = this.coffee.name;
       price = this.coffee.price;
-  
     }
 
     this.coffeeForm = this.formBuilder.group({

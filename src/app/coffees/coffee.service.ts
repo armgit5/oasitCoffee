@@ -8,6 +8,7 @@ import { Coffee } from './coffee';
 import { Observable } from 'rxjs';
 import { Cart } from '../cart/cart';
 import { Subscription } from 'rxjs/Rx';
+import { CoffeeOutput } from './coffee-output';
 
 @Injectable()
 export class CoffeeService {
@@ -16,6 +17,9 @@ export class CoffeeService {
     cartCoffees: Cart[] = [];
     private coffeeCounts:number = 0;
     coffeeCountsChanged = new EventEmitter<number>();
+
+    outputData = new CoffeeOutput(true, "");
+    editCoffeeData = new EventEmitter<CoffeeOutput>();
 
     // firebase viriables
     sdkDb: any;
@@ -116,4 +120,9 @@ export class CoffeeService {
         this.fetchCounts(0);
     }
    
+    editCoffee(isNew, inputId) {
+        this.outputData.isNew = isNew;
+        this.outputData.coffeeId = inputId;
+        this.editCoffeeData.emit(this.outputData);
+    }
 }
