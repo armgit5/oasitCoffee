@@ -47,16 +47,14 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   private $subscription: Subscription;
   private coffee: Coffee;
   categories: any[];
+  selectedCategory: string;
   private $categories: Subscription;
   types: any[];
   selectedType: string;
   private $types: Subscription;
 
   // Other
-  // name2 = this.types;
  
- 
-
   constructor(private router: Router,
               private route: ActivatedRoute,
               private af: AngularFire,
@@ -130,7 +128,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
               this.coffee = coffee;
               this.imageUrl = coffee.url;
               this.selectedType = coffee.type;
-             
+              this.selectedCategory = coffee.category;
               this.initForm();
           });
        } else {        
@@ -141,24 +139,18 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
     
   }
 
-  changeTower() {
-    console.log("change");
-  }
-
   private initForm() {
     let coffeeName = '';
     let price = null;
     let category = '';
     let type = '';
 
-    if (this.types != undefined) {
-      console.log(this.types[1].name);
-    }
     // console.log(this.isNew);
     if (!this.isNew) {
       coffeeName = this.coffee.name;
       price = this.coffee.price;
       type = this.selectedType;
+      category = this.selectedCategory;
     }
 
     this.coffeeForm = this.formBuilder.group({
@@ -204,7 +196,6 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
     } else {
       this.updateCoffee();
     }
-    
     
   }
 
