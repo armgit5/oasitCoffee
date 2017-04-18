@@ -77,9 +77,10 @@
         <div class="col-md-8" style="padding:0px">
           <select class="form-control" 
             formControlName="type"
-            [(ngModel)]="name2">
+            [(ngModel)]="selectedType">
             <option *ngFor="let type of types" 
-              [ngValue]="type.name">{{type.name}}</option>
+              [ngValue]="type.name"
+              [attr.selected]="type.name == name2 ? true : null">{{type.name}}</option>
           </select>
         </div>      
       </div>

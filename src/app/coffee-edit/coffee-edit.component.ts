@@ -49,10 +49,13 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   categories: any[];
   private $categories: Subscription;
   types: any[];
+  selectedType: string;
   private $types: Subscription;
 
   // Other
-  name2 = this.types;
+  // name2 = this.types;
+ 
+ 
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -87,11 +90,8 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
 
       this.$types = this.categoryService.loadTypes().subscribe(types => {
         this.types = types;
-        console.log(this.types);
       });
-
-      console.log("construc");
-      
+     
       // for testing
       // const storageRef = firebaseApp.storage().ref().child('images/-KgsGiSv3bOdKv2Oc4221');
       // storageRef.getDownloadURL().then(url => console.log(url));
@@ -129,20 +129,20 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
             coffee => {
               this.coffee = coffee;
               this.imageUrl = coffee.url;
-              
-              this.name2 = this.types[1].name;
+              this.selectedType = coffee.type;
              
               this.initForm();
           });
-       } else {
-
-         this.name2 = this.types[1].name;
-        
+       } else {        
          this.isNew = true;
          this.initForm();
        }
     });
     
+  }
+
+  changeTower() {
+    console.log("change");
   }
 
   private initForm() {
@@ -158,13 +158,14 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
     if (!this.isNew) {
       coffeeName = this.coffee.name;
       price = this.coffee.price;
+      type = this.selectedType;
     }
 
     this.coffeeForm = this.formBuilder.group({
       name: [coffeeName, Validators.required],
       price: [price, Validators.required],
       category: [category, Validators.required],
-      type: [type, Validators.required]
+      type: [type]
     });
     
   }
