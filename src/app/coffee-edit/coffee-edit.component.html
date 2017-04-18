@@ -66,7 +66,9 @@
       <div class="row" style="padding:0px;margin-bottom:3px">
         <div class="col-md-4">Category</div>
         <div class="col-md-8" style="padding:0px">
-          <select class="form-control" id="category" formControlName="category">
+          <select class="form-control"
+            formControlName="category"
+            [(ngModel)]="selectedCategory">
             <option *ngFor="let category of categories; let i = index;" 
                     [ngValue]="category.$key">{{category.name}}</option>
           </select>
@@ -168,7 +170,7 @@
 
 <div class="col-md-7">
     <span>
-      <img-cropper [image]="data1" [settings]="cropperSettings1" (onCrop)="cropped($event)"></img-cropper>
+      <img-cropper #cropper [image]="data1" [settings]="cropperSettings1" (onCrop)="cropped($event)"></img-cropper>
     </span>
 </div>
 <div class="row" style="padding: 5px;padding-right: 20px">
@@ -177,3 +179,4 @@
     </button>
 </div>
 </form>
+<button (click)="test()">Test</button>

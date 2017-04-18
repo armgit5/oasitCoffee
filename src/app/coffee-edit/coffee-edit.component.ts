@@ -5,7 +5,7 @@ import { Coffee } from '../coffees/coffee';
 import { AngularFire, FirebaseApp, FirebaseRef } from 'angularfire2';
 import { CoffeeService } from '../coffees/coffee.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {ImageCropperComponent, CropperSettings, Bounds} from 'ng2-img-cropper';
+import { ImageCropperComponent, CropperSettings, Bounds } from 'ng2-img-cropper';
 import { CategoryService } from '../coffees/category/category.service';
 
 @Component({
@@ -129,6 +129,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
               this.imageUrl = coffee.url;
               this.selectedType = coffee.type;
               this.selectedCategory = coffee.category;
+              // console.log(this.imageUrl);
               this.initForm();
           });
        } else {        
@@ -166,6 +167,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
     this.croppedHeight =bounds.bottom-bounds.top;
     this.croppedWidth = bounds.right-bounds.left;
     this.uploaded = true;
+    console.log("cropped " + this.cropper);
   }
 
   fileChangeListener($event) {
@@ -180,7 +182,11 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
     };
 
     myReader.readAsDataURL(file);
+    console.log("file change " + this.cropper);
+  }
 
+  test() {
+    console.log(this.imageUrl);
   }
 
   createCoffee() {
@@ -205,7 +211,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
     if (this.data1.image != undefined) {
       this.imageStorageInsert(this.data1.image, this.coffee.$key);
     }
-    let test = this.addOneToImageKey("-KgZQwY1d44h_vQXBgJNaNaN");
+    // let test = this.addOneToImageKey("-KgZQwY1d44h_vQXBgJNaNaN");
   }
 
   private imageStorageInsert(inputImage, $key) {
@@ -219,9 +225,12 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   }
 
   private clearDataAndReturn() {
+    console.log("clear and return");
+    this.cropper.reset();
     this.data1 = {};
     this.hideOutput.emit();
-    this.imageUrl = "";
+    this.uploaded = false;
+    this.imageUrl = "https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/cup-of-black-coffee1.jpg?alt=media&token=94afc335-0a25-4956-aea8-6d1fe140b65d";
   }
 
   private addOneToImageKey(oldImageKey): string {  
