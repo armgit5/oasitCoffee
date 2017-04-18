@@ -185,9 +185,9 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
     console.log("file change " + this.cropper);
   }
 
-  test() {
-    console.log(this.imageUrl);
-  }
+  // test() {
+  //   console.log(this.imageUrl);
+  // }
 
   createCoffee() {
     console.log(this.coffeeForm.value);
@@ -284,6 +284,9 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
           // Handle unsuccessful uploads
           console.log("error update name and others: " + error);
         });
+        if (this.data1.image == undefined) {
+          this.hideOutput.emit();
+        }
   }
 
   private deteleImageInStorage(imageKey) {
