@@ -51,6 +51,9 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   types: any[];
   private $types: Subscription;
 
+  // Other
+  name2 = this.types;
+
   constructor(private router: Router,
               private route: ActivatedRoute,
               private af: AngularFire,
@@ -84,8 +87,11 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
 
       this.$types = this.categoryService.loadTypes().subscribe(types => {
         this.types = types;
+        console.log(this.types);
       });
 
+      console.log("construc");
+      
       // for testing
       // const storageRef = firebaseApp.storage().ref().child('images/-KgsGiSv3bOdKv2Oc4221');
       // storageRef.getDownloadURL().then(url => console.log(url));
@@ -108,22 +114,30 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
     //       this.initForm();
     //     }
     // });
+
+    console.log("on init");
+
+    this.imageUrl = "https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/cup-of-black-coffee1.jpg?alt=media&token=94afc335-0a25-4956-aea8-6d1fe140b65d";
     this.isNew = true;
     this.initForm();
 
     this.$subscription = this.coffeeService.editCoffeeData.subscribe(
       (data: any) => {
-        console.log(!data.isNew);
        if (!data.isNew) {
           this.isNew = false;
           this.coffeeService.loadCoffee(data.coffeeId).subscribe(
             coffee => {
               this.coffee = coffee;
               this.imageUrl = coffee.url;
+              
+              this.name2 = this.types[1].name;
+             
               this.initForm();
-              // console.log('not new');
           });
        } else {
+
+         this.name2 = this.types[1].name;
+        
          this.isNew = true;
          this.initForm();
        }
@@ -132,12 +146,14 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   }
 
   private initForm() {
-
     let coffeeName = '';
     let price = null;
     let category = '';
     let type = '';
 
+    if (this.types != undefined) {
+      console.log(this.types[1].name);
+    }
     // console.log(this.isNew);
     if (!this.isNew) {
       coffeeName = this.coffee.name;
@@ -213,7 +229,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   private clearDataAndReturn() {
     this.data1 = {};
     this.hideOutput.emit();
-    this.imageUrl 
+    this.imageUrl = "";
   }
 
   private addOneToImageKey(oldImageKey): string {  
@@ -281,6 +297,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    console.log('on destroy');
     this.$subscription.unsubscribe();
     this.$categories.unsubscribe();
     this.$types.unsubscribe();

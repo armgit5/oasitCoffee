@@ -65,7 +65,7 @@ export class CoffeesComponent {
     }
 
     onEdit(coffeeOutput) {
-      console.log('edit');
+      // console.log('edit');
       this.button.show();
     }
    

@@ -72,22 +72,22 @@
 
 .product-info .x-container {
     /*cursor: pointer;*/
-    padding-top: 10px;
-    padding-right: 20px;
+    /*padding-top: 10px;
+    padding-right: 20px;*/
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 20px;
+    top: 10px;
     /*z-index: 2;*/
     color: red;
 }
 
 .product-info .pencil-container {
     cursor: pointer;
-    padding-top: 25px;
-    padding-right: 20px;
+    /*padding-top: 25px;
+    padding-right: 20px;*/
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 20px;
+    top: 25px;
     z-index: 2;
     color: orange;
 }
