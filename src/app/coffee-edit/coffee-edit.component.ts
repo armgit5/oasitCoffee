@@ -134,6 +134,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
           });
        } else {        
          this.isNew = true;
+         this.imageUrl = "https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/cup-of-black-coffee1.jpg?alt=media&token=94afc335-0a25-4956-aea8-6d1fe140b65d";
          this.initForm();
        }
     });
