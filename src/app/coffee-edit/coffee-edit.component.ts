@@ -55,7 +55,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
 
   // Other
   spinning: boolean = false;
- 
+
   constructor(private router: Router,
               private route: ActivatedRoute,
               private af: AngularFire,
@@ -160,7 +160,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
       name: [coffeeName, Validators.required],
       price: [price, Validators.required],
       category: [category, Validators.required],
-      type: [type]
+      type: [type, Validators.required]
     });
     
   }
@@ -230,20 +230,23 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   }
 
   private clearDataAndReturn() {
-    if (!this.isNew) {
-      if (this.data1.image == undefined) {
-          this.hideOutput.emit();
-        }
-    } else {
-      this.cropper.reset();
-      this.data1 = {};
-      this.hideOutput.emit();
-      this.uploaded = false;
-      this.imageUrl = "https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/cup-of-black-coffee1.jpg?alt=media&token=94afc335-0a25-4956-aea8-6d1fe140b65d";
-      this.spinning = false;
-    }
+    
+    this.cropper.reset();
+    this.data1 = {};
+    this.hideOutput.emit();
+    this.uploaded = false;
+    this.imageUrl = "https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/cup-of-black-coffee1.jpg?alt=media&token=94afc335-0a25-4956-aea8-6d1fe140b65d";
     this.spinning = false;
     
+    this.spinning = false;
+    
+}
+
+private clearWhenNoImage() {
+  this.spinning = false;
+  if (this.data1.image == undefined) {
+          this.hideOutput.emit();
+        }
 }
 
   private addOneToImageKey(oldImageKey): string {  
@@ -297,7 +300,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
           // Handle unsuccessful uploads
           console.log("error update name and others: " + error);
         });
-        this.clearDataAndReturn();
+        this.clearWhenNoImage();
   }
 
   private deteleImageInStorage(imageKey) {
