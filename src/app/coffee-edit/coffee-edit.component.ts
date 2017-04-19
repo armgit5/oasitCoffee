@@ -214,13 +214,13 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
                 this.addImageToStorage(coffeeId, this.data1.image, newImageKey, null);
               });
     } else {
+      console.log(this.spinning);
       this.updateCoffee();
     }
     
   }
 
-  private updateCoffee() {
-    console.log('edit');
+  private updateCoffee() {;
     this.updateNameAndOthers(this.coffee.$key);
     if (this.data1.image != undefined) {
       this.imageStorageInsert(this.data1.image, this.coffee.$key);
@@ -296,20 +296,23 @@ private clearWhenNoImage() {
      this.af.database.object(`coffees/${coffeeId}`).update({
         imageKey: newImageKey,
         url: downloadURL
-      }).catch(error => {
+      })
+      .then(() => this.clearDataAndReturn())
+      .catch(error => {
           // Handle unsuccessful uploads
           console.log("error updating img key and url: " + error);
       });
-      this.clearDataAndReturn();
+      
   }
 
   private updateNameAndOthers(coffeeId) {
-     this.af.database.object(`coffees/${coffeeId}`).update(this.coffeeForm.value)
-        .catch(error => {
-          // Handle unsuccessful uploads
-          console.log("error update name and others: " + error);
-        });
-        this.clearWhenNoImage();
+     this.af.database.object(`coffees/${coffeeId}`).update(this.coffeeForm.value).then(
+       () => this.clearWhenNoImage()
+     ).catch(error => {
+      // Handle unsuccessful uploads
+      console.log("error update name and others: " + error);
+    });
+        
   }
 
   private deteleImageInStorage(imageKey) {
