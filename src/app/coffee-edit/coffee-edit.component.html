@@ -174,8 +174,10 @@
     </span>
 </div>
 <div class="row" style="padding: 5px;padding-right: 20px">
-    <button class="btn btn-default pull-right" type="submit" [disabled]="!coffeeForm.valid">
-        <i class="fa fa-coffee" style="font-weight: bold;" > Upload</i>
+    <button class="btn btn-default pull-right" type="submit" [disabled]="!coffeeForm.valid || spinning">
+        <i class="fa fa-coffee" style="font-weight: bold;" *ngIf="!spinning"></i>
+        <i class="fa fa-spinner fa-spin fa-fw" aria-hidden="true" *ngIf="spinning"></i>
+        Upload
     </button>
 </div>
 </form>

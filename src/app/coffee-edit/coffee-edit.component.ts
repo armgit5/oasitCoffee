@@ -54,6 +54,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   private $types: Subscription;
 
   // Other
+  spinning: boolean = false;
  
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -193,6 +194,8 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   createCoffee() {
     console.log(this.coffeeForm.value);
 
+    this.spinning = true;
+
     if (this.isNew) {
       this.sdkDb.ref().child("coffees")
         .push(this.coffeeForm.value).then(item => {
@@ -212,6 +215,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
     if (this.data1.image != undefined) {
       this.imageStorageInsert(this.data1.image, this.coffee.$key);
     }
+
     // let test = this.addOneToImageKey("-KgZQwY1d44h_vQXBgJNaNaN");
   }
 
@@ -226,13 +230,21 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   }
 
   private clearDataAndReturn() {
-    console.log("clear and return");
-    this.cropper.reset();
-    this.data1 = {};
-    this.hideOutput.emit();
-    this.uploaded = false;
-    this.imageUrl = "https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/cup-of-black-coffee1.jpg?alt=media&token=94afc335-0a25-4956-aea8-6d1fe140b65d";
-  }
+    if (!this.isNew) {
+      if (this.data1.image == undefined) {
+          this.hideOutput.emit();
+        }
+    } else {
+      this.cropper.reset();
+      this.data1 = {};
+      this.hideOutput.emit();
+      this.uploaded = false;
+      this.imageUrl = "https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/cup-of-black-coffee1.jpg?alt=media&token=94afc335-0a25-4956-aea8-6d1fe140b65d";
+      this.spinning = false;
+    }
+    this.spinning = false;
+    
+}
 
   private addOneToImageKey(oldImageKey): string {  
     if (this.isNew) {
@@ -285,9 +297,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
           // Handle unsuccessful uploads
           console.log("error update name and others: " + error);
         });
-        if (this.data1.image == undefined) {
-          this.hideOutput.emit();
-        }
+        this.clearDataAndReturn();
   }
 
   private deteleImageInStorage(imageKey) {
