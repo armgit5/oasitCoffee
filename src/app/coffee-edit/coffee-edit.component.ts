@@ -55,6 +55,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
 
   // Other
   spinning: boolean = false;
+  notReady = true;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -122,6 +123,9 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
 
     this.$subscription = this.coffeeService.editCoffeeData.subscribe(
       (data: any) => {
+        this.spinning = false;
+        this.notReady = true;
+
        if (!data.isNew) {
           this.isNew = false;
           this.coffeeService.loadCoffee(data.coffeeId).subscribe(
@@ -130,13 +134,17 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
               this.imageUrl = coffee.url;
               this.selectedType = coffee.type;
               this.selectedCategory = coffee.category;
+              this.notReady = false;
               // console.log(this.imageUrl);
+              // console.log(!this.isNew, !this.uploaded, !(!this.isNew && !this.uploaded), (!this.coffeeForm.valid || !(!this.isNew && !this.uploaded)) || this.spinning);
               this.initForm();
           });
        } else {        
          this.isNew = true;
          this.imageUrl = "https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/cup-of-black-coffee1.jpg?alt=media&token=94afc335-0a25-4956-aea8-6d1fe140b65d";
          this.initForm();
+        //  console.log(this.isNew, this.uploaded);
+        console.log(!this.isNew, !this.uploaded, (!this.isNew && this.uploaded), this.spinning);
        }
     });
     
@@ -169,7 +177,9 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
     this.croppedHeight =bounds.bottom-bounds.top;
     this.croppedWidth = bounds.right-bounds.left;
     this.uploaded = true;
+    this.notReady = false;
     console.log("cropped " + this.cropper);
+    console.log(!this.isNew, !this.uploaded, !(!this.isNew && !this.uploaded), this.spinning);
   }
 
   fileChangeListener($event) {
@@ -230,7 +240,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   }
 
   private clearDataAndReturn() {
-    
+    this.notReady = true;
     this.cropper.reset();
     this.data1 = {};
     this.hideOutput.emit();
@@ -238,15 +248,14 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
     this.imageUrl = "https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/cup-of-black-coffee1.jpg?alt=media&token=94afc335-0a25-4956-aea8-6d1fe140b65d";
     this.spinning = false;
     
-    this.spinning = false;
-    
 }
 
 private clearWhenNoImage() {
   this.spinning = false;
+  this.notReady = true;
   if (this.data1.image == undefined) {
           this.hideOutput.emit();
-        }
+  }
 }
 
   private addOneToImageKey(oldImageKey): string {  
