@@ -52,13 +52,14 @@ export class CoffeeService {
         // });
 
         if (!alreadyInCart) {
-            this.cartCoffees.push({
+            this.cartCoffees.push({  
                 coffeeId: coffee.$key,
                 coffeeName: coffee.name,
                 coffeeType: coffee.type,
                 qty: count,
                 price: coffee.price,
-                comment: comment
+                comment: comment,
+                imageUrl: coffee.url
             });
         }
         

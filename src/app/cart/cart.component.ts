@@ -48,7 +48,7 @@ export class CartComponent implements OnInit {
                 this.newCount += coffee.qty;
                 cartCoffes.push(coffee);
             });
-            console.log(this.newTotal, this.newCount);
+            // console.log(this.newTotal, this.newCount);
             this.coffeeService.updateFetchCounts(this.newCount);
             this.total = this.newTotal;
         
@@ -69,7 +69,8 @@ export class CartComponent implements OnInit {
                 coffeeType: new FormControl(coffee.coffeeType),
                 qty: new FormControl(coffee.qty, Validators.required),
                 price: new FormControl(coffee.price),
-                comment: new FormControl(coffee.comment)
+                comment: new FormControl(coffee.comment),
+                imageUrl: new FormControl(coffee.imageUrl)
             }));
         });
         

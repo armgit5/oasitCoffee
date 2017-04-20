@@ -1,5 +1,5 @@
 .table>tbody>tr>td, .table>tfoot>tr>td{
-    vertical-align: middle;
+    /*vertical-align: middle;*/
 }
 @media screen and (max-width: 600px) {
     table#cart tbody td .form-control{
@@ -41,4 +41,20 @@
     overflow: hidden;
     height: auto;
     position: relative;
+}
+
+.cart-header {
+	font-weight: 400;
+	font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+.table thead>tr>th, .table tbody>tr>th, .table tfoot>tr>th, .table thead>tr>td, .table tbody>tr>td, .table tfoot>tr>td {
+/*padding: 8px;
+line-height: 1.428571429;
+vertical-align: top;
+border-bottom: 1px solid #ddd;*/
+}
+
+.table>tbody+tbody {
+    border-top: 0;
 }

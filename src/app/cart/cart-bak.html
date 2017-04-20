@@ -1,0 +1,64 @@
+<form [formGroup]="cartForm" (ngSubmit)="onSubmit()">
+    <h2>Coffee Cart</h2>
+    <div>
+        <ul class="list-group" formArrayName="cartCoffees">
+            <table class="table">
+                <tr>
+                    <th>Coffee</th>
+                    <th>Type</th>
+                    <th>Qty</th>
+                    <th>Comment</th>
+                    <th>Cost</th>
+                    <th>Delete</th>
+                    <th></th>
+                </tr>
+            </table>
+            <table class="table">
+            <div *ngFor="let coffee of cartForm.controls['cartCoffees'].controls; let i = index">
+                
+                    <tr formGroupName="{{i}}">
+                        <td>
+                            <input type="text" 
+                                    class="form-control"
+                                    formControlName="coffeeName">
+                        </td>           
+                        <td>
+                            <input type="text" 
+                                    class="form-control"
+                                    formControlName="coffeeType">
+                        </td>
+                        <td>
+                            <input type="number" 
+                                    class="form-control"
+                                    formControlName="qty">
+                        </td>
+                    
+                        <td>
+                            <input type="text" 
+                                    class="form-control"
+                                    formControlName="comment">
+                        </td> 
+                        <td>
+                            <input type="number" 
+                                    class="form-control"
+                                    formControlName="price">
+                        </td>
+                        
+                        <td><button class="btn btn-danger pull-right" type="button" (click)="delete(i)">Delete</button></td> 
+                    </tr> 
+                        
+            </div>
+            </table>   
+        
+        </ul>
+        <div><input type="text" 
+                class="form-control"
+                formControlName="customerName"></div>
+        <div>Total: {{total}}</div>
+        
+        <div>
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+
+    </div>
+</form>

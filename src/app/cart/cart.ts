@@ -7,7 +7,8 @@ export class Cart {
                 public coffeeType:string,
                 public qty:number,
                 public price:number,
-                public comment:string
+                public comment:string,
+                public imageUrl:string
                 ) {
 
     } 

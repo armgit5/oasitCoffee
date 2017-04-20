@@ -65,52 +65,55 @@
 
 
 <form [formGroup]="cartForm" (ngSubmit)="onSubmit()">
-<div class="container">
+<div class="container col-sm-12 col-md-10 col-md-offset-1">
 	<table formArrayName="cartCoffees" id="cart" class="table table-hover table-condensed">
     				<thead>
 						<tr>
-							<th style="width:50%">Product</th>
-							<th style="width:10%">Price</th>
-							<th style="width:8%">Quantity</th>
-							<th style="width:22%" class="text-center">Subtotal</th>
-							<th style="width:10%"></th>
+							<th style="width:45%" class="cart-header">Product</th>
+							<th style="width:12%" class="cart-header">Price</th>
+							<th style="width:12%" class="cart-header">Quantity</th>
+							<th style="width:21%" class="text-center cart-header">Subtotal</th>
+							<th style="width:10%" class="cart-header">Test</th>
 						</tr>
 					</thead>
-					<tbody *ngFor="let coffee of cartForm.controls['cartCoffees'].controls; let i = index">
+					<tbody
+					 *ngFor="let coffee of cartForm.controls['cartCoffees'].controls; let i = index">
 						<tr formGroupName="{{i}}">
 							<td data-th="Product">
 								<div class="row">
-									<div class="col-sm-2 hidden-xs"><img src="https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/cup-of-black-coffee1.jpg?alt=media&token=94afc335-0a25-4956-aea8-6d1fe140b65d" alt="..." class="img-responsive"/></div>
-									<div class="col-sm-10">
-										<h4 class="nomargin">{{cartForm.value.cartCoffees[i].coffeeName}} ({{cartForm.value.cartCoffees[i].coffeeType}})</h4>
-										<p><input type="text" 
+									<div class="col-sm-4 hidden-xs"><img src={{cartForm.value.cartCoffees[i].imageUrl}} alt="..." class="img-responsive"/></div>
+									<div class="col-sm-8" style="padding-right:35px">
+										<h4 style="margin:5px;font-weight:300">{{cartForm.value.cartCoffees[i].coffeeName}} ({{cartForm.value.cartCoffees[i].coffeeType}})</h4>
+										<p><textarea type="text" 
 												class="form-control"
-												formControlName="comment"></p>
+												formControlName="comment"
+												style="padding-top:0;padding-bottom:0"></textarea></p>
 									</div>
 								</div>
 							</td>
-							<td data-th="Price">{{cartForm.value.cartCoffees[i].price}}</td>
+							<td data-th="Price" style="padding-top:15px">{{cartForm.value.cartCoffees[i].price}}</td>
 							<td data-th="Quantity">
 								<input type="number" 
                                     class="form-control"
-                                    formControlName="qty">
+                                    formControlName="qty"
+									style="padding-top:8px">
 							</td>
-							<td data-th="Subtotal" class="text-center">{{cartForm.value.cartCoffees[i].price * cartForm.value.cartCoffees[i].qty}}</td>
-							<td class="actions" data-th="">
-								<button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
-								<button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>								
+							<td data-th="Subtotal" style="padding-top:15px" class="text-center">{{cartForm.value.cartCoffees[i].price * cartForm.value.cartCoffees[i].qty}}</td>
+							<td class="" data-th="">
+								<!--<button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>-->
+								<button class="btn btn-danger btn-sm" (click)="delete(i)"><i class="fa fa-trash-o"></i></button>								
 							</td>
 						</tr>
-
+					
 					</tbody>
 					<tfoot>
 						<tr class="visible-xs">
-							<td class="text-center"><strong>Total 1.99</strong></td>
+							<td class="text-center"><strong>Total: {{total}}</strong></td>
 						</tr>
 						<tr>
-							<td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
-							<td colspan="2" class="hidden-xs"></td>
-							<td class="hidden-xs text-center"><strong>Total $1.99</strong></td>
+							<!--<td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>-->
+							<td colspan="3" class="hidden-xs"></td>
+							<td class="text-center" >Total: {{total}}</td>
 							<td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
 						</tr>
 					</tfoot>
