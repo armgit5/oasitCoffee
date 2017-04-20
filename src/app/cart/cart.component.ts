@@ -78,6 +78,8 @@ export class CartComponent implements OnInit {
             cartCoffees: cartCoffees
         });
 
+        
+
     }   
 
     calculateTotal() {
