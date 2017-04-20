@@ -73,11 +73,11 @@
         src= {{coffee?.url}} 
         class="img-responsive product-img "
         align="middle" 
-        style="border-radius: 8px;">
+        style="border-radius: 8px;padding-top:2px">
     </div>
 
     <div class="product-info" style="height:200px">
-        <div *ngIf="mouseOver">
+        <div *ngIf="mouseOver" style="height:5px">
             <div class="x-container" (click)="deleteCoffee()">
                 <i class="fa fa-times-rectangle-o" aria-hidden="true"></i>
             </div>
