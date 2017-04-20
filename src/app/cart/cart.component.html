@@ -83,11 +83,12 @@
 								<div class="row">
 									<div class="col-sm-4 hidden-xs"><img src={{cartForm.value.cartCoffees[i].imageUrl}} alt="..." class="img-responsive"/></div>
 									<div class="col-sm-8" style="padding-right:35px">
-										<h4 style="margin:5px;font-weight:300">{{cartForm.value.cartCoffees[i].coffeeName}} ({{cartForm.value.cartCoffees[i].coffeeType}})</h4>
+										<h5 style="margin:5px;font-weight:300">{{cartForm.value.cartCoffees[i].coffeeName}} ({{cartForm.value.cartCoffees[i].coffeeType}})</h5>
 										<p><textarea type="text" 
 												class="form-control"
 												formControlName="comment"
-												style="padding-top:0;padding-bottom:0"></textarea></p>
+												style="padding-top:0;padding-bottom:0"
+												placeholder="Comment here..."></textarea></p>
 									</div>
 								</div>
 							</td>

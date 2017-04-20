@@ -67,6 +67,7 @@ export class CoffeeComponent implements OnInit {
         msg: `${this.coffee.name} is added to cart`,
         timeout: 2000
       });
+      this.comment = "";
     }
 
     editCoffee() {
