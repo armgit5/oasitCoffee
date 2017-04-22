@@ -1,18 +1,20 @@
-import { Component, Input, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { cartData } from './cart/cartData';
 import { CoffeeService } from './coffees/coffee.service';
 import { Observable } from "rxjs/Observable";
 import { Category } from './coffees/category/category';
 import { CategoryService } from './coffees/category/category.service';
+import { Subscription } from 'rxjs/Rx';
 
 @Component({
     selector: 'my-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
     // coffeeCounts = cartData.cart.length;
-    coffeeCounts: number;;
+    coffeeCounts: number;
+    $coffeeCounts: Subscription;
     clicked: boolean = false;
 
     @Input()
@@ -29,7 +31,7 @@ export class HeaderComponent implements OnInit {
     
     ngOnInit() {
         this.coffeeCounts = this.coffeeService.getCoffeeCounts();
-        this.coffeeService.coffeeCountsChanged
+        this.$coffeeCounts = this.coffeeService.coffeeCountsChanged
             .subscribe(coffeeCounts => this.coffeeCounts = coffeeCounts);
     }
 
@@ -52,6 +54,10 @@ export class HeaderComponent implements OnInit {
         document.getElementById("mySidenav").style.paddingLeft = "0%";
         document.getElementById("mySidenav").style.paddingRight = "0%";
         this.clicked = false;
+    }
+
+    ngOnDestroy() {
+        this.$coffeeCounts.unsubscribe();
     }
 
 }   

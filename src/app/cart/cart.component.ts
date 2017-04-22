@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 // import { cartData } from './cartData';
 import { coffeesData } from '../coffees/coffeesData';
 import { CoffeeService } from '../coffees/coffee.service';
@@ -6,6 +6,7 @@ import { CoffeeService } from '../coffees/coffee.service';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { QueueService } from '../queue/queue.service';
 import { Router } from "@angular/router";
+import { Cart } from './cart';
 
 @Component({
   selector: 'cart',
@@ -22,11 +23,18 @@ export class CartComponent implements OnInit {
     newTotal: number = 0;
     newCount: number = 0;
 
+    @ViewChild('qtyInput') qtyInput; 
+
     constructor(private coffeeService: CoffeeService,
                 private formBuilder: FormBuilder,
                 private queueService: QueueService,
                 private router: Router) {
         
+        // For testing 
+        // this.cartItems = [new Cart("-KhguZOrC43ph1D_oiwU","test","Cold",5,13,"comment",
+        // "https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/images%2F-KhguZOrC43ph1D_oiwU1?alt=media&token=d6aa5dc2-071e-49dd-b4af-06eb801837f6"
+        // )];
+
     }
 
     ngOnInit() {
@@ -58,6 +66,7 @@ export class CartComponent implements OnInit {
     }
 
     private initForm() {
+        console.log(this.cartItems);
 
         let customerName = "Arm";
         let cartCoffees: FormArray = new FormArray([]);
@@ -106,9 +115,44 @@ export class CartComponent implements OnInit {
     onSubmit() {
         this.queueService.addQueue(this.cartForm.value);
         //update coffee service cart coffees and cart items to []
-        this.setToZero();
+        // this.setToZero();
 
-        this.router.navigate(['queue']);
+        // this.router.navigate(['queue']);
     }
+
+    update() {
+        this.cartForm.value.forEach(data => {
+            this.newTotal = 0;
+            this.newCount = 0;
+            let cartCoffes = [];
+            data.cartCoffees.forEach(coffee => {
+                this.newTotal += coffee.qty * coffee.price;
+                this.newCount += coffee.qty;
+                cartCoffes.push(coffee);
+            });
+            // console.log(this.newTotal, this.newCount);
+            this.coffeeService.updateFetchCounts(this.newCount);
+            this.total = this.newTotal;
+        
+            //update coffee service cart coffee qty
+            this.coffeeService.cartCoffees = cartCoffes;
+        });
+    }
+
+    minus(i) {
+        
+        // if (this.qtyInput.nativeElement.value > 1) {
+        //     this.qtyInput.nativeElement.value--;
+        //     this.cartForm.value.cartCoffees[i].qty--;
+        //     let minusTotal = this.cartForm.value.cartCoffees[i].price * this.cartForm.value.cartCoffees[i].qty;
+        //     this.total -= this.cartForm.value.cartCoffees[i].price;
+        //     this.coffeeService.fetchCounts(-1);
+
+        // }
+    }
+
+    // plus() {
+    //     this.qtyInput.nativeElement.value++;
+    // }
 
 }

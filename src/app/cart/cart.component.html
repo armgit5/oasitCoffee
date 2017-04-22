@@ -64,7 +64,7 @@
 </form>-->
 
 
-<form [formGroup]="cartForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="cartForm" (ngSubmit)="onSubmit()" (keydown.enter)="$event.preventDefault()">>
 <div class="container col-sm-12 col-md-10 col-md-offset-1">
 	<table formArrayName="cartCoffees" id="cart" class="table table-hover table-condensed">
     				<thead>
@@ -98,6 +98,26 @@
                                     class="form-control"
                                     formControlName="qty"
 									style="padding-top:8px">
+									 <!--<div class="col-md-3" style="padding: 0; padding-top: 2px">
+										<a class="btn" (click)="minus(i)" style="padding: 0">
+											<i class="fa fa-minus-square fa-2x"></i> 
+											
+										</a>
+
+									</div>
+									<div class="col-md-6" style="padding: 0">
+										<input type="text" name="quant[1]" 
+											class="form-control input-number" 
+											formControlName="qty"
+											min="1"
+											style="text-align: center;"
+											#qtyInput> 
+									</div>
+									<div class="col-md-3" style="padding: 0; padding-top: 2px; padding-right: 1px">
+										<a class="btn" (click)="plus()" style="padding: 0">
+											<i class="fa fa-plus-square fa-2x"></i>
+										</a>
+									</div>-->
 							</td>
 							<td data-th="Subtotal" style="padding-top:15px" class="text-center">{{cartForm.value.cartCoffees[i].price * cartForm.value.cartCoffees[i].qty}}</td>
 							<td class="" data-th="">
@@ -123,3 +143,20 @@
 				</table>
 </div>
 </form>
+
+<div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
+                  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog"> 
+    <div class="modal-content" style="width:750px;height:475px;margin:0px;margin-left:-15%">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">USER ACCOUNT</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>Add User here</div>
+      </div>
+    </div>
+  </div>
+</div>

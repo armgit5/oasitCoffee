@@ -24,7 +24,8 @@ export class CoffeeComponent implements OnInit {
     mouseOver: boolean = false;
     added: boolean = false;
 
-    coffeeCount = 1;
+    coffeeCount:number = 1;
+    coffeeCountModel = 1;
     cart = cartData.cart;
     comment:string = "";
     public alerts: any = [];
@@ -60,7 +61,7 @@ export class CoffeeComponent implements OnInit {
 
     add() {
       this.addCoffeeAlert();
-      this.coffeeService.addToCart(this.coffee, this.coffeeCount, this.comment);
+      this.coffeeService.addToCart(this.coffee, Number(this.coffeeCount), this.comment);
       this.coffeeCount = 1;
       this.alerts.push({
         type: 'md-local',
