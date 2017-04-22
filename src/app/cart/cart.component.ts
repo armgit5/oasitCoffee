@@ -16,14 +16,14 @@ import { Cart } from './cart';
 export class CartComponent implements OnInit {
 
     cartForm: FormGroup;
-
+    customerName: string;
     cartItems = this.coffeeService.cartCoffees;
     total: number;
 
     newTotal: number = 0;
     newCount: number = 0;
 
-    @ViewChild('qtyInput') qtyInput; 
+     @ViewChild('staticModal') loginModal; 
 
     constructor(private coffeeService: CoffeeService,
                 private formBuilder: FormBuilder,
@@ -43,7 +43,8 @@ export class CartComponent implements OnInit {
 
         // update cart in real time when qty changes
         this.updateCartRealTime();
-           
+        this.customerName = null;
+        console.log(this.customerName);
     }
 
     updateCartRealTime() {
@@ -68,7 +69,7 @@ export class CartComponent implements OnInit {
     private initForm() {
         console.log(this.cartItems);
 
-        let customerName = "Arm";
+        let customerName = this.customerName;
         let cartCoffees: FormArray = new FormArray([]);
 
         this.cartItems.forEach(coffee => {
@@ -108,16 +109,21 @@ export class CartComponent implements OnInit {
     }
 
     setToZero() {
+        this.customerName = null;
         this.coffeeService.cartCoffees = [];
         this.coffeeService.updateFetchCounts(0);
     }
 
     onSubmit() {
-        this.queueService.addQueue(this.cartForm.value);
-        //update coffee service cart coffees and cart items to []
-        // this.setToZero();
-
-        // this.router.navigate(['queue']);
+        console.log(this.customerName == undefined || this.customerName == null);
+        if (this.customerName == undefined || this.customerName == null) {
+            this.loginModal.show();
+        } else {
+            //update coffee service cart coffees and cart items to []
+            this.queueService.addQueue(this.cartForm.value);
+            this.setToZero();
+            this.router.navigate(['queue']);
+        }  
     }
 
     update() {
@@ -161,6 +167,16 @@ export class CartComponent implements OnInit {
         //update coffee service cart coffee qty
         this.coffeeService.cartCoffees = this.cartForm.value.cartCoffees;
         
+    }
+
+    hideModal() {
+      this.loginModal.hide();
+    }
+
+    loginAsGuest(name) {
+        this.customerName = name;
+        this.cartForm.value.customerName = name;
+        this.onSubmit();
     }
 
     // qtyChange(qty) {
