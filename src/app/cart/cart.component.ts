@@ -160,8 +160,11 @@ export class CartComponent implements OnInit {
 
         //update coffee service cart coffee qty
         this.coffeeService.cartCoffees = this.cartForm.value.cartCoffees;
-
         
     }
+
+    // qtyChange(qty) {
+    //     console.log(qty);
+    // }
 
 }
