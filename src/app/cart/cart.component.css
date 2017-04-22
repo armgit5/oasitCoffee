@@ -59,7 +59,7 @@ border-bottom: 1px solid #ddd;*/
     border-top: 0;
 }
 
-input {
+/*input {
 	  color: #777;
 	  width: 2em;
 	  font-size: 2em;
@@ -94,4 +94,4 @@ input {
 	input[type=number]::-webkit-inner-spin-button::after {
 	  bottom: 7px;
 	  transform: rotate(180deg);
-	}
+	}*/

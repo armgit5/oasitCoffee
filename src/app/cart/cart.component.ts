@@ -141,18 +141,27 @@ export class CartComponent implements OnInit {
 
     minus(i) {
         
-        // if (this.qtyInput.nativeElement.value > 1) {
-        //     this.qtyInput.nativeElement.value--;
-        //     this.cartForm.value.cartCoffees[i].qty--;
-        //     let minusTotal = this.cartForm.value.cartCoffees[i].price * this.cartForm.value.cartCoffees[i].qty;
-        //     this.total -= this.cartForm.value.cartCoffees[i].price;
-        //     this.coffeeService.fetchCounts(-1);
+        if (this.cartForm.value.cartCoffees[i].qty > 1) {
+            this.cartForm.value.cartCoffees[i].qty--;
+            this.total -= Number(this.cartForm.value.cartCoffees[i].price);
+            this.coffeeService.fetchCounts(-1);
 
-        // }
+            //update coffee service cart coffee qty
+            this.coffeeService.cartCoffees = this.cartForm.value.cartCoffees;
+
+        }
     }
 
-    // plus() {
-    //     this.qtyInput.nativeElement.value++;
-    // }
+    plus(i) {
+        
+        this.cartForm.value.cartCoffees[i].qty++;
+        this.total += Number(this.cartForm.value.cartCoffees[i].price);
+        this.coffeeService.fetchCounts(1);
+
+        //update coffee service cart coffee qty
+        this.coffeeService.cartCoffees = this.cartForm.value.cartCoffees;
+
+        
+    }
 
 }

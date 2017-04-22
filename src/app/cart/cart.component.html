@@ -94,30 +94,28 @@
 							</td>
 							<td data-th="Price" style="padding-top:15px">{{cartForm.value.cartCoffees[i].price}}</td>
 							<td data-th="Quantity">
-								<input type="number" 
+								<!--<input type="number" 
                                     class="form-control"
                                     formControlName="qty"
-									style="padding-top:8px">
-									 <!--<div class="col-md-3" style="padding: 0; padding-top: 2px">
+									style="padding-top:8px">-->
+									<div class="col-md-3" style="padding: 0; padding-top: 2px">
 										<a class="btn" (click)="minus(i)" style="padding: 0">
 											<i class="fa fa-minus-square fa-2x"></i> 
-											
 										</a>
-
 									</div>
 									<div class="col-md-6" style="padding: 0">
 										<input type="text" name="quant[1]" 
 											class="form-control input-number" 
-											formControlName="qty"
+											value = {{cartForm.value.cartCoffees[i].qty}}
 											min="1"
 											style="text-align: center;"
 											#qtyInput> 
 									</div>
 									<div class="col-md-3" style="padding: 0; padding-top: 2px; padding-right: 1px">
-										<a class="btn" (click)="plus()" style="padding: 0">
+										<a class="btn" (click)="plus(i)" style="padding: 0">
 											<i class="fa fa-plus-square fa-2x"></i>
 										</a>
-									</div>-->
+									</div>
 							</td>
 							<td data-th="Subtotal" style="padding-top:15px" class="text-center">{{cartForm.value.cartCoffees[i].price * cartForm.value.cartCoffees[i].qty}}</td>
 							<td class="" data-th="">
