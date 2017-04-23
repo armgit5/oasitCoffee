@@ -135,7 +135,8 @@
 							<td></td>
 							<td colspan="2" class="hidden-xs"></td>
 							<td class="text-center" >Total: {{total}}</td>
-							<td><button type="submit" class="btn btn-success" [disabled]="cartItems.length <= 0">Save</button></td>
+							<td><button type="submit" class="btn btn-success"
+							 [disabled]="cartItems.length > 0">Save</button></td>
 							<!--<td><a class="btn btn-success btn-block" type="submit">Checkout <i class="fa fa-angle-right"></i></a></td>-->
 						</tr>
 					</tfoot>
@@ -157,7 +158,7 @@
 		  
         <div class="box">
 			<div class="content">
-				<div class="col-md-6 login">
+				<div class="col-md-6 login" style="margin-bottom:15px">
 					<div class="social">
 						<!--<a class="circle github" href="/auth/github">
 							<i class="fa fa-github fa-fw"></i>
@@ -175,16 +176,26 @@
 						<div class="line r"></div>
 					</div>
 					<div class="error"></div>
-					<div class="form loginBox">
+					<h4 class="modal-title" *ngIf="newAccount">Login with</h4>
+					<h4 class="modal-title" *ngIf="!newAccount">Register with</h4>
+					<div class="form loginBox" *ngIf="newAccount">
 						<form method="post" action="/login" accept-charset="UTF-8">
 						<input id="email" class="form-control" type="text" placeholder="Email" name="email">
 						<input id="password" class="form-control" type="password" placeholder="Password" name="password">
 						<input class="btn btn-default btn-login" type="button" value="Login" onclick="loginAjax()">
 						</form>
 					</div>
+					<div class="form" *ngIf="!newAccount">
+						<form method="post" html="{:multipart=>true}" data-remote="true" action="/register" accept-charset="UTF-8">
+						<input id="email" class="form-control" type="text" placeholder="Email" name="email">
+						<input id="password" class="form-control" type="password" placeholder="Password" name="password">
+						<input id="password_confirmation" class="form-control" type="password" placeholder="Repeat Password" name="password_confirmation">
+						<input class="btn btn-default btn-register" type="submit" value="Create account" name="commit">
+						</form>
+					</div>
 				</div>
 				<div class="col-md-6 login">
-					Guest account
+					<h4 class="modal-title"> Guest account </h4>
 					<div class="form loginBox">
 						<!--<form method="post" action="/login" accept-charset="UTF-8">-->
 						<input id="email" class="form-control" type="text" placeholder="Name" 		name="name" #guestInput>
@@ -201,14 +212,14 @@
 		 
       </div>
 
-			<div class="forgot login-footer">
+			<div class="forgot login-footer" *ngIf="newAccount">
 				<span>Looking to 
-						<a href="javascript: showRegisterForm();">create an account</a>
+						<a (click)="toggleLogin()">create an account</a>
 				?</span>
 			</div>
-			<div class="forgot register-footer" style="display:none">
+			<div class="forgot register-footer" *ngIf="!newAccount">
 					<span>Already have an account?</span>
-					<a href="javascript: showLoginForm();">Login</a>
+					<a (click)="toggleLogin()" >Login</a>
 			</div>
 
     </div>

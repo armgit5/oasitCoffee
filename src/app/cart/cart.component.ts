@@ -23,6 +23,8 @@ export class CartComponent implements OnInit {
     newTotal: number = 0;
     newCount: number = 0;
 
+    newAccount:boolean = true;
+
      @ViewChild('staticModal') loginModal; 
 
     constructor(private coffeeService: CoffeeService,
@@ -179,8 +181,12 @@ export class CartComponent implements OnInit {
         this.onSubmit();
     }
 
-    // qtyChange(qty) {
-    //     console.log(qty);
-    // }
+    toggleLogin() {
+        if (this.newAccount == true) {
+            this.newAccount = false;
+        } else {
+            this.newAccount = true;
+        }
+    }
 
 }
