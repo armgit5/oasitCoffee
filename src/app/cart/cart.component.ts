@@ -7,6 +7,8 @@ import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@ang
 import { QueueService } from '../queue/queue.service';
 import { Router } from "@angular/router";
 import { Cart } from './cart';
+import { AngularFire } from 'angularfire2';
+import { AuthMethods, AuthProviders } from 'angularfire2/index';
 
 @Component({
   selector: 'cart',
@@ -30,7 +32,8 @@ export class CartComponent implements OnInit {
     constructor(private coffeeService: CoffeeService,
                 private formBuilder: FormBuilder,
                 private queueService: QueueService,
-                private router: Router) {
+                private router: Router,
+                private af: AngularFire) {
         
         // For testing 
         // this.cartItems = [new Cart("-KhguZOrC43ph1D_oiwU","test","Cold",5,13,"comment",
@@ -47,6 +50,15 @@ export class CartComponent implements OnInit {
         this.updateCartRealTime();
         this.customerName = null;
         console.log(this.customerName);
+
+        this.af.auth.subscribe(authState => {
+            if (authState != null) {
+                console.log(authState.uid);
+            } else {
+                console.log("null authstate");
+            }
+            
+        });
     }
 
     updateCartRealTime() {
@@ -187,6 +199,33 @@ export class CartComponent implements OnInit {
         } else {
             this.newAccount = true;
         }
+    }
+
+    register() {
+        this.af.auth.createUser({
+            email: 'ysuwansiri@yahoo.com',
+            password: '123456'
+        })
+        .then(authState => {
+            console.log(authState);
+        })
+        .catch(error => console.log(error));
+    }
+
+    login() {
+        this.af.auth.login({
+            email: 'ysuwansiri@yahoo.com',
+            password: '123456'
+        }, {
+            method: AuthMethods.Password,
+            provider: AuthProviders.Password
+        })
+        .then(authState => console.log(authState))
+        .catch(error => console.log(error));
+    }
+
+    logout() {
+        this.af.auth.logout();
     }
 
 }
