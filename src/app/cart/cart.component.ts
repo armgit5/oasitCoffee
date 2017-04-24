@@ -25,7 +25,7 @@ export class CartComponent implements OnInit {
     newTotal: number = 0;
     newCount: number = 0;
 
-    newAccount:boolean = true;
+    // newAccount:boolean = true;
 
      @ViewChild('staticModal') loginModal; 
 
@@ -185,6 +185,12 @@ export class CartComponent implements OnInit {
 
     hideModal() {
       this.loginModal.hide();
+    }
+
+    onHasName(name) {
+        this.customerName = name;
+        this.cartForm.value.customerName = name;
+        this.onSubmit();
     }
 
 }
