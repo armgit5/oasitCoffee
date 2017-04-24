@@ -1,0 +1,64 @@
+        <div class="box">
+			<div class="content">
+				<div class="col-md-6 login" style="margin-bottom:15px">
+					<div class="social">
+						<!--<a class="circle github" href="/auth/github">
+							<i class="fa fa-github fa-fw"></i>
+						</a>
+						<a id="google_login" class="circle google" href="/auth/google_oauth2">
+							<i class="fa fa-google-plus fa-fw"></i>
+						</a>-->
+						<a id="facebook_login" class="circle facebook" 
+							(click)="facebookLogin()">
+							<i class="fa fa-facebook fa-fw"></i>
+						</a>
+					</div>
+					<div class="division">
+						<div class="line l"></div>
+							<span>or</span>
+						<div class="line r"></div>
+					</div>
+					<div class="error"></div>
+					<h4 class="modal-title" *ngIf="newAccount">Login with</h4>
+					<h4 class="modal-title" *ngIf="!newAccount">Register with</h4>
+					<div class="form loginBox" *ngIf="newAccount">
+						<form method="post" action="/login" accept-charset="UTF-8">
+						<input id="email" class="form-control" type="text" placeholder="Email" name="email">
+						<input id="password" class="form-control" type="password" placeholder="Password" name="password">
+						<input class="btn btn-default btn-login" type="button" value="Login" (click)="login()">
+						<input class="btn btn-default btn-login" type="button" value="Logout" (click)="logout()">
+						</form>
+					</div>
+					<div class="form" *ngIf="!newAccount">
+						<form method="post" html="{:multipart=>true}" data-remote="true" action="/register" accept-charset="UTF-8">
+						<input id="email" class="form-control" type="text" placeholder="Email" name="email">
+						<input id="password" class="form-control" type="password" placeholder="Password" name="password">
+						<input id="password_confirmation" class="form-control" type="password" placeholder="Repeat Password" name="password_confirmation">
+						<input class="btn btn-default btn-register" type="submit" value="Create account" name="commit" (click)="register()">
+						</form>
+					</div>
+				</div>
+				<div class="col-md-6 login">
+					<h4 class="modal-title"> Guest account </h4>
+					<div class="form loginBox">
+						<!--<form method="post" action="/login" accept-charset="UTF-8">-->
+						<input id="email" class="form-control" type="text" placeholder="Name" 		name="name" #guestInput>
+						<input class="btn btn-default btn-login" 
+							type="button" 
+							value="Login as guest"
+							(click)="loginAsGuest(guestInput.value)">
+						<!--</form>-->
+					</div>
+				</div>
+			</div>
+		</div>
+
+    <div class="forgot login-footer" *ngIf="newAccount">
+				<span>Looking to 
+						<a (click)="toggleLogin()">create an account</a>
+				?</span>
+			</div>
+			<div class="forgot register-footer" *ngIf="!newAccount">
+					<span>Already have an account?</span>
+					<a (click)="toggleLogin()" >Login</a>
+			</div>

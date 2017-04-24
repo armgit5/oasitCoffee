@@ -21,6 +21,8 @@ import { ImageCropperComponent } from 'ng2-img-cropper';
 import { CategoryService } from './coffees/category/category.service';
 import { ModalModule } from 'ngx-bootstrap';
 import { AlertModule } from 'ngx-bootstrap/alert';
+import { LoginComponent } from './login/login.component';
+import { LoginService } from './login/login.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { AlertModule } from 'ngx-bootstrap/alert';
     CoffeeComponent,
     QueueComponent,
     CoffeeEditComponent,
-    ImageCropperComponent
+    ImageCropperComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,10 @@ import { AlertModule } from 'ngx-bootstrap/alert';
     ModalModule.forRoot(),
     AlertModule.forRoot()
   ],
-  providers: [CoffeeService, QueueService, CategoryService],
+  providers: [CoffeeService, 
+              QueueService, 
+              CategoryService,
+              LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

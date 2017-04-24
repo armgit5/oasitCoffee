@@ -52,8 +52,8 @@ export class CartComponent implements OnInit {
         console.log(this.customerName);
 
         this.af.auth.subscribe(authState => {
-            if (authState != null) {
-                console.log(authState.uid);
+            if (!authState) {
+                console.log(authState);
             } else {
                 console.log("null authstate");
             }
@@ -185,47 +185,6 @@ export class CartComponent implements OnInit {
 
     hideModal() {
       this.loginModal.hide();
-    }
-
-    loginAsGuest(name) {
-        this.customerName = name;
-        this.cartForm.value.customerName = name;
-        this.onSubmit();
-    }
-
-    toggleLogin() {
-        if (this.newAccount == true) {
-            this.newAccount = false;
-        } else {
-            this.newAccount = true;
-        }
-    }
-
-    register() {
-        this.af.auth.createUser({
-            email: 'ysuwansiri@yahoo.com',
-            password: '123456'
-        })
-        .then(authState => {
-            console.log(authState);
-        })
-        .catch(error => console.log(error));
-    }
-
-    login() {
-        this.af.auth.login({
-            email: 'ysuwansiri@yahoo.com',
-            password: '123456'
-        }, {
-            method: AuthMethods.Password,
-            provider: AuthProviders.Password
-        })
-        .then(authState => console.log(authState))
-        .catch(error => console.log(error));
-    }
-
-    logout() {
-        this.af.auth.logout();
     }
 
 }
