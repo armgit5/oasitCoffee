@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { LoginService } from './login.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -9,19 +10,29 @@ import { LoginService } from './login.service';
 export class LoginComponent implements OnInit {
 
   newAccount:boolean = true;
+  loginForm: FormGroup;
 
   @Output() 
   customerNameOutput = new EventEmitter<string>();
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService,
+              private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.initLoginForm();
+  }
+
+  private initLoginForm() {
+    let email = '';
+    let password = '';
+
+    this.loginForm = this.formBuilder.group({
+      email: [email, Validators.required],
+      password: [password, Validators.required]
+    });
   }
 
    loginAsGuest(name) {
-        // this.customerName = name;
-        // this.cartForm.value.customerName = name;
-        // this.onSubmit();
         this.customerNameOutput.emit(name);
     }
 
@@ -42,11 +53,15 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-        
+        console.log("login");
+        console.log(this.loginForm.value);
+        let email = this.loginForm.value.email;
+        let password = this.loginForm.value.password;
+        this.loginService.login(email, password);
     }
 
     logout() {
-        
+        this.loginService.logout();
     }
 
 }

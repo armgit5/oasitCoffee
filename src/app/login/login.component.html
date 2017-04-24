@@ -1,4 +1,5 @@
-        <div class="box">
+    
+    <div class="box">
 			<div class="content">
 				<div class="col-md-6 login" style="margin-bottom:15px">
 					<div class="social">
@@ -22,17 +23,17 @@
 					<h4 class="modal-title" *ngIf="newAccount">Login with</h4>
 					<h4 class="modal-title" *ngIf="!newAccount">Register with</h4>
 					<div class="form loginBox" *ngIf="newAccount">
-						<form method="post" action="/login" accept-charset="UTF-8">
-						<input id="email" class="form-control" type="text" placeholder="Email" name="email">
-						<input id="password" class="form-control" type="password" placeholder="Password" name="password">
-						<input class="btn btn-default btn-login" type="button" value="Login" (click)="login()">
+						<form [formGroup]="loginForm" (ngSubmit)="login()">
+						<input formControlName="email" class="form-control" type="text" placeholder="Email" name="email">
+						<input formControlName="password" class="form-control" type="password" placeholder="Password" name="password">
+						<input class="btn btn-default btn-login" type="submit" value="Login">
 						<input class="btn btn-default btn-login" type="button" value="Logout" (click)="logout()">
 						</form>
 					</div>
 					<div class="form" *ngIf="!newAccount">
 						<form method="post" html="{:multipart=>true}" data-remote="true" action="/register" accept-charset="UTF-8">
-						<input id="email" class="form-control" type="text" placeholder="Email" name="email">
-						<input id="password" class="form-control" type="password" placeholder="Password" name="password">
+						<input id="email" class="form-control" formControlName="email" type="text" placeholder="Email" name="email">
+						<input id="password" class="form-control" formControlName="password" type="password" placeholder="Password" name="password">
 						<input id="password_confirmation" class="form-control" type="password" placeholder="Repeat Password" name="password_confirmation">
 						<input class="btn btn-default btn-register" type="submit" value="Create account" name="commit" (click)="register()">
 						</form>

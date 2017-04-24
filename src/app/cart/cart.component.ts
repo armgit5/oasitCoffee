@@ -9,6 +9,8 @@ import { Router } from "@angular/router";
 import { Cart } from './cart';
 import { AngularFire } from 'angularfire2';
 import { AuthMethods, AuthProviders } from 'angularfire2/index';
+import { User } from '../login/user';
+import { authConfig } from '../../environments/firebase.config';
 
 @Component({
   selector: 'cart',
@@ -24,6 +26,8 @@ export class CartComponent implements OnInit {
 
     newTotal: number = 0;
     newCount: number = 0;
+
+    user: User = new User(null, null, null, null);
 
     // newAccount:boolean = true;
 
@@ -49,13 +53,23 @@ export class CartComponent implements OnInit {
         // update cart in real time when qty changes
         this.updateCartRealTime();
         this.customerName = null;
-        console.log(this.customerName);
-
+        // console.log(this.customerName);
+        
         this.af.auth.subscribe(authState => {
-            if (!authState) {
-                console.log(authState);
+            console.log(authState);
+            if (authState) {
+                
+                this.user.uid = authState.uid;
+                this.user.email = authState.auth.email;
+                this.user.imageUrl = authState.auth.photoURL;
+                this.user.name = authState.auth.displayName;
+
             } else {
                 console.log("null authstate");
+                this.user.uid = null;
+                this.user.email = null;
+                this.user.imageUrl = null;
+                this.user.name = null;
             }
             
         });
@@ -188,9 +202,7 @@ export class CartComponent implements OnInit {
     }
 
     onHasName(name) {
-        this.customerName = name;
-        this.cartForm.value.customerName = name;
-        this.onSubmit();
+        
     }
 
 }
