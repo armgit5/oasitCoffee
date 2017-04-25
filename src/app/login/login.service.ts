@@ -43,7 +43,7 @@ export class LoginService {
             password: password
         })
         .then(authState => {
-            // console.log(authState);
+            console.log(authState);
             // this.isLoggedIn.emit(true);
         })
         .catch(error => console.log(error));

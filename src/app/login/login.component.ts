@@ -13,6 +13,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   registerForm: FormGroup;
 
+  posted = false;
+
   @Output() 
   customerNameOutput = new EventEmitter<string>();
 
@@ -62,6 +64,7 @@ export class LoginComponent implements OnInit {
         let email = this.registerForm.value.email;
         let password = this.registerForm.value.password;
         this.loginService.register(email, password);
+        this.posted = true;
     }
 
     facebookLogin() {

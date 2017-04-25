@@ -35,7 +35,10 @@
 						<input class="form-control" formControlName="email" type="text" placeholder="Email" name="email">
 						<input class="form-control" formControlName="password" type="password" placeholder="Password" name="password">
 						<input class="form-control" formControlName="confirm" type="password" placeholder="Repeat Password" name="password_confirmation">
-						<input class="btn btn-default btn-register" type="submit" value="Create account" name="commit" (click)="register()">
+						<input class="btn btn-default btn-register"
+               type="submit" value="Create account" 
+               name="commit" (click)="register()"
+               [disabled]="posted">
 						</form>
 					</div>
 				</div>
