@@ -5,6 +5,7 @@ import { Observable } from "rxjs/Observable";
 import { Category } from './coffees/category/category';
 import { CategoryService } from './coffees/category/category.service';
 import { Subscription } from 'rxjs/Rx';
+import { LoginService } from './login/login.service';
 
 @Component({
     selector: 'my-header',
@@ -17,6 +18,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     $coffeeCounts: Subscription;
     clicked: boolean = false;
 
+    @ViewChild('staticModal') loginModal; 
+
     @Input()
     count?: number;
 
@@ -25,7 +28,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     constructor(private coffeeService: CoffeeService,
-                private categorySerivce: CategoryService) {
+                private categorySerivce: CategoryService,
+                private loginService: LoginService) {
         
     }
     
@@ -58,6 +62,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.$coffeeCounts.unsubscribe();
+    }
+
+    login() {
+        this.loginModal.show();
+    }
+
+    hideModal() {
+      this.loginModal.hide();
+    }
+
+    logout() {
+        this.loginService.logout();
     }
 
 }   

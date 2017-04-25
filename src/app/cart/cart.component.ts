@@ -11,6 +11,7 @@ import { AngularFire } from 'angularfire2';
 import { AuthMethods, AuthProviders } from 'angularfire2/index';
 import { User } from '../login/user';
 import { authConfig } from '../../environments/firebase.config';
+import { LoginService } from '../login/login.service';
 
 @Component({
   selector: 'cart',
@@ -37,7 +38,8 @@ export class CartComponent implements OnInit {
                 private formBuilder: FormBuilder,
                 private queueService: QueueService,
                 private router: Router,
-                private af: AngularFire) {
+                private af: AngularFire,
+                private loginService: LoginService) {
         
         // For testing 
         // this.cartItems = [new Cart("-KhguZOrC43ph1D_oiwU","test","Cold",5,13,"comment",
@@ -54,6 +56,14 @@ export class CartComponent implements OnInit {
         this.updateCartRealTime();
         this.customerName = null;
         // console.log(this.customerName);
+
+        this.loginService.isLoggedIn.subscribe(isLoggedIn => {
+            if (isLoggedIn) {
+                console.log("logged in");
+            } else {
+                console.log("false");
+            }
+        });
         
         this.af.auth.subscribe(authState => {
             console.log(authState);
@@ -95,7 +105,6 @@ export class CartComponent implements OnInit {
     }
 
     private initForm() {
-        console.log(this.cartItems);
 
         let customerName = this.customerName;
         let cartCoffees: FormArray = new FormArray([]);
@@ -116,8 +125,6 @@ export class CartComponent implements OnInit {
             customerName: [customerName],
             cartCoffees: cartCoffees
         });
-
-        
 
     }   
 

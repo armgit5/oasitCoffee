@@ -62,13 +62,8 @@
                                 <!--<p>Account <b class="caret"></b></p>-->
                             </a>
                           <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
+                            <li><a (click)="login()">Login/ Signup</a></li>
+                            <li><a (click)="logout()">Logout</a></li>
                           </ul>
                     </li>
                </ul>
@@ -96,4 +91,23 @@
         padding-top:35px;"
         (mouseleave)="menuOut()">
   <category-selector (filter)="onFilter($event)"></category-selector>
+</div>
+
+<div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
+                  tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog"> 
+    <div class="modal-content" style="width:750px;height:475px;margin:0px;margin-left:-15%">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">USER ACCOUNT</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		  
+		<app-login (customerNameOutput)="onHasName($event)"></app-login>
+			
+      </div>
+    </div>
+  </div>
 </div>
