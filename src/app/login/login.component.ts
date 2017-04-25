@@ -11,6 +11,7 @@ export class LoginComponent implements OnInit {
 
   newAccount:boolean = true;
   loginForm: FormGroup;
+  registerForm: FormGroup;
 
   @Output() 
   customerNameOutput = new EventEmitter<string>();
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.initLoginForm();
+    this.initRegisterForm();
   }
 
   private initLoginForm() {
@@ -29,6 +31,18 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       email: [email, Validators.required],
       password: [password, Validators.required]
+    });
+  }
+
+  private initRegisterForm() {
+    let email = '';
+    let password = '';
+    let confirm = '';
+
+    this.registerForm = this.formBuilder.group({
+      email: [email, Validators.required],
+      password: [password, Validators.required],
+      confirm: [confirm, Validators.required]
     });
   }
 
@@ -45,7 +59,9 @@ export class LoginComponent implements OnInit {
     }
 
     register() {
-        
+        let email = this.registerForm.value.email;
+        let password = this.registerForm.value.password;
+        this.loginService.register(email, password);
     }
 
     facebookLogin() {
@@ -53,8 +69,6 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-        console.log("login");
-        console.log(this.loginForm.value);
         let email = this.loginForm.value.email;
         let password = this.loginForm.value.password;
         this.loginService.login(email, password);

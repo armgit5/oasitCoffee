@@ -1,12 +1,14 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { AngularFire } from 'angularfire2';
 import { AuthMethods, AuthProviders } from 'angularfire2/index';
+import { User } from './user';
 
 
 @Injectable()
 export class LoginService {
 
     isLoggedIn = new EventEmitter<boolean>();
+    user: User = new User(null, null, null, null);
 
     constructor(private af: AngularFire) {
         this.af.auth.subscribe(authState => {
@@ -29,7 +31,7 @@ export class LoginService {
             provider: AuthProviders.Password
         })
         .then(authState => {
-            console.log(authState);
+            // console.log(authState);
             // this.isLoggedIn.emit(true);
         })
         .catch(error => console.log(error));
@@ -41,7 +43,7 @@ export class LoginService {
             password: password
         })
         .then(authState => {
-            console.log(authState);
+            // console.log(authState);
             // this.isLoggedIn.emit(true);
         })
         .catch(error => console.log(error));

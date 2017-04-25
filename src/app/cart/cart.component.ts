@@ -65,24 +65,24 @@ export class CartComponent implements OnInit {
             }
         });
         
-        this.af.auth.subscribe(authState => {
-            console.log(authState);
-            if (authState) {
+        // this.af.auth.subscribe(authState => {
+        //     console.log(authState);
+        //     if (authState) {
                 
-                this.user.uid = authState.uid;
-                this.user.email = authState.auth.email;
-                this.user.imageUrl = authState.auth.photoURL;
-                this.user.name = authState.auth.displayName;
+        //         this.user.uid = authState.uid;
+        //         this.user.email = authState.auth.email;
+        //         this.user.imageUrl = authState.auth.photoURL;
+        //         this.user.name = authState.auth.displayName;
 
-            } else {
-                console.log("null authstate");
-                this.user.uid = null;
-                this.user.email = null;
-                this.user.imageUrl = null;
-                this.user.name = null;
-            }
+        //     } else {
+        //         console.log("null authstate");
+        //         this.user.uid = null;
+        //         this.user.email = null;
+        //         this.user.imageUrl = null;
+        //         this.user.name = null;
+        //     }
             
-        });
+        // });
     }
 
     updateCartRealTime() {
