@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 // import { cartData } from './cartData';
 import { coffeesData } from '../coffees/coffeesData';
 import { CoffeeService } from '../coffees/coffee.service';
@@ -12,13 +12,14 @@ import { AuthMethods, AuthProviders } from 'angularfire2/index';
 import { User } from '../login/user';
 import { authConfig } from '../../environments/firebase.config';
 import { LoginService } from '../login/login.service';
+import { Subscription } from 'rxjs/Rx';
 
 @Component({
   selector: 'cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, OnDestroy {
 
     cartForm: FormGroup;
     customerName: string;
@@ -29,6 +30,8 @@ export class CartComponent implements OnInit {
     newCount: number = 0;
 
     user: User = new User(null, null, null, null);
+
+    $logIn: Subscription;
 
     // newAccount:boolean = true;
 
@@ -54,35 +57,24 @@ export class CartComponent implements OnInit {
 
         // update cart in real time when qty changes
         this.updateCartRealTime();
-        this.customerName = null;
-        // console.log(this.customerName);
 
-        this.loginService.isLoggedIn.subscribe(isLoggedIn => {
+        // initialize user name if no name then use email
+        if (!this.loginService.user.name && this.loginService.user.email) {
+            this.customerName = this.loginService.user.email;
+        } else {
+            this.customerName = this.loginService.user.name;
+        }
+        
+        this.$logIn = this.loginService.isLoggedIn.subscribe(isLoggedIn => {
             if (isLoggedIn) {
                 console.log("logged in");
+                this.customerName = this.loginService.user.name;
+                console.log(this.customerName);
             } else {
                 console.log("false");
+                this.customerName = null;
             }
         });
-        
-        // this.af.auth.subscribe(authState => {
-        //     console.log(authState);
-        //     if (authState) {
-                
-        //         this.user.uid = authState.uid;
-        //         this.user.email = authState.auth.email;
-        //         this.user.imageUrl = authState.auth.photoURL;
-        //         this.user.name = authState.auth.displayName;
-
-        //     } else {
-        //         console.log("null authstate");
-        //         this.user.uid = null;
-        //         this.user.email = null;
-        //         this.user.imageUrl = null;
-        //         this.user.name = null;
-        //     }
-            
-        // });
     }
 
     updateCartRealTime() {
@@ -149,15 +141,20 @@ export class CartComponent implements OnInit {
         this.coffeeService.updateFetchCounts(0);
     }
 
+    private addToQueue() {
+        this.queueService.addQueue(this.cartForm.value);
+        this.setToZero();
+        this.router.navigate(['queue']);
+    }
+
     onSubmit() {
         console.log(this.customerName == undefined || this.customerName == null);
+        console.log(this.customerName);
         if (this.customerName == undefined || this.customerName == null) {
             this.loginModal.show();
         } else {
             //update coffee service cart coffees and cart items to []
-            this.queueService.addQueue(this.cartForm.value);
-            this.setToZero();
-            this.router.navigate(['queue']);
+            this.addToQueue();
         }  
     }
 
@@ -210,6 +207,10 @@ export class CartComponent implements OnInit {
 
     onHasName(name) {
         
+    }
+
+    ngOnDestroy() {
+        this.$logIn.unsubscribe();
     }
 
 }

@@ -136,7 +136,7 @@
 							<td colspan="2" class="hidden-xs"></td>
 							<td class="text-center" >Total: {{total}}</td>
 							<td><button type="submit" class="btn btn-success"
-							 [disabled]="cartItems.length > 0">Save</button></td>
+							 [disabled]="cartItems.length <= 0">Save</button></td>
 							<!--<td><a class="btn btn-success btn-block" type="submit">Checkout <i class="fa fa-angle-right"></i></a></td>-->
 						</tr>
 					</tfoot>

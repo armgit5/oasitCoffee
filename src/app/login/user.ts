@@ -8,4 +8,8 @@ export class User {
                 public imageUrl: string,
                 ) {
     }  
+
+    isLoggedIn() {
+        
+    }
 }
