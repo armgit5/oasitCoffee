@@ -52,11 +52,6 @@ export class CartComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.calculateTotal();
-        this.initForm();
-
-        // update cart in real time when qty changes
-        this.updateCartRealTime();
 
         // initialize user name if no name then use email
         if (!this.loginService.user.name && this.loginService.user.email) {
@@ -75,6 +70,12 @@ export class CartComponent implements OnInit, OnDestroy {
                 this.customerName = null;
             }
         });
+
+        this.calculateTotal();
+        this.initForm();
+
+        // update cart in real time when qty changes
+        this.updateCartRealTime();
     }
 
     updateCartRealTime() {
@@ -142,6 +143,7 @@ export class CartComponent implements OnInit, OnDestroy {
     }
 
     private addToQueue() {
+        console.log(this.cartForm.value);
         this.queueService.addQueue(this.cartForm.value);
         this.setToZero();
         this.router.navigate(['queue']);

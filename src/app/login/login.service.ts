@@ -9,12 +9,8 @@ export class LoginService {
 
     isLoggedIn = new EventEmitter<boolean>();
     user: User = new User(null, null, null, null);
-
     
-
     constructor(private af: AngularFire) {
-        console.log('inside service');
-        console.log(this.user);
         this.af.auth.subscribe(authState => {
             if (authState) {
                 console.log("service login")
