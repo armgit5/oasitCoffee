@@ -12,11 +12,13 @@ export class LoginComponent implements OnInit {
   newAccount:boolean = true;
   loginForm: FormGroup;
   registerForm: FormGroup;
-
   posted = false;
 
   @Output() 
   customerNameOutput = new EventEmitter<string>();
+
+  @Output()
+  modalOff = new EventEmitter<boolean>(); 
 
   constructor(private loginService: LoginService,
               private formBuilder: FormBuilder) { }
@@ -74,7 +76,11 @@ export class LoginComponent implements OnInit {
     login() {
         let email = this.loginForm.value.email;
         let password = this.loginForm.value.password;
-        this.loginService.login(email, password);
+        this.loginService.login(email, password)
+          .then(authState => {
+            this.modalOff.emit(true);
+          })
+          .catch(error => console.log(error));
     }
 
     // logout() {

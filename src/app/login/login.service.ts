@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable, EventEmitter, ViewChild } from '@angular/core';
 import { AngularFire } from 'angularfire2';
 import { AuthMethods, AuthProviders } from 'angularfire2/index';
 import { User } from './user';
@@ -9,6 +9,8 @@ export class LoginService {
 
     isLoggedIn = new EventEmitter<boolean>();
     user: User = new User(null, null, null, null);
+
+    @ViewChild('staticModal') loginModal; 
     
     constructor(private af: AngularFire) {
         this.af.auth.subscribe(authState => {
@@ -32,19 +34,25 @@ export class LoginService {
         });
     }
 
-    login(email, password) {
-        this.af.auth.login({
-            email: email,
-            password: password
-        }, {
-            method: AuthMethods.Password,
-            provider: AuthProviders.Password
-        })
-        .then(authState => {
-            console.log(authState);
-            // this.isLoggedIn.emit(true);
-        })
-        .catch(error => console.log(error));
+    login(email, password): Promise<any> {
+
+        return new Promise((resolve, reject) => {
+
+            this.af.auth.login({
+                email: email,
+                password: password
+            }, {
+                method: AuthMethods.Password,
+                provider: AuthProviders.Password
+            })
+            .then(authState => {
+                resolve(authState);
+            })
+            .catch(error => resolve(error));
+
+        });
+
+       
     }
 
     register(email, password) {
@@ -53,22 +61,25 @@ export class LoginService {
             password: password
         })
         .then(authState => {
-            console.log(authState);
-            // this.isLoggedIn.emit(true);
+            
         })
         .catch(error => console.log(error));
     }
 
-    facebookLogin() {
-        this.af.auth.login({
-           provider: AuthProviders.Facebook,
-           method: AuthMethods.Popup
-        })
-        .then(authState => {
-            console.log(authState);
-            // this.isLoggedIn.emit(true);
-        })
-        .catch(error => console.log(error));
+    facebookLogin(): Promise<any> {
+
+        return new Promise((resolve, reject) => {
+
+            this.af.auth.login({
+            provider: AuthProviders.Facebook,
+            method: AuthMethods.Popup
+            })
+            .then(authState => {
+                resolve(authState)
+            })
+            .catch(error => resolve(error));
+
+        });
     }
 
     logout() {
