@@ -66,12 +66,12 @@ export class CartComponent implements OnInit, OnDestroy {
         
         this.$logIn = this.loginService.isLoggedIn.subscribe(isLoggedIn => {
             if (isLoggedIn) {
-                console.log("logged in");
+                // console.log("logged in");
                 this.assignUserInfo();
-                console.log(this.customerName);
+                // console.log(this.customerName);
                 this.onSubmit();
             } else {
-                console.log("false");
+                // console.log("false");
                 this.customerName = null;
             }
         });
@@ -148,15 +148,15 @@ export class CartComponent implements OnInit, OnDestroy {
     }
 
     private addToQueue() {
-        console.log(this.cartForm.value);
+        // console.log(this.cartForm.value);
         this.queueService.addQueue(this.cartForm.value);
         this.setToZero();
         this.router.navigate(['queue']);
     }
 
     onSubmit() {
-        console.log(this.customerName == undefined || this.customerName == null);
-        console.log(this.customerName);
+        // console.log(this.customerName == undefined || this.customerName == null);
+        // console.log(this.customerName);
         if (this.customerName == undefined || this.customerName == null) {
             this.loginModal.show();
         } else {

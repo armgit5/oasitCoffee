@@ -15,16 +15,16 @@ export class LoginService {
     constructor(private af: AngularFire) {
         this.af.auth.subscribe(authState => {
             if (authState) {
-                console.log("service login")
-                console.log(authState);
+                // console.log("service login")
+                // console.log(authState);
                 this.user.uid = authState.uid;
                 this.user.email = authState.auth.email;
                 this.user.imageUrl = authState.auth.photoURL;
                 this.user.name = authState.auth.displayName;
-                console.log(this.user);
+                // console.log(this.user);
                 this.isLoggedIn.emit(true);
             } else {
-                console.log("service logout")
+                // console.log("service logout")
                 this.user.uid = null;
                 this.user.email = null;
                 this.user.imageUrl = null;
