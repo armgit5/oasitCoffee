@@ -62,7 +62,8 @@
                                 <!--<p>Account <b class="caret"></b></p>-->
                             </a>
                           <ul class="dropdown-menu">
-                            <li><a (click)="login()">Login/ Signup</a></li>
+                            <li><a (click)="login()" *ngIf="!loginStatus">Login/ Signup</a></li>
+                            <li><a (click)="accountLogin()"  *ngIf="loginStatus">Account Info</a></li>
                             <li><a (click)="logout()">Logout</a></li>
                           </ul>
                     </li>

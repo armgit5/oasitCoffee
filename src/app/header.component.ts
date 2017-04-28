@@ -23,6 +23,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     @Input()
     count?: number;
 
+    $logIn: Subscription;
+    loginStatus = false;
+
     onFilter(filter) {
         this.categorySerivce.categoryChanged.emit(filter);
     }
@@ -31,6 +34,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 private categorySerivce: CategoryService,
                 private loginService: LoginService) {
         
+        this.$logIn = this.loginService.isLoggedIn.subscribe(isLoggedIn => {
+            if (isLoggedIn) {
+                console.log("login");
+                this.loginStatus = true;
+            } else {
+                console.log("false");
+                this.loginStatus = false;
+            }
+        });
     }
     
     ngOnInit() {
@@ -62,6 +74,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.$coffeeCounts.unsubscribe();
+        this.$logIn.unsubscribe();
     }
 
     login() {
@@ -74,6 +87,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     logout() {
         this.loginService.logout();
+    }
+
+    accountInfo() {
+        
     }
 
 }   
