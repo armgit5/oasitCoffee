@@ -70,7 +70,11 @@ export class LoginComponent implements OnInit {
     }
 
     facebookLogin() {
-       this.loginService.facebookLogin();
+       this.loginService.facebookLogin()
+        .then(authState => {
+            this.modalOff.emit(true);
+          })
+          .catch(error => console.log(error));
     }
 
     login() {

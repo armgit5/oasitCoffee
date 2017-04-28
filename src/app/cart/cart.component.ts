@@ -51,20 +51,25 @@ export class CartComponent implements OnInit, OnDestroy {
 
     }
 
-    ngOnInit() {
-
-        // initialize user name if no name then use email
+    private assignUserInfo() {
         if (!this.loginService.user.name && this.loginService.user.email) {
             this.customerName = this.loginService.user.email;
         } else {
             this.customerName = this.loginService.user.name;
         }
+    }
+
+    ngOnInit() {
+
+        // initialize user name if no name then use email
+        this.assignUserInfo();
         
         this.$logIn = this.loginService.isLoggedIn.subscribe(isLoggedIn => {
             if (isLoggedIn) {
                 console.log("logged in");
-                this.customerName = this.loginService.user.name;
+                this.assignUserInfo();
                 console.log(this.customerName);
+                this.onSubmit();
             } else {
                 console.log("false");
                 this.customerName = null;
