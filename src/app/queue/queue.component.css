@@ -1,0 +1,13 @@
+.md-user-image {
+    border-radius: 50%;
+    width: 34px;
+}
+
+img {
+    border: 0 none;
+    box-sizing: border-box;
+    height: auto;
+    max-width: 100%;
+    vertical-align: middle;
+}
+
