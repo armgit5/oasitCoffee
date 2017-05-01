@@ -17,7 +17,7 @@ export class QueueService {
   
   addQueue(cart) {
     // push queue to firebase without key
-    let queue = {customerName: cart.customerName, cartCoffees: cart.cartCoffees};  
+    let queue = {customerName: cart.customerName, customerImage: cart.customerImage, cartCoffees: cart.cartCoffees};  
     this.sdkDb.child("queue").push(queue);
   }
 

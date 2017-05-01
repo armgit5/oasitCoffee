@@ -25,6 +25,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     $logIn: Subscription;
     loginStatus = false;
+    customerName: string;
 
     onFilter(filter) {
         this.categorySerivce.categoryChanged.emit(filter);
@@ -38,9 +39,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
             if (isLoggedIn) {
                 console.log("login");
                 this.loginStatus = true;
+                this.customerName = this.loginService.user.name;
             } else {
                 console.log("false");
                 this.loginStatus = false;
+                this.customerName = null;
             }
         });
     }
@@ -90,7 +93,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     accountInfo() {
-        
+
     }
 
 }   

@@ -1,35 +1,6 @@
 
-<!--<table class="table">
-    <tr>
-        <th>Coffee</th>
-        <th>Type</th>
-        <th>Qty</th>
-        <th>Comment</th>
-        <th>Delete</th>
-    </tr>
-</table>
-     
-<div *ngFor="let queue of queues">
-    
-    {{queue.customerName}}
-
-    <table class="table">
-    <tr *ngFor="let cartCoffee of queue.cartCoffees">
-        <td>{{cartCoffee.coffeeName}}</td>
-        <td>{{cartCoffee.coffeeType}}</td>
-        <td>{{cartCoffee.qty}}</td>
-        <td>{{cartCoffee.comment}}</td>
-    </tr>
-    </table>
-
-    <td><button class="btn btn-danger pull-right" type="button" (click)="deleteQueue(queue.$key)">Delete</button>
-</div>-->
-
-<!--<br>-->
-
-<!--<form (ngSubmit)="onSubmit()">-->
 <div class="container col-sm-12 col-md-10 col-md-offset-1">
-	<table class="table table-hover table-condensed">
+	<!--<table class="table table-hover table-condensed">
     				<thead>
                         
 						<tr>
@@ -56,61 +27,38 @@
 							</td>
 							<td data-th="Price" style="padding-top:15px">13</td>
 							<td data-th="Quantity">
-								<!--<input type="number" 
-                                    class="form-control"
-                                    formControlName="qty"
-									style="padding-top:8px">-->
-									<!--<div class="col-md-3" style="padding: 0; padding-top: 2px">
-										<a class="btn" (click)="minus(i)" style="padding: 0">
-											<i class="fa fa-minus-square fa-2x"></i> 
-										</a>
-									</div>
-									<div class="col-md-6" style="padding: 0">
-										<input type="text" name="quant[1]" 
-											class="form-control input-number" 
-											value = {{cartForm.value.cartCoffees[i].qty}}
-											min="1"
-											style="text-align: center;background-color:white;color:black"
-											#qtyInput
-											disabled> 
-									</div>
-									<div class="col-md-3" style="padding: 0; padding-top: 2px; padding-right: 1px">
-										<a class="btn" (click)="plus(i)" style="padding: 0">
-											<i class="fa fa-plus-square fa-2x"></i>
-										</a>
-									</div>-->
                                     {{cartCoffee.qty}}
 							</td>
 							<td data-th="Subtotal" style="padding-top:15px" class="text-center"></td>
 							<td class="" data-th="">
-								<!--<button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>-->
+								<button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
 								<button class="btn btn-danger btn-sm" (click)="delete(i)"><i class="fa fa-trash-o"></i></button>								
 							</td>
 						</tr>
 					 
 					</tbody>
 
-				</table>
+				</table>-->
 
-               
-
-                    <div class="panel panel-default">
+                    <div class="panel panel-default" *ngFor="let queue of queues">
                         <div class="panel-heading">
-                            <h3 class="panel-title"> <div class="chat_user_avatar">
-                                <!--<a href="https://web.facebook.com/iamgurdeeposahan" target="_blank">-->
-                                    <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="md-user-image">
-                                <!--</a>-->
-                                </div>Panel title</h3>
+                            <!--<h3 class="panel-title"> -->
+                                
+                                <div class="chat_user_avatar">
+                                    <img alt="image" src={{queue?.customerImage}} class="md-user-image">
+                                      {{queue.customerName}}
+                                </div>
+                            <!--</h3>-->
                                 
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body" >
                              
-                        <div class="chat_message_wrapper chat_message_right">
+                        <div class="chat_message_wrapper chat_message_right" *ngFor="let cartCoffee of queue.cartCoffees">
                                 
                                 <ul class="chat_message">
                                     <li>
                                         <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem delectus distinctio dolor earum est hic id impedit ipsum minima mollitia natus nulla perspiciatis quae quasi, quis recusandae, saepe, sunt totam.
+                                            {{cartCoffee.coffeeName}}
                                             <span class="chat_message_time">13:34</span>
                                         </p>
                                     </li>

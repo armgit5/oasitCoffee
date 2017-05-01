@@ -23,6 +23,7 @@ export class CartComponent implements OnInit, OnDestroy {
 
     cartForm: FormGroup;
     customerName: string;
+    
     cartItems = this.coffeeService.cartCoffees;
     total: number;
 
@@ -43,11 +44,6 @@ export class CartComponent implements OnInit, OnDestroy {
                 private router: Router,
                 private af: AngularFire,
                 private loginService: LoginService) {
-        
-        // For testing 
-        // this.cartItems = [new Cart("-KhguZOrC43ph1D_oiwU","test","Cold",5,13,"comment",
-        // "https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/images%2F-KhguZOrC43ph1D_oiwU1?alt=media&token=d6aa5dc2-071e-49dd-b4af-06eb801837f6"
-        // )];
 
     }
 
@@ -105,6 +101,7 @@ export class CartComponent implements OnInit, OnDestroy {
     private initForm() {
 
         let customerName = this.customerName;
+        let customerImage = this.loginService.user.imageUrl;
         let cartCoffees: FormArray = new FormArray([]);
 
         this.cartItems.forEach(coffee => {
@@ -121,6 +118,7 @@ export class CartComponent implements OnInit, OnDestroy {
         
         this.cartForm = this.formBuilder.group({
             customerName: [customerName],
+            customerImage: [customerImage],
             cartCoffees: cartCoffees
         });
 
@@ -135,10 +133,7 @@ export class CartComponent implements OnInit, OnDestroy {
 
     delete(index) {
         (<FormArray>this.cartForm.controls['cartCoffees']).removeAt(index);
-        
-        // this.coffeeService.fetchCounts(-(this.cartItems[index]).qty);
         this.cartItems.splice(index, 1);
-        // this.calculateTotal();
     }
 
     setToZero() {
@@ -148,21 +143,18 @@ export class CartComponent implements OnInit, OnDestroy {
     }
 
     private addToQueue() {
-        // console.log(this.cartForm.value);
         this.queueService.addQueue(this.cartForm.value);
         this.setToZero();
         this.router.navigate(['queue']);
     }
 
     onSubmit() {
-        // console.log(this.customerName == undefined || this.customerName == null);
-        // console.log(this.customerName);
+        console.log(this.cartForm.value);
         if (this.customerName == undefined || this.customerName == null) {
             this.loginModal.show();
         } else {
-            //update coffee service cart coffees and cart items to []
             this.addToQueue();
-        }  
+        }   
     }
 
     update() {
@@ -175,11 +167,9 @@ export class CartComponent implements OnInit, OnDestroy {
                 this.newCount += coffee.qty;
                 cartCoffes.push(coffee);
             });
-            // console.log(this.newTotal, this.newCount);
             this.coffeeService.updateFetchCounts(this.newCount);
             this.total = this.newTotal;
-        
-            //update coffee service cart coffee qty
+
             this.coffeeService.cartCoffees = cartCoffes;
         });
     }
