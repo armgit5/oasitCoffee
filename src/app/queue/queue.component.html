@@ -40,13 +40,16 @@
 
 				</table>-->
 
-                    <div class="panel panel-default" *ngFor="let queue of queues">
+                    <div class="panel panel-default" *ngFor="let queue of queues; let i = index">
                         <div class="panel-heading">
                             <!--<h3 class="panel-title"> -->
                                 
                                 <div class="chat_user_avatar">
-                                    <img alt="image" src={{queue?.customerImage}} class="md-user-image">
-                                      {{queue.customerName}}
+                                    <!--<div class="row">-->
+                                    <img *ngIf="queue?.customerImage != null" src={{queue?.customerImage}} class="md-user-image">
+                                    <i class="fa fa-user-circle fa-2x" aria-hidden="true" *ngIf="queue?.customerImage == null"></i>    
+                                     <span> &nbsp; {{queue.customerName}}</span>
+                                    <!--</div>-->
                                 </div>
                             <!--</h3>-->
                                 
