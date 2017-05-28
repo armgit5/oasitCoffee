@@ -7,10 +7,8 @@ import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@ang
 import { QueueService } from '../queue/queue.service';
 import { Router } from "@angular/router";
 import { Cart } from './cart';
-import { AngularFire } from 'angularfire2';
-import { AuthMethods, AuthProviders } from 'angularfire2/index';
 import { User } from '../login/user';
-import { authConfig } from '../../environments/firebase.config';
+
 import { LoginService } from '../login/login.service';
 import { Subscription } from 'rxjs/Rx';
 
@@ -42,7 +40,6 @@ export class CartComponent implements OnInit, OnDestroy {
                 private formBuilder: FormBuilder,
                 private queueService: QueueService,
                 private router: Router,
-                private af: AngularFire,
                 private loginService: LoginService) {
 
     }

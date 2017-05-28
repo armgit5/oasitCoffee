@@ -1,5 +1,5 @@
 import { Injectable, Inject, EventEmitter } from '@angular/core';
-import { FirebaseRef, AngularFire, FirebaseApp } from 'angularfire2';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { Category } from './category';
 
 @Injectable()
@@ -7,18 +7,16 @@ export class CategoryService {
 
   categoryChanged = new EventEmitter<Category>();
 
-  constructor(@Inject(FirebaseRef) fb, 
-                private af: AngularFire,
-                @Inject(FirebaseApp) firebaseApp: any) {
+  constructor(private db: AngularFireDatabase) {
   
   }
 
   loadCategories() {
-    return this.af.database.list('categories');
+    return this.db.list('categories');
   }
 
   loadTypes() {
-    return this.af.database.list('types');
+    return this.db.list('types');
   }
 
 }

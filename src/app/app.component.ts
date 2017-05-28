@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { cartData } from './cart/cartData';
-import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
-
 
 
 @Component({
@@ -18,10 +16,9 @@ import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'a
 })
 export class AppComponent {
 
-    courses$ : FirebaseObjectObservable<any>;
     cartItems = cartData.cart;
 
-    constructor(private af: AngularFire) {
+    constructor() {
     
     }
 }

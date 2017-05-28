@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef, ViewChild, Inject, OnDestroy, Out
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { Coffee } from '../coffees/coffee';
-import { AngularFire, FirebaseApp, FirebaseRef } from 'angularfire2';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { CoffeeService } from '../coffees/coffee.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ImageCropperComponent, CropperSettings, Bounds } from 'ng2-img-cropper';
@@ -59,13 +59,11 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router,
               private route: ActivatedRoute,
-              private af: AngularFire,
+              private db: AngularFireDatabase,
               private coffeeService: CoffeeService,
               private formBuilder: FormBuilder,
               private changeDetectorRef: ChangeDetectorRef,
-              private categoryService: CategoryService,
-              @Inject(FirebaseApp) firebaseApp: any,
-              @Inject(FirebaseRef) fb) { 
+              private categoryService: CategoryService) { 
 
       // Initialize image cropping
       this.name = 'Angular2'
@@ -80,9 +78,6 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
       this.cropperSettings1.croppedHeight = 200;
 
       this.data1 = {};
-
-      this.firebaseApp = firebaseApp;
-      this.sdkDb = fb.database();
 
       this.$categories = this.categoryService.loadCategories().subscribe(categories => {
             this.categories = categories;
@@ -293,7 +288,7 @@ private clearWhenNoImage() {
   }
 
   private updateImageKeyAndUrl(coffeeId, newImageKey, downloadURL) {
-     this.af.database.object(`coffees/${coffeeId}`).update({
+     this.db.object(`coffees/${coffeeId}`).update({
         imageKey: newImageKey,
         url: downloadURL
       })
@@ -306,7 +301,7 @@ private clearWhenNoImage() {
   }
 
   private updateNameAndOthers(coffeeId) {
-     this.af.database.object(`coffees/${coffeeId}`).update(this.coffeeForm.value).then(
+     this.db.object(`coffees/${coffeeId}`).update(this.coffeeForm.value).then(
        () => this.clearWhenNoImage()
      ).catch(error => {
       // Handle unsuccessful uploads

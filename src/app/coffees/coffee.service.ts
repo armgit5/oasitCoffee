@@ -3,7 +3,7 @@ import {Injectable, Inject, EventEmitter} from "@angular/core";
 import {Http} from "@angular/http";
 import {xhrHeaders} from "./xhr-headers";
 import { cartData } from '../cart/cartData';
-import { AngularFire, FirebaseListObservable, FirebaseObjectObservable, FirebaseRef, FirebaseApp } from 'angularfire2';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { Coffee } from './coffee';
 import { Observable } from 'rxjs';
 import { Cart } from '../cart/cart';
@@ -31,12 +31,8 @@ export class CoffeeService {
     private alreadyUploaded: boolean = false;
     
     constructor(private http: Http, 
-                @Inject(FirebaseRef) fb, 
-                private af: AngularFire,
-                @Inject(FirebaseApp) firebaseApp: any
+                private db: AngularFireDatabase
                 ) {
-        this.sdkDb = fb.database();
-        this.firebaseApp = firebaseApp;
     }
 
     addToCart(coffee, count, comment) {
@@ -67,12 +63,12 @@ export class CoffeeService {
     }
 
     loadAllCoffees() {
-        return this.af.database.list('coffees')
+        return this.db.list('coffees')
                 .map(Coffee.fromJsonList);
     }
 
     loadCoffee($key) {
-        return this.af.database.object(`coffees/${$key}`); 
+        return this.db.object(`coffees/${$key}`); 
     }
 
     deleteCoffee($key) {
@@ -82,7 +78,7 @@ export class CoffeeService {
             let imageKey = snapshot.val().imageKey;
 
             // removing the coffee
-            this.af.database.object(`coffees/${$key}`).remove()
+            this.db.object(`coffees/${$key}`).remove()
             .then(() => {
 
                 // deleting image in storage

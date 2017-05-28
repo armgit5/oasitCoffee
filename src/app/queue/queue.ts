@@ -6,7 +6,8 @@ export class Queue {
                 public $key,
                 public customerName: string,
                 public customerImage: string,
-                public cartCoffees: Cart[]
+                public cartCoffees: Cart[],
+                public status: string
                 ) {
 
     } 
@@ -15,7 +16,7 @@ export class Queue {
         return array.map(Queue.fromJson);
     }
 
-    static fromJson({$key, customerName, customerImage, cartCoffee}):Queue {
-       return  new Queue($key, customerName, customerImage, cartCoffee);
+    static fromJson({$key, customerName, customerImage, cartCoffee, status}):Queue {
+       return  new Queue($key, customerName, customerImage, cartCoffee, status);
     }
 }

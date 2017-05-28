@@ -10,7 +10,9 @@ import { CategoryComponent } from './coffees/category/category.component';
 import { CoffeeComponent } from './coffees/coffee.component';
 import { AppComponent } from './app.component';
 import { AngularFireModule } from 'angularfire2';
-import { firebaseConfig, authConfig } from '../environments/firebase.config';
+import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
+import { firebaseConfig } from '../environments/firebase.config';
 import { CoffeeService } from './coffees/coffee.service';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
@@ -42,7 +44,9 @@ import { LoginService } from './login/login.service';
     FormsModule,
     HttpModule,
     RouterModule.forRoot(routeConfig),
-    AngularFireModule.initializeApp(firebaseConfig, authConfig),
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
     ReactiveFormsModule,
     ModalModule.forRoot(),
     AlertModule.forRoot()

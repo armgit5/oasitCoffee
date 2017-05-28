@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { Queue } from './queue';
 import { Http } from '@angular/http';
-import { FirebaseRef, AngularFire } from 'angularfire2';
+import { AngularFireDatabase } from 'angularfire2/database';
 import {Observable, Subject} from 'rxjs/Rx';
 
 @Injectable()
@@ -10,9 +10,8 @@ export class QueueService {
   queues: Queue[] = [];
   sdkDb: any;
 
-  constructor(private http: Http, @Inject(FirebaseRef) fb, private af: AngularFire) {
-      this.sdkDb = fb.database().ref();
-    
+  constructor(private db: AngularFireDatabase) {
+  
   }
   
   addQueue(cart) {
@@ -22,12 +21,12 @@ export class QueueService {
   }
 
   getQueue(): Observable<Queue[]> {
-    return this.af.database.list('queue');  
+    return this.db.list('queue');  
   }
 
   deleteQueue($key) {
     console.log(`queue/${$key}`);
-    this.af.database.object(`queue/${$key}`).remove();
+    this.db.object(`queue/${$key}`).remove();
   }
 
 
