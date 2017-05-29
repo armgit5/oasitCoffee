@@ -7,7 +7,7 @@ export class Queue {
                 public customerName: string,
                 public customerImage: string,
                 public cartCoffees: Cart[],
-                public status: string
+                public status: boolean
                 ) {
 
     } 

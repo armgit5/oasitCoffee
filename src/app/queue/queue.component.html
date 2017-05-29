@@ -40,7 +40,9 @@
 
 				</table>-->
 
-                    <div class="panel panel-default" *ngFor="let queue of queues; let i = index">
+                    <div class="panel" 
+							[ngClass]="{'panel-default': !queue?.readyStatus, 'panel-success': queue?.readyStatus}"
+							 *ngFor="let queue of queues; let i = index">
                         <div class="panel-heading">
                            
                                 
@@ -49,10 +51,22 @@
                                     <img *ngIf="queue?.customerImage != null" src={{queue?.customerImage}} class="md-user-image">
                                     <i class="fa fa-user-circle fa-2x" aria-hidden="true" *ngIf="queue?.customerImage == null"></i>    
                                      <span> &nbsp; {{queue.customerName}}</span>
-                                     <span> &nbsp; (Status: Ready) </span>
+                                     <span *ngIf="queue?.readyStatus"> &nbsp; (Status: Ready) </span>
+									 <span *ngIf="!queue?.readyStatus"> &nbsp; (Status: Still making) </span>
+  
                                      <button class="btn btn-danger btn-sm" 
                                       (click)="deleteQueue(queue.$key)"
-                                      style="float:right"><i class="fa fa-trash-o"></i></button>               
+                                      style="float:right"><i class="fa fa-trash-o"></i></button>   
+
+									  <button *ngIf="!queue?.readyStatus"
+									   class="btn btn-success btn-sm" 
+                                      (click)="markReady(queue.$key, true)"
+                                      style="float:right; margin-right:5px"><i class="fa fa-check-square-o"></i></button> 
+
+									  <button *ngIf="queue?.readyStatus"
+									   class="btn btn-warning btn-sm" 
+                                      (click)="markReady(queue.$key, false)"
+                                      style="float:right; margin-right:5px"><i class="fa fa-coffee"></i></button>            
                                 </div>
                      
                                 

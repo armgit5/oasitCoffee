@@ -11,12 +11,15 @@ export class QueueService {
   sdkDb: any;
 
   constructor(private db: AngularFireDatabase) {
-  
+    
   }
   
   addQueue(cart) {
     // push queue to firebase without key
-    let queue = {customerName: cart.customerName, customerImage: cart.customerImage, cartCoffees: cart.cartCoffees};  
+    let queue = {customerName: cart.customerName, 
+                customerImage: cart.customerImage, 
+                cartCoffees: cart.cartCoffees,
+                readyStatus: false};  
     this.sdkDb.child("queue").push(queue);
   }
 
@@ -27,6 +30,10 @@ export class QueueService {
   deleteQueue($key) {
     console.log(`queue/${$key}`);
     this.db.object(`queue/${$key}`).remove();
+  }
+
+  markReady($key, status) {
+    this.db.object(`queue/${$key}`).update({readyStatus: status});
   }
 
 

@@ -23,12 +23,18 @@ export class QueueComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.queueService.getQueue().subscribe(
-      queues => this.queues = queues
+      queues => {
+        this.queues = queues;
+      }
     );
   }
 
   deleteQueue($key) {
     this.queueService.deleteQueue($key);
+  }
+
+  markReady($key, status) {
+    this.queueService.markReady($key, status);
   }
 
   ngOnDestroy() {
