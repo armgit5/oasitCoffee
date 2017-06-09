@@ -1,6 +1,6 @@
+
 import { Component } from '@angular/core';
 import { cartData } from './cart/cartData';
-
 
 @Component({
   selector: 'app-root',
@@ -19,6 +19,6 @@ export class AppComponent {
     cartItems = cartData.cart;
 
     constructor() {
-    
+  
     }
 }

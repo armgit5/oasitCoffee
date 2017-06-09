@@ -1,3 +1,4 @@
+import * as firebase from 'firebase';
 
 import {Injectable, Inject, EventEmitter} from "@angular/core";
 import {Http} from "@angular/http";
@@ -22,9 +23,6 @@ export class CoffeeService {
     editCoffeeData = new EventEmitter<CoffeeOutput>();
 
     // firebase viriables
-    sdkDb: any;
-    firebaseApp: any;
-    storageRef: any;
     private storageFolderName: string = "images/";
 
     // coffee upload
@@ -74,7 +72,7 @@ export class CoffeeService {
     deleteCoffee($key) {
 
         // get coffee image key
-        this.sdkDb.ref(`coffees/${$key}`).once('value').then(snapshot => {
+        firebase.database().ref(`coffees/${$key}`).once('value').then(snapshot => {
             let imageKey = snapshot.val().imageKey;
 
             // removing the coffee
@@ -91,7 +89,7 @@ export class CoffeeService {
     }
 
     private deteleImageInStorage(imageKey) {
-        this.firebaseApp.storage().ref().child(this.storageFolderName + imageKey)
+        firebase.storage().ref().child(this.storageFolderName + imageKey)
         .delete().then(function() {
             // File deleted successfully
             console.log("successfully deleted the image");

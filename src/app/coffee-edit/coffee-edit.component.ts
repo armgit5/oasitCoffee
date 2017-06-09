@@ -74,8 +74,8 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
       this.cropperSettings1.canvasWidth = 400;
       this.cropperSettings1.canvasHeight = 333;
 
-      this.cropperSettings1.croppedWidth = 240;
-      this.cropperSettings1.croppedHeight = 200;
+      this.cropperSettings1.croppedWidth = 330;
+      this.cropperSettings1.croppedHeight = 275;
 
       this.data1 = {};
 

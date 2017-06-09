@@ -26,6 +26,7 @@ import { AlertModule } from 'ngx-bootstrap/alert';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
 
+
 @NgModule({
   declarations: [
     AppComponent,
