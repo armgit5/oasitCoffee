@@ -7,6 +7,7 @@ import { CoffeeService } from '../coffees/coffee.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ImageCropperComponent, CropperSettings, Bounds } from 'ng2-img-cropper';
 import { CategoryService } from '../coffees/category/category.service';
+import * as firebase from 'firebase/app';
 
 @Component({
   selector: 'app-coffee-edit',
@@ -34,10 +35,6 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   @Output("hideModal")
   hideOutput = new EventEmitter();
 
-  // FirebaseApp
-  private sdkDb: any;
-  private storageRef: any;
-  private firebaseApp: any;
   // private alreadyUploaded: boolean = false;
   private storageFolderName: string = "images/";
 
@@ -202,7 +199,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
     this.spinning = true;
 
     if (this.isNew) {
-      this.sdkDb.ref().child("coffees")
+      this.db.list("coffees")
         .push(this.coffeeForm.value).then(item => {
                 let coffeeId = item.key;  
                 let newImageKey = this.addOneToImageKey(coffeeId);
@@ -226,7 +223,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
 
   private imageStorageInsert(inputImage, $key) {
 
-   this.sdkDb.ref(`coffees/${$key}`).once('value').then(snapshot => {
+   firebase.database().ref(`coffees/${$key}`).once('value').then(snapshot => {
       let oldImageKey = snapshot.val().imageKey;     
       let newImageKey = this.addOneToImageKey(oldImageKey);
       this.addImageToStorage($key, inputImage, newImageKey, oldImageKey); 
@@ -267,7 +264,7 @@ private clearWhenNoImage() {
     // add new image to storage
     let image = inputImage.split("base64,");
     console.log(coffeeId, image, newImageKey, oldImageKey, this.storageFolderName);
-    let storageRef = this.firebaseApp.storage().ref().child(this.storageFolderName + newImageKey);
+    let storageRef = firebase.storage().ref().child(this.storageFolderName + newImageKey);
     storageRef.putString(image[1], 'base64').then(snapshot => {
 
         // get imagedownload url
@@ -311,7 +308,7 @@ private clearWhenNoImage() {
   }
 
   private deteleImageInStorage(imageKey) {
-    this.firebaseApp.storage().ref().child(this.storageFolderName + imageKey)
+    firebase.storage().ref().child(this.storageFolderName + imageKey)
       .delete().then(function() {
         // File deleted successfully
         console.log("successfully deleted the image");
