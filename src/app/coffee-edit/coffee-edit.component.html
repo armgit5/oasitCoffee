@@ -171,12 +171,12 @@
   </div>
 </div>
 
-<div class="col-md-7">
+<div class="col-md-7" style="padding-left:55px">
     <span>
       <img-cropper #cropper [image]="data1" [settings]="cropperSettings1" (onCrop)="cropped($event)"></img-cropper>
     </span>
 </div>
-<div class="row" style="padding: 5px;padding-right: 20px">
+<div class="row" style="padding: 5px;padding-right: 35px">
     <button class="btn btn-default pull-right" type="submit" [disabled]="!coffeeForm.valid || notReady || spinning">
         <i class="fa fa-coffee" style="font-weight: bold;" *ngIf="!spinning"></i>
         <i class="fa fa-spinner fa-spin fa-fw" aria-hidden="true" *ngIf="spinning"></i>
