@@ -1,34 +1,31 @@
 <div class="container main">
 
+<div *ngFor="let alert of alerts">
+<alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" 
+        style=" position:fixed; top: 60px; z-index:9999; 
+                                  border-radius:0px;
+                                  text-align:right;
+                                  right: 5%;">
+      <!--<strong>Well done!</strong> You successfully added coffees-->
+      <strong>Well done! </strong><span [innerHtml]="alert.msg"></span>
+    </alert>
+</div>
+
   <div class="row">
-    <!--<div class="col-md-2 col-lg-2">
-     
-        <div class="refinement-group" style="border-right: 1px solid #DDD">
-          
-          <div style="color: black;font-size:14px;">MENUS</div>
-         
-          <category-selector (filter)="onFilter($event)"></category-selector>
-        </div>
 
-    </div>-->
-
-    
-   
-            <!--<div (filter)="onFilter($event)">
-            </div>-->
-
-            <div class="col-md-3 col-lg-3" 
-                *ngFor="let coffee of coffees | coffeeFilter:filterArg; let i = index;"
-                style="background-color: white; height: 425px;">
-                <coffee-component [coffee]="coffee" (editCoffeeOutput)="onEdit($event)"></coffee-component>
-            </div>
-            
-            <div class="col-md-3 col-lg-3" style="margin-top:10px;">
-               <a (click)="newCoffee()"
-                style="color: #444;font-weight: 300;">
-                <i class="fa fa-plus-square-o fa-2x"></i>&nbsp; <u>New Coffee</u>
-              </a>         
-            </div>
+      <div class="col-md-3 col-lg-3" 
+          *ngFor="let coffee of coffees | coffeeFilter:filterArg; let i = index;"
+          style="background-color: white; height: 425px;">
+          <coffee-component [coffee]="coffee" (editCoffeeOutput)="onEdit($event)"
+           (addCoffeeOutput)="onAdd($event)"></coffee-component>
+      </div>
+      
+      <div class="col-md-3 col-lg-3" style="margin-top:10px;">
+          <a (click)="newCoffee()"
+          style="color: #444;font-weight: 300;">
+          <i class="fa fa-plus-square-o fa-2x"></i>&nbsp; <u>New Coffee</u>
+        </a>         
+      </div>
      
     
   </div><!--/row-->
@@ -58,4 +55,6 @@
     </div>
   </div>
 </div>
+
+
 

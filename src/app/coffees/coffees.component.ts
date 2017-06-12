@@ -19,6 +19,8 @@ export class CoffeesComponent {
     filterArg: Category;
     $coffee: Subscription;
 
+    public alerts: any = [];
+
     // isNew: boolean = true;
     // inputId: string = "";
 
@@ -45,11 +47,10 @@ export class CoffeesComponent {
     }
 
     newCoffee() {
-      // this.router.navigate(['/coffee/new']);
-      
-      // this.editCoffeeOutput.emit(outputData);
+
       this.coffeeService.editCoffee(true, "");
       this.button.show();
+      
     }
 
     onNgDestroy() {
@@ -67,6 +68,14 @@ export class CoffeesComponent {
     onEdit(coffeeOutput) {
       // console.log('edit');
       this.button.show();
+    }
+
+    onAdd(coffeeName) {
+      this.alerts.push({
+        type: 'success',
+        msg: `You successfully added ${coffeeName}`,
+        timeout: 2000
+      });
     }
 
     

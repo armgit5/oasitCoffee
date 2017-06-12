@@ -21,6 +21,9 @@ export class CoffeeComponent implements OnInit {
     @Output() 
     editCoffeeOutput = new EventEmitter<CoffeeOutput>();
 
+    @Output()
+    addCoffeeOutput = new EventEmitter<string>();
+
     mouseOver: boolean = false;
     added: boolean = false;
 
@@ -63,12 +66,13 @@ export class CoffeeComponent implements OnInit {
       this.addCoffeeAlert();
       this.coffeeService.addToCart(this.coffee, Number(this.coffeeCount), this.comment);
       this.coffeeCount = 1;
-      this.alerts.push({
-        type: 'md-local',
-        msg: `${this.coffee.name} is added to cart`,
-        timeout: 2000
-      });
-      this.comment = "";
+      // this.alerts.push({
+      //   type: 'md-local',
+      //   msg: `${this.coffee.name} is added to cart`,
+      //   timeout: 2000
+      // });
+      // this.comment = "";
+      this.addCoffeeOutput.emit(this.coffee.name);
     }
 
     editCoffee() {
