@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     $coffeeCounts: Subscription;
     clicked: boolean = false;
 
-    @ViewChild('staticModal') loginModal; 
+    @ViewChild('staticModal') loginModal;
 
     @Input()
     count?: number;
@@ -34,7 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     constructor(private coffeeService: CoffeeService,
                 private categorySerivce: CategoryService,
                 private loginService: LoginService) {
-        
+
         this.$logIn = this.loginService.isLoggedIn.subscribe(isLoggedIn => {
             if (isLoggedIn) {
                 console.log("login");
@@ -47,7 +47,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
             }
         });
     }
-    
+
     ngOnInit() {
         this.coffeeCounts = this.coffeeService.getCoffeeCounts();
         this.$coffeeCounts = this.coffeeService.coffeeCountsChanged
@@ -65,7 +65,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
              document.getElementById("mySidenav").style.paddingLeft = "0%";
             document.getElementById("mySidenav").style.paddingRight = "0%";
             this.clicked = false;
-        }  
+        }
     }
 
     menuOut() {
@@ -84,6 +84,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.loginModal.show();
     }
 
+    admin() {
+
+    }
+
     hideModal() {
       this.loginModal.hide();
     }
@@ -96,4 +100,4 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     }
 
-}   
+}

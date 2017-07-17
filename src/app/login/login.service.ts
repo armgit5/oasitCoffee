@@ -2,6 +2,7 @@ import { Injectable, EventEmitter, ViewChild } from '@angular/core';
 import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
 import { User } from './user';
 import * as firebase from 'firebase/app';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Injectable()
 export class LoginService {
@@ -9,9 +10,10 @@ export class LoginService {
     isLoggedIn = new EventEmitter<boolean>();
     user: User = new User(null, null, null, null);
 
-    @ViewChild('staticModal') loginModal; 
-    
-    constructor(private afAuth: AngularFireAuth) {
+    @ViewChild('staticModal') loginModal;
+
+    constructor(private afAuth: AngularFireAuth,
+                private db: AngularFireDatabase) {
         this.afAuth.authState.subscribe(authState => {
             if (authState) {
                 // console.log("service login")
@@ -45,14 +47,41 @@ export class LoginService {
 
         });
 
-       
+
     }
 
-    register(email, password) {
-        this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-        .then(authState => {   
+    registerCompanyWithUser(companyName, email) {
+        this.db.list('/companies').push({
+          companyName: companyName,
+          users: {
+              email: email,
+              role: "admin"
+            }
         })
-        .catch(error => console.log(error));
+        .catch(
+          err => console.log(err)
+        );
+    }
+
+    register(email, password, companyName) {
+
+        if (companyName) {
+          console.log("there is company");
+          this.registerCompanyWithUser(companyName, email);
+        } else {
+          console.log("not a company user");
+        }
+
+
+        // this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+        // .then(authState => {
+        //   if (companyName) {
+        //     console.log("there is company");
+        //   } else {
+        //     console.log("not a company user");
+        //   }
+        // })
+        // .catch(error => console.log(error));
     }
 
     facebookLogin(): Promise<any> {

@@ -25,6 +25,7 @@ import { ModalModule } from 'ngx-bootstrap';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
+import { AdminComponent } from './admin/admin.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { LoginService } from './login/login.service';
     QueueComponent,
     CoffeeEditComponent,
     ImageCropperComponent,
-    LoginComponent
+    LoginComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

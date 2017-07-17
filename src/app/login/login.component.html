@@ -1,4 +1,4 @@
-    
+
     <div class="box">
 			<div class="content">
 				<div class="col-md-6 login" style="margin-bottom:15px">
@@ -9,20 +9,20 @@
 						<a id="google_login" class="circle google" href="/auth/google_oauth2">
 							<i class="fa fa-google-plus fa-fw"></i>
 						</a>-->
-						<a id="facebook_login" class="circle facebook" 
-							(click)="facebookLogin()">
+						<a id="facebook_login" class="circle facebook"
+							(click)="facebookLogin()" *ngIf="!newAccount">
 							<i class="fa fa-facebook fa-fw"></i>
 						</a>
 					</div>
-					<div class="division">
+					<div class="division" *ngIf="!newAccount">
 						<div class="line l"></div>
 							<span>or</span>
 						<div class="line r"></div>
 					</div>
 					<div class="error"></div>
-					<h4 class="modal-title" *ngIf="newAccount">Login with</h4>
-					<h4 class="modal-title" *ngIf="!newAccount">Register with</h4>
-					<div class="form loginBox" *ngIf="newAccount">
+					<h4 class="modal-title" *ngIf="!newAccount">Login with</h4>
+					<h4 class="modal-title" *ngIf="newAccount">Register with</h4>
+					<div class="form loginBox" *ngIf="!newAccount">
 						<form [formGroup]="loginForm" (ngSubmit)="login()">
 						<input formControlName="email" class="form-control" type="text" placeholder="Email" name="email">
 						<input formControlName="password" class="form-control" type="password" placeholder="Password" name="password">
@@ -30,25 +30,26 @@
 						<!--<input class="btn btn-default btn-login" type="button" value="Logout" (click)="logout()">-->
 						</form>
 					</div>
-					<div class="form" *ngIf="!newAccount">
+					<div class="form" *ngIf="newAccount">
 						<form [formGroup]="registerForm" (ngSubmit)="register()">
+            <input *ngIf="newCompany" class="form-control" formControlName="companyName" type="text" placeholder="Company Name" name="companyName">
 						<input class="form-control" formControlName="email" type="text" placeholder="Email" name="email">
 						<input class="form-control" formControlName="password" type="password" placeholder="Password" name="password">
 						<input class="form-control" formControlName="confirm" type="password" placeholder="Repeat Password" name="password_confirmation">
 						<input class="btn btn-default btn-register"
-               type="submit" value="Create account" 
+               type="submit" value="Create account"
                name="commit" (click)="register()"
                [disabled]="posted">
 						</form>
 					</div>
 				</div>
-				<div class="col-md-6 login">
+				<div class="col-md-6 login" *ngIf="!newAccount">
 					<h4 class="modal-title"> Guest account </h4>
 					<div class="form loginBox">
 						<!--<form method="post" action="/login" accept-charset="UTF-8">-->
 						<input id="email" class="form-control" type="text" placeholder="Name" 		name="name" #guestInput>
-						<input class="btn btn-default btn-login" 
-							type="button" 
+						<input class="btn btn-default btn-login"
+							type="button"
 							value="Login as guest"
 							(click)="loginAsGuest(guestInput.value)">
 						<!--</form>-->
@@ -57,12 +58,14 @@
 			</div>
 		</div>
 
-    <div class="forgot login-footer" *ngIf="newAccount">
-				<span>Looking to 
-						<a (click)="toggleLogin()">create an account</a>
+    <div class="forgot login-footer" *ngIf="!newAccount">
+				<span>Looking to
+						<a (click)="toggleLogin(false)">create an account</a>
+            or
+            <a (click)="toggleLogin(true)">create company account</a>
 				?</span>
 			</div>
-			<div class="forgot register-footer" *ngIf="!newAccount">
+			<div class="forgot register-footer" *ngIf="newAccount">
 					<span>Already have an account?</span>
-					<a (click)="toggleLogin()" >Login</a>
+					<a (click)="toggleLogin(false)" >Login</a>
 			</div>

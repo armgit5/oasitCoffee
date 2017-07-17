@@ -9,16 +9,17 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  newAccount:boolean = true;
+  newAccount:boolean = false;
+  newCompany: boolean = false;
   loginForm: FormGroup;
   registerForm: FormGroup;
   posted = false;
 
-  @Output() 
+  @Output()
   customerNameOutput = new EventEmitter<string>();
 
   @Output()
-  modalOff = new EventEmitter<boolean>(); 
+  modalOff = new EventEmitter<boolean>();
 
   constructor(private loginService: LoginService,
               private formBuilder: FormBuilder) { }
@@ -39,11 +40,13 @@ export class LoginComponent implements OnInit {
   }
 
   private initRegisterForm() {
+    let companyName = '';
     let email = '';
     let password = '';
     let confirm = '';
 
     this.registerForm = this.formBuilder.group({
+      companyName: [companyName, Validators.required],
       email: [email, Validators.required],
       password: [password, Validators.required],
       confirm: [confirm, Validators.required]
@@ -54,18 +57,23 @@ export class LoginComponent implements OnInit {
         this.customerNameOutput.emit(name);
     }
 
-    toggleLogin() {
+    toggleLogin(newCompany: boolean) {
+        this.registerForm.reset();
+        this.posted = false;
         if (this.newAccount == true) {
             this.newAccount = false;
         } else {
             this.newAccount = true;
         }
+        this.newCompany = newCompany;
     }
 
     register() {
+        console.log(this.registerForm.value);
         let email = this.registerForm.value.email;
         let password = this.registerForm.value.password;
-        this.loginService.register(email, password);
+        let companyName = this.registerForm.value.companyName;
+        this.loginService.register(email, password, companyName);
         this.posted = true;
     }
 
