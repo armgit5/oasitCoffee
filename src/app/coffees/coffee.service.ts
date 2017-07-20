@@ -26,33 +26,30 @@ export class CoffeeService {
     editCoffeeData = new EventEmitter<CoffeeOutput>();
 
     // firebase viriables
-    private storageFolderName: string = "images/";
+    private storageFolderName: string;
 
     // coffee upload
     private alreadyUploaded: boolean = false;
 
-    // path variable
-    // private coffeePath: String;
-
+    // coffee path
+    private coffeePath: string;
 
     constructor(private http: Http,
                 private db: AngularFireDatabase,
                 private loginService: LoginService) {
+        if (apiMethods.v1) {
+          this.coffeePath = `coffees/`;
+          this.storageFolderName = "images/";
+        }
 
-
-
-        loginService.userOutput.subscribe(
-          (user: User) => {
-
-            // if (apiMethods.v1) {
-            //   this.coffeePath = 'coffees';
-            // }
-
-            // if (apiMethods.vCompanies) {
-            //   this.coffeePath = `/companies/${this.loginService.user.companyName}/coffees`;
-            // }
-          }
-        );
+        if (apiMethods.vCompanies) {
+          this.loginService.userOutput.subscribe(
+            (user: User) => {
+              this.coffeePath = `/companies/${user.companyName}/coffees/`;
+              this.storageFolderName = `${user.companyName}/images/`;
+            }
+          );
+        }
     }
 
     addToCart(coffee, count, comment) {
@@ -83,34 +80,29 @@ export class CoffeeService {
     }
 
     loadAllCoffees(user: User) {
+        let path = ' ';
         if (apiMethods.v1) {
-          return this.db.list('coffees')
-                .map(Coffee.fromJsonList);
+          path = 'coffees';
         }
-
         if (apiMethods.vCompanies) {
-          // console.log(this.loginService.user.companyName);
-          return this.db.list(`/companies/${user.companyName}/coffees`)
-            .map(Coffee.fromJsonList);
+          path = `/companies/${user.companyName}/coffees`;
         }
-
+        return this.db.list(path)
+                .map(Coffee.fromJsonList);
     }
 
     loadCoffee($key) {
-      if (apiMethods.v1) {
-        return this.db.object(`coffees/${$key}`);
-      }
+        return this.db.object(this.coffeePath + $key);
     }
 
     deleteCoffee($key) {
-
-      if (apiMethods.v1) {
+        console.log(this.coffeePath + $key);
         // get coffee image key
-        firebase.database().ref(`coffees/${$key}`).once('value').then(snapshot => {
+        firebase.database().ref(this.coffeePath + $key).once('value').then(snapshot => {
             let imageKey = snapshot.val().imageKey;
 
             // removing the coffee
-            this.db.object(`coffees/${$key}`).remove()
+            this.db.object(this.coffeePath + $key).remove()
             .then(() => {
 
                 // deleting image in storage
@@ -118,32 +110,9 @@ export class CoffeeService {
             })
             .catch(error => console.log("Error"));
         });
-      }
-
-      if (apiMethods.vCompanies) {
-        // get coffee image key
-        console.log(this.loginService.user);
-        firebase.database().ref(`/companies/${this.loginService.user.companyName}/coffees/${$key}`).once('value').then(snapshot => {
-            let imageKey = snapshot.val().imageKey;
-
-            // removing the coffee
-            this.db.object(`/companies/${this.loginService.user.companyName}/coffees/${$key}`).remove()
-            .then(() => {
-
-                // deleting image in storage
-                this.deteleImageInStorage(imageKey);
-            })
-            .catch(error => console.log("Error"));
-        });
-      }
-
     }
 
     private deteleImageInStorage(imageKey) {
-        if (apiMethods.vCompanies) {
-          this.storageFolderName = `${this.loginService.user.companyName}/images/`;
-        }
-
         firebase.storage().ref().child(this.storageFolderName + imageKey)
         .delete().then(function() {
             // File deleted successfully
