@@ -113,16 +113,15 @@ export class LoginService {
           console.log("not a company user");
         }
 
-
-        // this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-        // .then(authState => {
-        //   if (companyName) {
-        //     console.log("there is company");
-        //   } else {
-        //     console.log("not a company user");
-        //   }
-        // })
-        // .catch(error => console.log(error));
+        this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+        .then(authState => {
+          if (companyName) {
+            console.log("there is company");
+          } else {
+            console.log("not a company user");
+          }
+        })
+        .catch(error => console.log(error));
     }
 
     facebookLogin(): Promise<any> {

@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
         let password = this.registerForm.value.password;
         let companyName = this.registerForm.value.companyName;
         this.loginService.register(email, password, companyName);
-        this.posted = true;
+        this.posted = false;
     }
 
     facebookLogin() {
