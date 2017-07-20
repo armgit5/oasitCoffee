@@ -8,6 +8,6 @@ export const environment = {
 };
 
 export const apiMethods = {
-  v1: true,
-  vCompanies: false
+  v1: false,
+  vCompanies: true
 }

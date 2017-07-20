@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import { CategoryService } from './category/category.service';
 import { Category } from './category/category';
 import { CoffeeOutput } from './coffee-output';
+import { LoginService } from '../login/login.service';
+import { User } from '../login/user';
 
 @Component({
   selector: 'coffee',
@@ -24,18 +26,25 @@ export class CoffeesComponent {
     // isNew: boolean = true;
     // inputId: string = "";
 
-    @ViewChild('staticModal') button; 
+    @ViewChild('staticModal') button;
 
     onFilter(filter) {
         this.filterArg = filter;
     }
-    
+
     constructor(private coffeeService: CoffeeService,
                 private router: Router,
-                private categoryService: CategoryService) {
-      this.$coffee = this.coffeeService.loadAllCoffees().subscribe(
-        coffees => this.coffees = coffees
+                private categoryService: CategoryService,
+                private loginService: LoginService) {
+
+      loginService.userOutput.subscribe(
+        (user: User) => {
+          this.$coffee = this.coffeeService.loadAllCoffees(user).subscribe(
+            coffees => this.coffees = coffees
+          );
+        }
       );
+
       this.categoryService.categoryChanged.subscribe(filterArg => {
         this.filterArg = filterArg;
         console.log(filterArg);
@@ -43,14 +52,14 @@ export class CoffeesComponent {
     }
 
     onNgInit() {
-      
+
     }
 
     newCoffee() {
 
       this.coffeeService.editCoffee(true, "");
       this.button.show();
-      
+
     }
 
     onNgDestroy() {
@@ -78,6 +87,6 @@ export class CoffeesComponent {
       });
     }
 
-    
-   
+
+
 }

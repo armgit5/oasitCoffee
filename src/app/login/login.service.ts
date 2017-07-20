@@ -18,7 +18,7 @@ export class LoginService {
                 private db: AngularFireDatabase) {
         this.afAuth.authState.subscribe(authState => {
             if (authState) {
-                console.log(authState);
+                // console.log(authState);
                 this.user.uid = authState.uid;
                 this.user.email = authState.email;
                 this.user.imageUrl = authState.photoURL;
@@ -45,7 +45,7 @@ export class LoginService {
         }
       }).subscribe(
         items => {
-          console.log(items);
+          // console.log(items);
           this.user.companyName = items[0].companyName;
           this.isLoggedIn.emit(true);
           this.userOutput.emit(this.user);

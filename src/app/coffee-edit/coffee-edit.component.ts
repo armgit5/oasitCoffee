@@ -8,6 +8,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ImageCropperComponent, CropperSettings, Bounds } from 'ng2-img-cropper';
 import { CategoryService } from '../coffees/category/category.service';
 import * as firebase from 'firebase/app';
+import { LoginService } from '../login/login.service';
+import { User } from '../login/user';
+import { apiMethods } from '../../environments/environment';
 
 @Component({
   selector: 'app-coffee-edit',
@@ -27,10 +30,10 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   @ViewChild('cropper', undefined) cropper:ImageCropperComponent;
   uploaded = false;
 
-  @Input() 
+  @Input()
   isNew: boolean;
-  @Input() 
-  inputId: string;  
+  @Input()
+  inputId: string;
 
   @Output("hideModal")
   hideOutput = new EventEmitter();
@@ -60,7 +63,8 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
               private coffeeService: CoffeeService,
               private formBuilder: FormBuilder,
               private changeDetectorRef: ChangeDetectorRef,
-              private categoryService: CategoryService) { 
+              private categoryService: CategoryService,
+              private loginService: LoginService) {
 
       // Initialize image cropping
       this.name = 'Angular2'
@@ -78,16 +82,16 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
 
       this.$categories = this.categoryService.loadCategories().subscribe(categories => {
             this.categories = categories;
-      });   
+      });
 
       this.$types = this.categoryService.loadTypes().subscribe(types => {
         this.types = types;
       });
-     
+
       // for testing
       // const storageRef = firebaseApp.storage().ref().child('images/-KgsGiSv3bOdKv2Oc4221');
       // storageRef.getDownloadURL().then(url => console.log(url));
-  } 
+  }
 
   ngOnInit() {
     // Load coffee from firebase
@@ -131,15 +135,15 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
               // console.log(!this.isNew, !this.uploaded, !(!this.isNew && !this.uploaded), (!this.coffeeForm.valid || !(!this.isNew && !this.uploaded)) || this.spinning);
               this.initForm();
           });
-       } else {        
+       } else {
          this.isNew = true;
          this.imageUrl = "https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/cup-of-black-coffee1.jpg?alt=media&token=94afc335-0a25-4956-aea8-6d1fe140b65d";
          this.initForm();
         //  console.log(this.isNew, this.uploaded);
-        console.log(!this.isNew, !this.uploaded, (!this.isNew && this.uploaded), this.spinning);
+        // console.log(!this.isNew, !this.uploaded, (!this.isNew && this.uploaded), this.spinning);
        }
     });
-    
+
   }
 
   private initForm() {
@@ -162,7 +166,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
       category: [category, Validators.required],
       type: [type, Validators.required]
     });
-    
+
   }
 
   cropped(bounds:Bounds) {
@@ -170,8 +174,8 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
     this.croppedWidth = bounds.right-bounds.left;
     this.uploaded = true;
     this.notReady = false;
-    console.log("cropped " + this.cropper);
-    console.log(!this.isNew, !this.uploaded, !(!this.isNew && !this.uploaded), this.spinning);
+    // console.log("cropped " + this.cropper);
+    // console.log(!this.isNew, !this.uploaded, !(!this.isNew && !this.uploaded), this.spinning);
   }
 
   fileChangeListener($event) {
@@ -194,22 +198,34 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   // }
 
   createCoffee() {
-    console.log(this.coffeeForm.value);
+    // console.log(this.coffeeForm.value);
 
     this.spinning = true;
 
     if (this.isNew) {
-      this.db.list("coffees")
+      if (apiMethods.v1) {
+        this.db.list("coffees")
         .push(this.coffeeForm.value).then(item => {
-                let coffeeId = item.key;  
+                let coffeeId = item.key;
                 let newImageKey = this.addOneToImageKey(coffeeId);
                 this.addImageToStorage(coffeeId, this.data1.image, newImageKey, null);
               });
+      }
+      if (apiMethods.vCompanies) {
+        // console.log(this.loginService.user);
+        this.db.list(`/companies/${this.loginService.user.companyName}/coffees`)
+        .push(this.coffeeForm.value).then(item => {
+          let coffeeId = item.key;
+          let newImageKey = this.addOneToImageKey(coffeeId);
+          this.addImageToStorage(coffeeId, this.data1.image, newImageKey, null);
+        });
+      }
+
     } else {
       console.log(this.spinning);
       this.updateCoffee();
     }
-    
+
   }
 
   private updateCoffee() {;
@@ -223,11 +239,23 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
 
   private imageStorageInsert(inputImage, $key) {
 
-   firebase.database().ref(`coffees/${$key}`).once('value').then(snapshot => {
-      let oldImageKey = snapshot.val().imageKey;     
-      let newImageKey = this.addOneToImageKey(oldImageKey);
-      this.addImageToStorage($key, inputImage, newImageKey, oldImageKey); 
-    });
+    if (apiMethods.v1) {
+      firebase.database().ref(`coffees/${$key}`).once('value').then(snapshot => {
+        let oldImageKey = snapshot.val().imageKey;
+        let newImageKey = this.addOneToImageKey(oldImageKey);
+        this.addImageToStorage($key, inputImage, newImageKey, oldImageKey);
+      });
+    }
+
+    if (apiMethods.vCompanies) {
+      firebase.database().ref(`/companies/${this.loginService.user.companyName}/coffees/${$key}`).once('value').then(snapshot => {
+        let oldImageKey = snapshot.val().imageKey;
+        let newImageKey = this.addOneToImageKey(oldImageKey);
+        this.addImageToStorage($key, inputImage, newImageKey, oldImageKey);
+      });
+    }
+
+
 
   }
 
@@ -239,7 +267,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
     this.uploaded = false;
     this.imageUrl = "https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/cup-of-black-coffee1.jpg?alt=media&token=94afc335-0a25-4956-aea8-6d1fe140b65d";
     this.spinning = false;
-    
+
 }
 
 private clearWhenNoImage() {
@@ -250,7 +278,7 @@ private clearWhenNoImage() {
   }
 }
 
-  private addOneToImageKey(oldImageKey): string {  
+  private addOneToImageKey(oldImageKey): string {
     if (this.isNew) {
       return oldImageKey + 1;
     }
@@ -263,6 +291,11 @@ private clearWhenNoImage() {
 
     // add new image to storage
     let image = inputImage.split("base64,");
+
+    if (apiMethods.vCompanies) {
+      this.storageFolderName = `${this.loginService.user.companyName}/images/`;
+    }
+
     console.log(coffeeId, image, newImageKey, oldImageKey, this.storageFolderName);
     let storageRef = firebase.storage().ref().child(this.storageFolderName + newImageKey);
     storageRef.putString(image[1], 'base64').then(snapshot => {
@@ -275,17 +308,20 @@ private clearWhenNoImage() {
         // update and delete coffee $key
         if (!this.isNew) {
           this.deteleImageInStorage(oldImageKey);
-        } 
+        }
         this.updateImageKeyAndUrl(coffeeId, newImageKey, downloadURL);
 
     }).catch(error => {
         // Handle unsuccessful uploads
-        console.log("error uploading: " + error);
+        console.log("error uploading");
+        console.log(error);
     });
   }
 
   private updateImageKeyAndUrl(coffeeId, newImageKey, downloadURL) {
-     this.db.object(`coffees/${coffeeId}`).update({
+
+    if (apiMethods.v1) {
+      this.db.object(`coffees/${coffeeId}`).update({
         imageKey: newImageKey,
         url: downloadURL
       })
@@ -294,17 +330,43 @@ private clearWhenNoImage() {
           // Handle unsuccessful uploads
           console.log("error updating img key and url: " + error);
       });
-      
+    }
+
+    if (apiMethods.vCompanies) {
+      this.db.object(`/companies/${this.loginService.user.companyName}/coffees/${coffeeId}`).update({
+        imageKey: newImageKey,
+        url: downloadURL
+      })
+      .then(() => this.clearDataAndReturn())
+      .catch(error => {
+          // Handle unsuccessful uploads
+          console.log("error updating img key and url: " + error);
+      });
+    }
+
+
   }
 
   private updateNameAndOthers(coffeeId) {
-     this.db.object(`coffees/${coffeeId}`).update(this.coffeeForm.value).then(
-       () => this.clearWhenNoImage()
-     ).catch(error => {
-      // Handle unsuccessful uploads
-      console.log("error update name and others: " + error);
-    });
-        
+    if (apiMethods.v1) {
+      this.db.object(`coffees/${coffeeId}`).update(this.coffeeForm.value).then(
+        () => this.clearWhenNoImage()
+      ).catch(error => {
+        // Handle unsuccessful uploads
+        console.log("error update name and others: " + error);
+      });
+    }
+
+    if (apiMethods.vCompanies) {
+      this.db.object(`/companies/${this.loginService.user.companyName}/coffees/${coffeeId}`).update(this.coffeeForm.value).then(
+        () => this.clearWhenNoImage()
+      ).catch(error => {
+        // Handle unsuccessful uploads
+        console.log("error update name and others: " + error);
+      });
+    }
+
+
   }
 
   private deteleImageInStorage(imageKey) {

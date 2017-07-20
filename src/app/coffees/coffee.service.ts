@@ -31,12 +31,27 @@ export class CoffeeService {
     // coffee upload
     private alreadyUploaded: boolean = false;
 
+    // path variable
+    // private coffeePath: String;
+
 
     constructor(private http: Http,
                 private db: AngularFireDatabase,
                 private loginService: LoginService) {
+
+
+
         loginService.userOutput.subscribe(
-          (user: User) => console.log("new user :" + user.email + " " + user.companyName)
+          (user: User) => {
+
+            // if (apiMethods.v1) {
+            //   this.coffeePath = 'coffees';
+            // }
+
+            // if (apiMethods.vCompanies) {
+            //   this.coffeePath = `/companies/${this.loginService.user.companyName}/coffees`;
+            // }
+          }
         );
     }
 
@@ -67,10 +82,16 @@ export class CoffeeService {
         this.fetchCounts(count);
     }
 
-    loadAllCoffees() {
+    loadAllCoffees(user: User) {
         if (apiMethods.v1) {
           return this.db.list('coffees')
                 .map(Coffee.fromJsonList);
+        }
+
+        if (apiMethods.vCompanies) {
+          // console.log(this.loginService.user.companyName);
+          return this.db.list(`/companies/${user.companyName}/coffees`)
+            .map(Coffee.fromJsonList);
         }
 
     }
