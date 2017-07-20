@@ -18,7 +18,7 @@ export class CoffeeComponent implements OnInit {
     @Input()
     coffee: Coffee;
 
-    @Output() 
+    @Output()
     editCoffeeOutput = new EventEmitter<CoffeeOutput>();
 
     @Output()
@@ -36,11 +36,11 @@ export class CoffeeComponent implements OnInit {
 
     constructor(private coffeeService: CoffeeService,
                 private router: Router) {
-  
+
     }
 
     ngOnInit() {
-      
+
     }
 
     plus() {
@@ -51,8 +51,8 @@ export class CoffeeComponent implements OnInit {
     minus() {
       if (this.coffeeCount > 1) {
         this.coffeeCount--;
-      } 
-      // console.log("minus");  
+      }
+      // console.log("minus");
     }
 
     addCoffeeAlert() {

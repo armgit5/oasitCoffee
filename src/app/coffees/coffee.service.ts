@@ -120,9 +120,30 @@ export class CoffeeService {
         });
       }
 
+      if (apiMethods.vCompanies) {
+        // get coffee image key
+        console.log(this.loginService.user);
+        firebase.database().ref(`/companies/${this.loginService.user.companyName}/coffees/${$key}`).once('value').then(snapshot => {
+            let imageKey = snapshot.val().imageKey;
+
+            // removing the coffee
+            this.db.object(`/companies/${this.loginService.user.companyName}/coffees/${$key}`).remove()
+            .then(() => {
+
+                // deleting image in storage
+                this.deteleImageInStorage(imageKey);
+            })
+            .catch(error => console.log("Error"));
+        });
+      }
+
     }
 
     private deteleImageInStorage(imageKey) {
+        if (apiMethods.vCompanies) {
+          this.storageFolderName = `${this.loginService.user.companyName}/images/`;
+        }
+
         firebase.storage().ref().child(this.storageFolderName + imageKey)
         .delete().then(function() {
             // File deleted successfully
