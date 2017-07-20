@@ -27,13 +27,13 @@ export class AppComponent {
     // Admin page shouldn't have class and header
     router.events.subscribe(
       (val: NavigationEnd) => {
-        console.log("1 " + (val.url=="/admin"));
+        // console.log("1 " + (val.url=="/admin"));
         if (val.url == "/admin") {
           this.isAdmin = true;
-          console.log("isAdmin " + this.isAdmin);
+          // console.log("isAdmin " + this.isAdmin);
         } else {
           this.isAdmin = false;
-          console.log("isAdmin " + this.isAdmin);
+          // console.log("isAdmin " + this.isAdmin);
         }
       }
     );

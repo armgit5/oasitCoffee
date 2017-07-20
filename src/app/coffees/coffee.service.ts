@@ -10,6 +10,9 @@ import { Observable } from 'rxjs';
 import { Cart } from '../cart/cart';
 import { Subscription } from 'rxjs/Rx';
 import { CoffeeOutput } from './coffee-output';
+import { apiMethods } from '../../environments/environment';
+import { LoginService } from '../login/login.service';
+import { User } from '../login/user';
 
 @Injectable()
 export class CoffeeService {
@@ -27,10 +30,14 @@ export class CoffeeService {
 
     // coffee upload
     private alreadyUploaded: boolean = false;
-    
-    constructor(private http: Http, 
-                private db: AngularFireDatabase
-                ) {
+
+
+    constructor(private http: Http,
+                private db: AngularFireDatabase,
+                private loginService: LoginService) {
+        loginService.userOutput.subscribe(
+          (user: User) => console.log("new user :" + user.email + " " + user.companyName)
+        );
     }
 
     addToCart(coffee, count, comment) {
@@ -42,11 +49,11 @@ export class CoffeeService {
         //          cartCoffee.qty += count;
         //          cartCoffee.comment = comment;
         //          alreadyInCart = true;
-        //     } 
+        //     }
         // });
 
         if (!alreadyInCart) {
-            this.cartCoffees.push({  
+            this.cartCoffees.push({
                 coffeeId: coffee.$key,
                 coffeeName: coffee.name,
                 coffeeType: coffee.type,
@@ -56,21 +63,27 @@ export class CoffeeService {
                 imageUrl: coffee.url
             });
         }
-        
+
         this.fetchCounts(count);
     }
 
     loadAllCoffees() {
-        return this.db.list('coffees')
+        if (apiMethods.v1) {
+          return this.db.list('coffees')
                 .map(Coffee.fromJsonList);
+        }
+
     }
 
     loadCoffee($key) {
-        return this.db.object(`coffees/${$key}`); 
+      if (apiMethods.v1) {
+        return this.db.object(`coffees/${$key}`);
+      }
     }
 
     deleteCoffee($key) {
 
+      if (apiMethods.v1) {
         // get coffee image key
         firebase.database().ref(`coffees/${$key}`).once('value').then(snapshot => {
             let imageKey = snapshot.val().imageKey;
@@ -84,8 +97,8 @@ export class CoffeeService {
             })
             .catch(error => console.log("Error"));
         });
+      }
 
-        
     }
 
     private deteleImageInStorage(imageKey) {
@@ -115,7 +128,7 @@ export class CoffeeService {
         this.coffeeCounts = newCount;
         this.fetchCounts(0);
     }
-   
+
     editCoffee(isNew, inputId) {
         this.outputData.isNew = isNew;
         this.outputData.coffeeId = inputId;

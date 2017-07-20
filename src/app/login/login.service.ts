@@ -2,13 +2,15 @@ import { Injectable, EventEmitter, ViewChild } from '@angular/core';
 import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
 import { User } from './user';
 import * as firebase from 'firebase/app';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
 @Injectable()
 export class LoginService {
 
     isLoggedIn = new EventEmitter<boolean>();
-    user: User = new User(null, null, null, null);
+    userOutput = new EventEmitter<User>();
+    user: User = new User(null, null, null, null, null);
+
 
     @ViewChild('staticModal') loginModal;
 
@@ -16,23 +18,39 @@ export class LoginService {
                 private db: AngularFireDatabase) {
         this.afAuth.authState.subscribe(authState => {
             if (authState) {
-                // console.log("service login")
-                // console.log(authState);
+                console.log(authState);
                 this.user.uid = authState.uid;
                 this.user.email = authState.email;
                 this.user.imageUrl = authState.photoURL;
                 this.user.name = authState.displayName;
-                // console.log(this.user);
-                this.isLoggedIn.emit(true);
+                this.queryCompanyName(this.user);
             } else {
-                // console.log("service logout")
                 this.user.uid = null;
                 this.user.email = null;
                 this.user.imageUrl = null;
                 this.user.name = null;
                 this.isLoggedIn.emit(false);
+                this.userOutput.emit(this.user);
             }
         });
+    }
+
+    // Query users to comapanies table
+    // assign companyName to user.companyName
+    private queryCompanyName(user: User) {
+      this.db.list('/usersToCompanies', {
+        query: {
+          orderByChild: 'email',
+          equalTo: user.email
+        }
+      }).subscribe(
+        items => {
+          console.log(items);
+          this.user.companyName = items[0].companyName;
+          this.isLoggedIn.emit(true);
+          this.userOutput.emit(this.user);
+        }
+      );
     }
 
     login(email, password): Promise<any> {
@@ -44,23 +62,46 @@ export class LoginService {
                 resolve(authState);
             })
             .catch(error => resolve(error));
-
         });
-
-
     }
 
-    registerCompanyWithUser(companyName, email) {
-        this.db.list('/companies').push({
-          companyName: companyName,
-          users: {
-              email: email,
-              role: "admin"
-            }
-        })
-        .catch(
-          err => console.log(err)
-        );
+    private createUserToCompany(email, companyName) {
+      this.db.list("/usersToCompanies").push({
+        email: email,
+        companyName: companyName
+      });
+    }
+
+    private registerCompanyWithUser(companyName, email) {
+        // this.db.list('/companies').push({
+        //   companyName: companyName,
+        //   users: {
+        //       email: email,
+        //       role: "admin"
+        //     }
+        // })
+        // .catch(
+        //   err => console.log(err)
+        // );
+
+        // Sign up a company.
+        // Check to see if the company name exists or not.
+        let myObject= this.db.object("/companies/"+companyName);
+        myObject.subscribe(snapshot => {
+          if (snapshot.$value === null) {
+            myObject.set({
+              users: [{
+                email: email,
+                role: "admin"
+              }]
+            });
+
+            this.createUserToCompany(email, companyName);
+
+          } else {
+            console.log("company already exists");
+          }
+        });
     }
 
     register(email, password, companyName) {

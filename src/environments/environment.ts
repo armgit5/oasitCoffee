@@ -6,3 +6,8 @@
 export const environment = {
   production: false
 };
+
+export const apiMethods = {
+  v1: true,
+  vCompanies: false
+}

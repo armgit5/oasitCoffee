@@ -21,20 +21,20 @@ export class CartComponent implements OnInit, OnDestroy {
 
     cartForm: FormGroup;
     customerName: string;
-    
+
     cartItems = this.coffeeService.cartCoffees;
     total: number;
 
     newTotal: number = 0;
     newCount: number = 0;
 
-    user: User = new User(null, null, null, null);
+    user: User = new User(null, null, null, null, null);
 
     $logIn: Subscription;
 
     // newAccount:boolean = true;
 
-     @ViewChild('staticModal') loginModal; 
+     @ViewChild('staticModal') loginModal;
 
     constructor(private coffeeService: CoffeeService,
                 private formBuilder: FormBuilder,
@@ -56,7 +56,7 @@ export class CartComponent implements OnInit, OnDestroy {
 
         // initialize user name if no name then use email
         this.assignUserInfo();
-        
+
         this.$logIn = this.loginService.isLoggedIn.subscribe(isLoggedIn => {
             if (isLoggedIn) {
                 // console.log("logged in");
@@ -89,7 +89,7 @@ export class CartComponent implements OnInit, OnDestroy {
             // console.log(this.newTotal, this.newCount);
             this.coffeeService.updateFetchCounts(this.newCount);
             this.total = this.newTotal;
-        
+
             //update coffee service cart coffee qty
             this.coffeeService.cartCoffees = cartCoffes;
         });
@@ -104,7 +104,7 @@ export class CartComponent implements OnInit, OnDestroy {
         this.cartItems.forEach(coffee => {
             cartCoffees.push(new FormGroup({
                 coffeeId: new FormControl(coffee.coffeeId),
-                coffeeName: new FormControl(coffee.coffeeName), 
+                coffeeName: new FormControl(coffee.coffeeName),
                 coffeeType: new FormControl(coffee.coffeeType),
                 qty: new FormControl(coffee.qty, Validators.required),
                 price: new FormControl(coffee.price),
@@ -112,14 +112,14 @@ export class CartComponent implements OnInit, OnDestroy {
                 imageUrl: new FormControl(coffee.imageUrl)
             }));
         });
-        
+
         this.cartForm = this.formBuilder.group({
             customerName: [customerName],
             customerImage: [customerImage],
             cartCoffees: cartCoffees
         });
 
-    }   
+    }
 
     calculateTotal() {
         this.total = 0;
@@ -151,7 +151,7 @@ export class CartComponent implements OnInit, OnDestroy {
             this.loginModal.show();
         } else {
             this.addToQueue();
-        }   
+        }
     }
 
     update() {
@@ -172,7 +172,7 @@ export class CartComponent implements OnInit, OnDestroy {
     }
 
     minus(i) {
-        
+
         if (this.cartForm.value.cartCoffees[i].qty > 1) {
             this.cartForm.value.cartCoffees[i].qty--;
             this.total -= Number(this.cartForm.value.cartCoffees[i].price);
@@ -185,14 +185,14 @@ export class CartComponent implements OnInit, OnDestroy {
     }
 
     plus(i) {
-        
+
         this.cartForm.value.cartCoffees[i].qty++;
         this.total += Number(this.cartForm.value.cartCoffees[i].price);
         this.coffeeService.fetchCounts(1);
 
         //update coffee service cart coffee qty
         this.coffeeService.cartCoffees = this.cartForm.value.cartCoffees;
-        
+
     }
 
     hideModal() {
@@ -200,7 +200,7 @@ export class CartComponent implements OnInit, OnDestroy {
     }
 
     onHasName(name) {
-        
+
     }
 
     ngOnDestroy() {

@@ -95,8 +95,8 @@ export class LoginComponent implements OnInit {
           .catch(error => console.log(error));
     }
 
-    // logout() {
-    //     this.loginService.logout();
-    // }
+    logout() {
+        this.loginService.logout();
+    }
 
 }
