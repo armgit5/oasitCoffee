@@ -23,6 +23,10 @@ export class CoffeesComponent {
 
     public alerts: any = [];
 
+    // Company Name and User Name
+    email = "";
+    companyName = "";
+
     // isNew: boolean = true;
     // inputId: string = "";
 
@@ -39,6 +43,9 @@ export class CoffeesComponent {
 
       loginService.userOutput.subscribe(
         (user: User) => {
+          this.email = user.email;
+          this.companyName = user.companyName;
+
           this.$coffee = this.coffeeService.loadAllCoffees(user).subscribe(
             coffees => this.coffees = coffees
           );

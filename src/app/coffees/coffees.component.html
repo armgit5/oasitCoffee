@@ -1,8 +1,10 @@
 <div class="container main">
 
+<p>Welcome: {{email}} to {{companyName}}</p>
+
 <div *ngFor="let alert of alerts">
-<alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" 
-        style=" position:fixed; top: 60px; z-index:9999; 
+<alert [type]="alert.type" [dismissOnTimeout]="alert.timeout"
+        style=" position:fixed; top: 60px; z-index:9999;
                                   border-radius:0px;
                                   text-align:right;
                                   right: 5%;">
@@ -13,23 +15,23 @@
 
   <div class="row">
 
-      <div class="col-md-3 col-lg-3" 
+      <div class="col-md-3 col-lg-3"
           *ngFor="let coffee of coffees | coffeeFilter:filterArg; let i = index;"
           style="background-color: white; height: 425px;">
           <coffee-component [coffee]="coffee" (editCoffeeOutput)="onEdit($event)"
            (addCoffeeOutput)="onAdd($event)"></coffee-component>
       </div>
-      
+
       <div class="col-md-3 col-lg-3" style="margin-top:10px;">
           <a (click)="newCoffee()"
           style="color: #444;font-weight: 300;">
           <i class="fa fa-plus-square-o fa-2x"></i>&nbsp; <u>New Coffee</u>
-        </a>         
+        </a>
       </div>
-     
-    
+
+
   </div><!--/row-->
- 
+
   <hr>
 
   <footer>
@@ -41,7 +43,7 @@
 
 <div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
                   tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog"> 
+  <div class="modal-dialog">
     <div class="modal-content" style="width:850px;height:535px;margin:0px;margin-left:-25%">
       <div class="modal-header">
         <h4 class="modal-title pull-left">ADD NEW COFFEE</h4>
