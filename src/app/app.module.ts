@@ -28,6 +28,7 @@ import { LoginService } from './login/login.service';
 import { AdminComponent } from './admin/admin.component';
 import { SidebarComponent } from './admin/sidebar/sidebar.component';
 import { UsersComponent } from './admin/users/users.component';
+import { NavbarComponent } from './admin/shared/navbar/navbar.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { UsersComponent } from './admin/users/users.component';
     LoginComponent,
     AdminComponent,
     SidebarComponent,
-    UsersComponent
+    UsersComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
