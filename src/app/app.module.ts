@@ -26,6 +26,8 @@ import { AlertModule } from 'ngx-bootstrap/alert';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
 import { AdminComponent } from './admin/admin.component';
+import { SidebarComponent } from './admin/sidebar/sidebar.component';
+import { UsersComponent } from './admin/users/users.component';
 
 
 @NgModule({
@@ -40,7 +42,9 @@ import { AdminComponent } from './admin/admin.component';
     CoffeeEditComponent,
     ImageCropperComponent,
     LoginComponent,
-    AdminComponent
+    AdminComponent,
+    SidebarComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
@@ -54,8 +58,8 @@ import { AdminComponent } from './admin/admin.component';
     ModalModule.forRoot(),
     AlertModule.forRoot()
   ],
-  providers: [CoffeeService, 
-              QueueService, 
+  providers: [CoffeeService,
+              QueueService,
               CategoryService,
               LoginService],
   bootstrap: [AppComponent]

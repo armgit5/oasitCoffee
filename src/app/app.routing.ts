@@ -3,6 +3,7 @@ import { CartComponent } from './cart/cart.component';
 import { QueueComponent } from './queue/queue.component';
 import { CoffeeEditComponent } from './coffee-edit/coffee-edit.component';
 import { AdminComponent } from './admin/admin.component';
+import { UsersComponent } from './admin/users/users.component';
 
 export const routeConfig = [
   { path: "", component: CoffeesComponent },
@@ -18,7 +19,11 @@ export const routeConfig = [
       component: CoffeeEditComponent
     }
   ]},
-  { path: "admin", component: AdminComponent},
+  { path: "admin", component: AdminComponent, children: [
+    { path: "user",
+      component: UsersComponent
+    }
+  ]},
 ];
 
 export const navigatableComponents = [

@@ -38,9 +38,12 @@
 #map{
     position:relative;
     width:100%;
-    height: calc(100% - 60px);
+    height: 100%;
 }
+.map{
+    height: 280px !important;
 
+}
 .places-buttons .btn{
     margin-bottom: 30px
 }
