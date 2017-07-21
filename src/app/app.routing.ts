@@ -30,6 +30,6 @@ export const navigatableComponents = [
   // CoffeesComponent,
   // CoffeeEditComponent,
   CartComponent,
-  QueueComponent,
-  AdminComponent
+  QueueComponent
+  // AdminComponent
 ];

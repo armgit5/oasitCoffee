@@ -5,9 +5,9 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from "@angular/router";
 import { routeConfig,navigatableComponents } from "./app.routing";
 
+import { CoffeePipe } from "./coffees/coffee.pipe";
 // import { CoffeeComponent } from './coffees/coffee.component';
 // import { CoffeeEditComponent } from './coffee-edit/coffee-edit.component';
-import { CoffeePipe } from "./coffees/coffee.pipe";
 // import { CategoryComponent } from './coffees/category/category.component';
 
 import { HeaderComponent } from "./header.component";
@@ -28,11 +28,14 @@ import { ModalModule } from 'ngx-bootstrap';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
-import { AdminComponent } from './admin/admin.component';
-import { SidebarComponent } from './admin/sidebar/sidebar.component';
-import { UsersComponent } from './admin/users/users.component';
-import { NavbarComponent } from './admin/shared/navbar/navbar.component';
+
+// import { AdminComponent } from './admin/admin.component';
+// import { SidebarComponent } from './admin/sidebar/sidebar.component';
+// import { UsersComponent } from './admin/users/users.component';
+// import { NavbarComponent } from './admin/shared/navbar/navbar.component';
+
 import { CoffeeModule } from './coffees/coffee.module';
+import { AdminModule } from './admin/admin.module';
 
 
 @NgModule({
@@ -48,11 +51,11 @@ import { CoffeeModule } from './coffees/coffee.module';
     // CategoryComponent,
     // ImageCropperComponent,
 
-    LoginComponent,
-    AdminComponent,
-    SidebarComponent,
-    UsersComponent,
-    NavbarComponent
+    LoginComponent
+    // AdminComponent,
+    // SidebarComponent,
+    // UsersComponent,
+    // NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +70,8 @@ import { CoffeeModule } from './coffees/coffee.module';
     // ModalModule.forRoot(),
     // AlertModule.forRoot(),
 
-    CoffeeModule
+    CoffeeModule,
+    AdminModule
   ],
   providers: [CoffeeService,
               QueueService,
