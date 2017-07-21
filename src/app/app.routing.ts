@@ -1,7 +1,7 @@
 import { CoffeesComponent } from "./coffees/coffees.component";
+import { CoffeeEditComponent } from './coffee-edit/coffee-edit.component';
 import { CartComponent } from './cart/cart.component';
 import { QueueComponent } from './queue/queue.component';
-import { CoffeeEditComponent } from './coffee-edit/coffee-edit.component';
 import { AdminComponent } from './admin/admin.component';
 import { UsersComponent } from './admin/users/users.component';
 
@@ -27,9 +27,9 @@ export const routeConfig = [
 ];
 
 export const navigatableComponents = [
-  CoffeesComponent,
+  // CoffeesComponent,
+  // CoffeeEditComponent,
   CartComponent,
   QueueComponent,
-  CoffeeEditComponent,
   AdminComponent
 ];

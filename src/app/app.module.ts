@@ -4,10 +4,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from "@angular/router";
 import { routeConfig,navigatableComponents } from "./app.routing";
+
+// import { CoffeeComponent } from './coffees/coffee.component';
+// import { CoffeeEditComponent } from './coffee-edit/coffee-edit.component';
 import { CoffeePipe } from "./coffees/coffee.pipe";
+// import { CategoryComponent } from './coffees/category/category.component';
+
 import { HeaderComponent } from "./header.component";
-import { CategoryComponent } from './coffees/category/category.component';
-import { CoffeeComponent } from './coffees/coffee.component';
 import { AppComponent } from './app.component';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
@@ -18,8 +21,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import { QueueComponent } from './queue/queue.component';
 import { QueueService } from './queue/queue.service';
-import { CoffeeEditComponent } from './coffee-edit/coffee-edit.component';
-import { ImageCropperComponent } from 'ng2-img-cropper';
+
+// import { ImageCropperComponent } from 'ng2-img-cropper';
 import { CategoryService } from './coffees/category/category.service';
 import { ModalModule } from 'ngx-bootstrap';
 import { AlertModule } from 'ngx-bootstrap/alert';
@@ -29,19 +32,22 @@ import { AdminComponent } from './admin/admin.component';
 import { SidebarComponent } from './admin/sidebar/sidebar.component';
 import { UsersComponent } from './admin/users/users.component';
 import { NavbarComponent } from './admin/shared/navbar/navbar.component';
+import { CoffeeModule } from './coffees/coffee.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ...navigatableComponents,
-    CoffeePipe,
     HeaderComponent,
-    CategoryComponent,
-    CoffeeComponent,
     QueueComponent,
-    CoffeeEditComponent,
-    ImageCropperComponent,
+
+    // CoffeePipe,
+    // CoffeeComponent,
+    // CoffeeEditComponent,
+    // CategoryComponent,
+    // ImageCropperComponent,
+
     LoginComponent,
     AdminComponent,
     SidebarComponent,
@@ -56,9 +62,12 @@ import { NavbarComponent } from './admin/shared/navbar/navbar.component';
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    ReactiveFormsModule,
-    ModalModule.forRoot(),
-    AlertModule.forRoot()
+
+    // ReactiveFormsModule,
+    // ModalModule.forRoot(),
+    // AlertModule.forRoot(),
+
+    CoffeeModule
   ],
   providers: [CoffeeService,
               QueueService,
