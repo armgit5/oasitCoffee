@@ -67,7 +67,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
               private loginService: LoginService) {
 
       // Initialize image cropping
-      this.name = 'Angular2'
+      this.name = 'Angular2';
       this.cropperSettings1 = new CropperSettings();
       this.cropperSettings1.width = 400;
       this.cropperSettings1.height = 333;
@@ -204,7 +204,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
 
     if (this.isNew) {
       if (apiMethods.v1) {
-        this.db.list("coffees")
+        this.db.list('coffees')
         .push(this.coffeeForm.value).then(item => {
                 let coffeeId = item.key;
                 let newImageKey = this.addOneToImageKey(coffeeId);
@@ -230,7 +230,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
 
   private updateCoffee() {;
     this.updateNameAndOthers(this.coffee.$key);
-    if (this.data1.image != undefined) {
+    if (this.data1.image !== undefined) {
       this.imageStorageInsert(this.data1.image, this.coffee.$key);
     }
 
@@ -265,7 +265,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
     this.data1 = {};
     this.hideOutput.emit();
     this.uploaded = false;
-    this.imageUrl = "https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/cup-of-black-coffee1.jpg?alt=media&token=94afc335-0a25-4956-aea8-6d1fe140b65d";
+    this.imageUrl = 'https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/cup-of-black-coffee1.jpg?alt=media&token=94afc335-0a25-4956-aea8-6d1fe140b65d';
     this.spinning = false;
 
 }
@@ -273,7 +273,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
 private clearWhenNoImage() {
   this.spinning = false;
   this.notReady = true;
-  if (this.data1.image == undefined) {
+  if (this.data1.image === undefined) {
           this.hideOutput.emit();
   }
 }
@@ -290,7 +290,7 @@ private clearWhenNoImage() {
   private addImageToStorage(coffeeId, inputImage, newImageKey, oldImageKey) {
 
     // add new image to storage
-    let image = inputImage.split("base64,");
+    let image = inputImage.split('base64,');
 
     if (apiMethods.vCompanies) {
       this.storageFolderName = `${this.loginService.user.companyName}/images/`;
@@ -303,7 +303,7 @@ private clearWhenNoImage() {
         // get imagedownload url
         let downloadURL = snapshot.downloadURL;
         this.imageUrl = downloadURL;
-        console.log("successfully added an image and update key");
+        console.log('successfully added an image and update key');
 
         // update and delete coffee $key
         if (!this.isNew) {
@@ -313,7 +313,7 @@ private clearWhenNoImage() {
 
     }).catch(error => {
         // Handle unsuccessful uploads
-        console.log("error uploading");
+        console.log('error uploading');
         console.log(error);
     });
   }
@@ -328,7 +328,7 @@ private clearWhenNoImage() {
       .then(() => this.clearDataAndReturn())
       .catch(error => {
           // Handle unsuccessful uploads
-          console.log("error updating img key and url: " + error);
+          console.log('error updating img key and url: ' + error);
       });
     }
 
@@ -340,7 +340,7 @@ private clearWhenNoImage() {
       .then(() => this.clearDataAndReturn())
       .catch(error => {
           // Handle unsuccessful uploads
-          console.log("error updating img key and url: " + error);
+          console.log('error updating img key and url: ' + error);
       });
     }
 
@@ -353,7 +353,7 @@ private clearWhenNoImage() {
         () => this.clearWhenNoImage()
       ).catch(error => {
         // Handle unsuccessful uploads
-        console.log("error update name and others: " + error);
+        console.log('error update name and others: ' + error);
       });
     }
 
@@ -362,7 +362,7 @@ private clearWhenNoImage() {
         () => this.clearWhenNoImage()
       ).catch(error => {
         // Handle unsuccessful uploads
-        console.log("error update name and others: " + error);
+        console.log('error update name and others: ' + error);
       });
     }
 
@@ -373,10 +373,10 @@ private clearWhenNoImage() {
     firebase.storage().ref().child(this.storageFolderName + imageKey)
       .delete().then(function() {
         // File deleted successfully
-        console.log("successfully deleted the image");
+        console.log('successfully deleted the image');
       }).catch(function(error) {
         // Uh-oh, an error occurred!
-        console.log("error deleting the image");
+        console.log('error deleting the image');
     });
   }
 

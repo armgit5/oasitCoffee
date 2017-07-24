@@ -41,19 +41,26 @@ export class CoffeesComponent {
                 private categoryService: CategoryService,
                 private loginService: LoginService) {
 
-      this.coffees = this.coffeeService.coffees;
+      // this.coffees = this.coffeeService.coffees;
 
+      this.subToUserCoffees(this.loginService.user);
+
+      // This is for the first time opening the page
+      // and the user info is not loaded fast enough
+      // from firebase
       loginService.userOutput.subscribe(
         (user: User) => {
           this.email = user.email;
           this.companyName = user.companyName;
 
-          this.$coffee = this.coffeeService.loadAllCoffees(user).subscribe(
-            coffees => {
-              this.coffees = coffees;
-              this.coffeeService.coffees = coffees;
-            }
-          );
+          this.subToUserCoffees(user);
+
+          // this.$coffee = this.coffeeService.loadAllCoffees(user).subscribe(
+          //   coffees => {
+          //     this.coffees = coffees;
+          //     this.coffeeService.coffees = coffees;
+          //   }
+          // );
         }
       );
 
@@ -63,6 +70,15 @@ export class CoffeesComponent {
         this.filterArg = filterArg;
         console.log(filterArg);
       });
+    }
+
+    private subToUserCoffees(user: User) {
+          this.$coffee = this.coffeeService.loadAllCoffees(user).subscribe(
+            coffees => {
+              this.coffees = coffees;
+              this.coffeeService.coffees = coffees;
+            }
+          );
     }
 
     newCoffee() {
