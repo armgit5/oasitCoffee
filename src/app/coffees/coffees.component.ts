@@ -24,8 +24,8 @@ export class CoffeesComponent {
     public alerts: any = [];
 
     // Company Name and User Name
-    email = "";
-    companyName = "";
+    email = '';
+    companyName = '';
 
     // isNew: boolean = true;
     // inputId: string = "";
@@ -41,30 +41,33 @@ export class CoffeesComponent {
                 private categoryService: CategoryService,
                 private loginService: LoginService) {
 
+      this.coffees = this.coffeeService.coffees;
+
       loginService.userOutput.subscribe(
         (user: User) => {
           this.email = user.email;
           this.companyName = user.companyName;
 
           this.$coffee = this.coffeeService.loadAllCoffees(user).subscribe(
-            coffees => this.coffees = coffees
+            coffees => {
+              this.coffees = coffees;
+              this.coffeeService.coffees = coffees;
+            }
           );
         }
       );
 
+      console.log('coffees construction');
+
       this.categoryService.categoryChanged.subscribe(filterArg => {
         this.filterArg = filterArg;
         console.log(filterArg);
-      })
-    }
-
-    onNgInit() {
-
+      });
     }
 
     newCoffee() {
 
-      this.coffeeService.editCoffee(true, "");
+      this.coffeeService.editCoffee(true, '');
       this.button.show();
 
     }

@@ -36,7 +36,8 @@ import { AlertModule } from 'ngx-bootstrap/alert';
     ReactiveFormsModule,
     ModalModule,
     AlertModule,
-    CategoryComponent
+    CategoryComponent,
+    CoffeeComponent
   ]
 })
 

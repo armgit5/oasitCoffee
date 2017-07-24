@@ -1,8 +1,7 @@
 import * as firebase from 'firebase';
-
 import {Injectable, Inject, EventEmitter} from "@angular/core";
-import {Http} from "@angular/http";
-import {xhrHeaders} from "./xhr-headers";
+import {Http} from '@angular/http';
+import {xhrHeaders} from './xhr-headers';
 import { cartData } from '../cart/cartData';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Coffee } from './coffee';
@@ -19,10 +18,11 @@ export class CoffeeService {
 
     // coffee variables
     cartCoffees: Cart[] = [];
-    private coffeeCounts:number = 0;
+    private coffeeCounts: number = 0;
     coffeeCountsChanged = new EventEmitter<number>();
+    coffees: Coffee[] = [];
 
-    outputData = new CoffeeOutput(true, "");
+    outputData = new CoffeeOutput(true, '');
     editCoffeeData = new EventEmitter<CoffeeOutput>();
 
     // firebase viriables
@@ -39,7 +39,7 @@ export class CoffeeService {
                 private loginService: LoginService) {
         if (apiMethods.v1) {
           this.coffeePath = `coffees/`;
-          this.storageFolderName = "images/";
+          this.storageFolderName = 'images/';
         }
 
         if (apiMethods.vCompanies) {
@@ -108,7 +108,7 @@ export class CoffeeService {
                 // deleting image in storage
                 this.deteleImageInStorage(imageKey);
             })
-            .catch(error => console.log("Error"));
+            .catch(error => console.log('Error'));
         });
     }
 
@@ -116,12 +116,12 @@ export class CoffeeService {
         firebase.storage().ref().child(this.storageFolderName + imageKey)
         .delete().then(function() {
             // File deleted successfully
-            console.log("successfully deleted the image");
+            console.log('successfully deleted the image');
         }).catch(function(error) {
             // Uh-oh, an error occurred!
-            console.log("error deleting the image");
+            console.log('error deleting the image');
         });
-        console.log("delete image in storage " + imageKey);
+        console.log('delete image in storage ' + imageKey);
     }
 
     getCoffeeCounts() {
