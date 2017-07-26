@@ -1,0 +1,7 @@
+
+.navbar .navbar-brand, .navbar-nav>li, .navbar-nav p {
+  font-family: "Helvetica Neue", "Helvetica", "Hiragino Kaku Gothic Pro", arial, sans-serif;
+  color: #211922;
+  font-size: 16px;
+  font-weight: 300;
+}

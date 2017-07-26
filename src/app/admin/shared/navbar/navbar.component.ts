@@ -8,7 +8,8 @@ import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common'
     styleUrls: ['../../admin.component.css',
                 '../../animate.min.css',
                 '../../demo.css',
-                '../../light-bootstrap-dashboard.css']
+                '../../light-bootstrap-dashboard.css',
+                './navbar.component.css']
 })
 
 export class NavbarComponent implements OnInit{

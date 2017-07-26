@@ -1,0 +1,14 @@
+.sidebar .nav p {
+  font-weight: 400;
+}
+
+.sidebar .logo text {
+  color: #FFFFFF;
+  float: left;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 20px;
+  margin-left: 10px;
+  margin-top: 10px;
+  width: 60px;
+}

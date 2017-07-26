@@ -7,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['../admin.component.css',
                 '../animate.min.css',
                 '../demo.css',
-                '../light-bootstrap-dashboard.css']
+                '../light-bootstrap-dashboard.css',
+                './sidebar.component.css']
 })
 
 export class SidebarComponent implements OnInit {
