@@ -15,13 +15,13 @@
             </div>
 
             <ul class="nav">
-                <li class="active">
+                <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
                     <a [routerLink]="['/admin']">
                         <i class="pe-7s-graph"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li>
+                <li routerLinkActive="active">
                     <a [routerLink]="['/admin/user']">
                         <i class="pe-7s-user"></i>
                         <p>User Profile</p>
