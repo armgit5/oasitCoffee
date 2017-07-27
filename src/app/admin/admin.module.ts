@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
 import { UserFormComponent } from './users/userform/userform.component';
+import { UserTableComponent } from './users/usertable/usertable.component';
 
 @NgModule({
 
@@ -15,7 +16,8 @@ import { UserFormComponent } from './users/userform/userform.component';
     SidebarComponent,
     UsersComponent,
     UserFormComponent,
-    NavbarComponent
+    NavbarComponent,
+    UserTableComponent
   ],
   imports: [
     CommonModule,
