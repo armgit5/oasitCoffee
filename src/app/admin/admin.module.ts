@@ -8,6 +8,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
 import { UserFormComponent } from './users/userform/userform.component';
 import { UserTableComponent } from './users/usertable/usertable.component';
+import { ModalModule } from 'ngx-bootstrap';
 
 @NgModule({
 
@@ -23,7 +24,8 @@ import { UserTableComponent } from './users/usertable/usertable.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    ModalModule
   ]
 
 })

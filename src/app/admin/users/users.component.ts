@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -12,10 +12,11 @@ import { FormGroup } from '@angular/forms';
 export class UsersComponent implements OnInit {
 
   registerForm: FormGroup;
-  
+
   constructor() { }
 
   ngOnInit() {
   }
+
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -13,10 +13,22 @@ import { FormGroup } from '@angular/forms';
 export class UserTableComponent implements OnInit {
 
   registerForm: FormGroup;
+  @ViewChild('staticModal') button;
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  newUser() {
+    this.button.show();
+  }
+
+  hide() {
+  this.button.hide();
+}
+
+  hideModal() {
+    this.hide();
+  }
 }

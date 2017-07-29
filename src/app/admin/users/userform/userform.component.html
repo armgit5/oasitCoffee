@@ -1,10 +1,4 @@
-<div class="col-md-8" style="width:450px">
-  <div class="card">
-    <div class="header">
-      <h4 class="title">CREATE/EDIT USERS</h4>
-    </div>
-    <div class="content">
-      <form [formGroup]="userForm" (ngSubmit)="createUser()">
+ <form [formGroup]="userForm" (ngSubmit)="createUser()">
         <div class="row">
           <div class="col-md-3" style="padding-top:15px">User's Info:</div>
           <div class="col-md-9">
@@ -42,7 +36,3 @@
         <button type="submit" class="btn btn-info btn-fill pull-right">Update Profile</button>
         <div class="clearfix"></div>
       </form>
-
-    </div>
-  </div>
-</div>
