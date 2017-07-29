@@ -10,6 +10,7 @@ import { Category } from './category/category';
 import { CoffeeOutput } from './coffee-output';
 import { LoginService } from '../login/login.service';
 import { User } from '../login/user';
+import { apiMethods } from '../../environments/environment';
 
 @Component({
   selector: 'coffee',
@@ -64,7 +65,7 @@ export class CoffeesComponent {
         }
       );
 
-      console.log('coffees construction');
+      // console.log('coffees construction');
 
       this.categoryService.categoryChanged.subscribe(filterArg => {
         this.filterArg = filterArg;
@@ -73,12 +74,24 @@ export class CoffeesComponent {
     }
 
     private subToUserCoffees(user: User) {
+        if (apiMethods.v1 || apiMethods.vCompanies) {
           this.$coffee = this.coffeeService.loadAllCoffees(user).subscribe(
             coffees => {
               this.coffees = coffees;
               this.coffeeService.coffees = coffees;
             }
           );
+        }
+        if (apiMethods.vWuth) {
+          // console.log('v3');
+          this.coffeeService.loadAllCoffees(null).subscribe(
+            (coffees: Coffee[]) => {
+              // console.log(coffees);
+              this.coffees = coffees;
+              this.coffeeService.coffees = coffees;
+            }
+          );
+        }
     }
 
     newCoffee() {

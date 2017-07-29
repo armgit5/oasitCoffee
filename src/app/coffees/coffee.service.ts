@@ -1,7 +1,7 @@
 import * as firebase from 'firebase';
-import {Injectable, Inject, EventEmitter} from "@angular/core";
-import {Http} from '@angular/http';
-import {xhrHeaders} from './xhr-headers';
+import { Injectable, Inject, EventEmitter}  from "@angular/core";
+import { Http, Headers, RequestOptions } from '@angular/http';
+import { xhrHeaders } from './xhr-headers';
 import { cartData } from '../cart/cartData';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Coffee } from './coffee';
@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 import { Cart } from '../cart/cart';
 import { Subscription } from 'rxjs/Rx';
 import { CoffeeOutput } from './coffee-output';
-import { apiMethods } from '../../environments/environment';
+import { apiMethods, apiUrl } from '../../environments/environment';
 import { LoginService } from '../login/login.service';
 import { User } from '../login/user';
 
@@ -50,6 +50,15 @@ export class CoffeeService {
             }
           );
         }
+
+        if (apiMethods.vWuth) {
+          this.loginService.userOutput.subscribe(
+            (user: User) => {
+              this.coffeePath = `/companies/${user.companyName}/coffees/`;
+              this.storageFolderName = `${user.companyName}/images/`;
+            }
+          );
+        }
     }
 
     addToCart(coffee, count, comment) {
@@ -79,16 +88,31 @@ export class CoffeeService {
         this.fetchCounts(count);
     }
 
-    loadAllCoffees(user: User) {
+    loadAllCoffees(user: User): Observable<any[]> {
         let path = ' ';
         if (apiMethods.v1) {
+          // console.log('v1');
           path = 'coffees';
         }
         if (apiMethods.vCompanies) {
+          //  console.log('v2');
           path = `/companies/${user.companyName}/coffees`;
         }
+
+        if (apiMethods.vWuth) {
+          // console.log('v3');
+          let headers = new Headers({ 'Access-Control-Allow-Origin': '*' });
+          let options = new RequestOptions({ headers: headers });
+          path = `${apiUrl.url}/api/products?Company=oasit`;
+          // path = 'https://oasit-b6bc8.firebaseio.com/coffees.json';
+          return this.http.get(path, options)
+                .map(res => res.json())
+                .map(Coffee.fromJsonListV2);
+        }
+
         return this.db.list(path)
                 .map(Coffee.fromJsonList);
+
     }
 
     loadCoffee($key) {

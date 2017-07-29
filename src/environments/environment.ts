@@ -9,6 +9,10 @@ export const environment = {
 
 export const apiMethods = {
   v1: false,
-  vCompanies: true,
-  vWuth: false
-}
+  vCompanies: false,
+  vWuth: true
+};
+
+export const apiUrl = {
+  url: 'https://api-oasit.herokuapp.com/'
+};
