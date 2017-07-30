@@ -83,14 +83,12 @@ export class CoffeesComponent {
           );
         }
         if (apiMethods.vWuth) {
-          // console.log('v3');
-          this.coffeeService.loadAllCoffees(null).subscribe(
-            (coffees: Coffee[]) => {
-              // console.log(coffees);
-              this.coffees = coffees;
-              this.coffeeService.coffees = coffees;
-            }
-          );
+          // this.coffeeService.loadAllCoffees(null).subscribe(
+          //   (coffees: Coffee[]) => {
+          //     this.coffees = coffees;
+          //     this.coffeeService.coffees = coffees;
+          //   }
+          // );
         }
     }
 

@@ -11,6 +11,8 @@ import * as firebase from 'firebase/app';
 import { LoginService } from '../login/login.service';
 import { User } from '../login/user';
 import { apiMethods } from '../../environments/environment';
+import * as AWS from 'aws-sdk';
+import { PutObjectRequest } from "aws-sdk/clients/s3";
 
 @Component({
   selector: 'app-coffee-edit',
@@ -26,7 +28,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   cropperSettings1:CropperSettings;
   croppedWidth:number;
   croppedHeight:number;
-  imageUrl: string = "";
+  imageUrl: string = '';
   @ViewChild('cropper', undefined) cropper:ImageCropperComponent;
   uploaded = false;
 
@@ -35,15 +37,15 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   @Input()
   inputId: string;
 
-  @Output("hideModal")
+  @Output('hideModal')
   hideOutput = new EventEmitter();
 
   // private alreadyUploaded: boolean = false;
-  private storageFolderName: string = "images/";
+  private storageFolderName: string = 'images/';
 
   // Coffee
   coffeeForm: FormGroup;
-  private coffeeId: string = "";
+  private coffeeId: string = '';
   private $subscription: Subscription;
   private coffee: Coffee;
   categories: any[];
@@ -94,26 +96,12 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // Load coffee from firebase
-    // this.$subscription = this.route.params.subscribe(
-    //   (params: any) => {
-    //     if (params.hasOwnProperty('id')) {
-    //       this.isNew = false;
-    //       this.coffeeService.loadCoffee(params['id']).subscribe(
-    //         coffee => {
-    //           this.coffee = coffee;
-    //           this.imageUrl = coffee.url;
-    //           this.initForm();
-    //         });
-    //     } else {
-    //       this.isNew = true;
-    //       this.initForm();
-    //     }
-    // });
-
-    // console.log("on init");
-
-    this.imageUrl = "https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/cup-of-black-coffee1.jpg?alt=media&token=94afc335-0a25-4956-aea8-6d1fe140b65d";
+    // tslint:disable-next-line:max-line-length
+    if (apiMethods.vWuth) {
+      this.imageUrl = ' https://s3-ap-southeast-1.amazonaws.com/oasit/coffee330x275.jpg';
+    } else {
+      this.imageUrl = 'https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/cup-of-black-coffee1.jpg?alt=media&token=94afc335-0a25-4956-aea8-6d1fe140b65d';
+    }
     this.isNew = true;
     this.initForm();
 
@@ -131,16 +119,13 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
               this.selectedType = coffee.type;
               this.selectedCategory = coffee.category;
               this.notReady = false;
-              // console.log(this.imageUrl);
-              // console.log(!this.isNew, !this.uploaded, !(!this.isNew && !this.uploaded), (!this.coffeeForm.valid || !(!this.isNew && !this.uploaded)) || this.spinning);
               this.initForm();
           });
        } else {
          this.isNew = true;
-         this.imageUrl = "https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/cup-of-black-coffee1.jpg?alt=media&token=94afc335-0a25-4956-aea8-6d1fe140b65d";
+         // tslint:disable-next-line:max-line-length
+         this.imageUrl = 'https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/cup-of-black-coffee1.jpg?alt=media&token=94afc335-0a25-4956-aea8-6d1fe140b65d';
          this.initForm();
-        //  console.log(this.isNew, this.uploaded);
-        // console.log(!this.isNew, !this.uploaded, (!this.isNew && this.uploaded), this.spinning);
        }
     });
 
@@ -179,18 +164,18 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   }
 
   fileChangeListener($event) {
-    var image:any = new Image();
-    var file:File = $event.target.files[0];
-    var myReader:FileReader = new FileReader();
-    var that = this;
+    let image: any = new Image();
+    let file: File = $event.target.files[0];
+    let myReader: FileReader = new FileReader();
+    let that = this;
     myReader.onloadend = function (loadEvent:any) {
         image.src = loadEvent.target.result;
         that.cropper.setImage(image);
-        console.log("file changed " + image);
+        console.log('file changed ' + image);
     };
 
     myReader.readAsDataURL(file);
-    console.log("file change " + this.cropper);
+    console.log('file change ' + this.cropper);
   }
 
   // test() {
@@ -219,6 +204,24 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
           let newImageKey = this.addOneToImageKey(coffeeId);
           this.addImageToStorage(coffeeId, this.data1.image, newImageKey, null);
         });
+      }
+
+      if (apiMethods.vWuth) {
+        let image = this.data1.image.split('base64,');
+        let buf = new Buffer(image[1], 'base64');
+
+        let AWSService = AWS;
+        AWSService.config.region = 'ap-southeast-1';
+        AWSService.config.accessKeyId = 'AKIAJBFYUAJ3KHEUWOPA';
+        AWSService.config.secretAccessKey = '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';
+        let bucket = new AWSService.S3();
+        let params = {Bucket: 'oasit/images', Key: 'key123.png', Body: buf};
+        bucket.upload(params, function (err, data) {
+            console.log('err ' + err);
+            console.log(data);
+        });
+
+        // console.log(image[1]);
       }
 
     } else {
@@ -254,7 +257,6 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
         this.addImageToStorage($key, inputImage, newImageKey, oldImageKey);
       });
     }
-
 
 
   }

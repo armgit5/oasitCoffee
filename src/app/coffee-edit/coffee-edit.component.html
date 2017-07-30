@@ -1,104 +1,56 @@
 
-
-<!--<div class="container">
-<div class="col-md-5">
-    <div class="form-area">  
-        <form [formGroup]="coffeeForm" (ngSubmit)="onSubmit()">
-        <br style="clear:both">
-                    <h3 style="margin-bottom: 25px; text-align: center;">Form</h3>
-    				
-            <img src={{imageUrl}} alt="..." class="img-responsive" *ngIf="!isNew">
-
-            <div class="form-group">
-              <input
-              type="text" 
-              class="form-control" 
-              id="name" 
-              placeholder="Coffee Name"
-              FormControlName="name">
-            </div>
-
-            <div class="form-group">
-              <input
-              type="text" 
-              class="form-control" 
-              id="price" 
-              placeholder="Price"
-              FormControlName="price">
-            </div>
-
-            <div class="form-group">
-              <span class="result" *ngIf="data1.image" >
-                <img [src]="data1.image" 
-                [width]="cropperSettings1.croppedWidth" 
-                [height]="cropperSettings1.croppedWidth">
-              </span>
-              
-              <span>
-                <img-cropper [image]="data1" [settings]="cropperSettings1" (onCrop)="cropped($event)"></img-cropper>
-              </span> 
-                  
-            </div>
-
-        <button *ngIf="isNew" (click)="createCoffee()" type="button" id="submit" name="submit" class="btn btn-primary pull-right">Create</button>
-        <button *ngIf="!isNew" (click)="updateCoffee()" type="button" id="submit" name="submit" class="btn btn-primary pull-right">Edit</button>
-        </form>
-    </div>
-</div>
-</div>-->
-
 <form [formGroup]="coffeeForm" (ngSubmit)="createCoffee()">
 <div class="col-md-5">
 <div class="product-title">
   <div class="img-middle" align="middle">
-      <img *ngIf="!uploaded" 
-        align="middle" 
-        alt="Simple Living Seneca Reclaimed Double 'X' Design Cocktail Table" 
-        class="img-responsive product-img" 
-        src={{imageUrl}}>  
+      <img *ngIf="!uploaded"
+        align="middle"
+        alt="Simple Living Seneca Reclaimed Double 'X' Design Cocktail Table"
+        class="img-responsive product-img"
+        src={{imageUrl}}>
       <img [src]="data1.image" *ngIf="data1.image && uploaded"
-      [width]="cropperSettings1.croppedWidth" 
+      [width]="cropperSettings1.croppedWidth"
       [height]="cropperSettings1.croppedHeight">
   </div>
 
   <div class="product-info" style="margin-top:5px;">
-      
+
       <div class="row" style="padding:0px;margin-bottom:3px">
         <div class="col-md-4">Category</div>
         <div class="col-md-8" style="padding:0px">
           <select class="form-control"
             formControlName="category"
             [(ngModel)]="selectedCategory">
-            <option *ngFor="let category of categories; let i = index;" 
+            <option *ngFor="let category of categories; let i = index;"
                     [ngValue]="category.$key">{{category.name}}</option>
           </select>
-        </div>      
+        </div>
       </div>
       <div class="row form-group" style="padding:0px;margin-bottom:3px">
         <div class="col-md-4">Type</div>
         <div class="col-md-8" style="padding:0px">
-          <select class="form-control" 
+          <select class="form-control"
             formControlName="type"
             [(ngModel)]="selectedType">
-            <option *ngFor="let type of types" 
+            <option *ngFor="let type of types"
               [ngValue]="type.name"
               [attr.selected]="type.name == name2 ? true : null">{{type.name}}</option>
           </select>
-        </div>      
+        </div>
       </div>
-      
+
       <div class="row" style="padding:0px;margin-bottom:3px">
         <div class="col-md-4">Name</div>
         <div class="col-md-8" style="padding:0px">
             <div class="product-title form-group" style="margin:0px">
-              <input class="form-control ng-touched ng-dirty ng-invalid" 
-                formControlName="name" 
-                id="name" 
-                placeholder="Name..." 
+              <input class="form-control ng-touched ng-dirty ng-invalid"
+                formControlName="name"
+                id="name"
+                placeholder="Name..."
                 type="text"
                 style="padding-left:5px"
-                 maxlength="13"> 
-            </div>    
+                 maxlength="13">
+            </div>
         </div>
       </div>
 
@@ -106,65 +58,17 @@
         <div class="col-md-4">Price</div>
         <div class="col-md-8" style="padding:0px">
             <div class="product-title form-group" style="margin:0px">
-              <input class="form-control ng-touched ng-dirty ng-invalid" 
-                formControlName="price" 
-                id="price" 
-                placeholder="Price..." 
+              <input class="form-control ng-touched ng-dirty ng-invalid"
+                formControlName="price"
+                id="price"
+                placeholder="Price..."
                 type="number"
                 style="padding-left:5px"
                 min="1"
-                max="99999"> 
-            </div>    
+                max="99999">
+            </div>
         </div>
       </div>
-
-      
-      <!--<div class="col-md-4 pull-right" style="padding: 0px; text-align: right; margin-top: 0px; margin-bottom: 2px" disabled="">
-          
-          <div class="col-md-4" style="padding: 0; padding-top: 2px; padding-right:5px">
-              <a class="btn" style="padding:0px;color:#444;">
-                  <i class="fa fa-minus-square fa-2x"></i>
-              </a>
-          </div>
-          <div class="col-md-4" style="padding: 0">
-              <input 
-                class="form-control input-number" 
-                min="1" 
-                name="quant[1]" 
-                style="text-align: center;" 
-                type="text" 
-                disabled="">
-          </div>
-          <div class="col-md-4" style="padding: 0; padding-top: 2px; padding-left: 0px;">
-              <a class="btn" style="padding: 0;color:#444;">
-                  <i class="fa fa-plus-square fa-2x"></i>
-              </a>
-          </div>
-      </div>-->
-
-      <!--<div class="product-comment" style="padding: 0px">
-          <textarea class="form-control ng-untouched ng-pristine ng-valid" disabled="" placeholder="please leave a comment here..." style="min-width: 100%"></textarea>
-      </div>-->
-      <!--<div class="product-price-wrapper" style="margin-top:2px">
-          <div class="col-md-8" style="padding: 0px">
-            <div class="col-md-2" style="margin-top:5px;padding:0px">THB</div>
-            <div class="col-md-10" style="padding:0px">
-              <div class="product-price standard" 
-                style="margin-right:12px">
-                <input class="form-control ng-touched ng-dirty ng-invalid" 
-                  formControlName="price" 
-                  id="price" 
-                  placeholder="Price..." 
-                  type="text" 
-                  style="padding-left:5px;"></div>
-            </div>
-          </div>
-          <div class="col-md-4" style="padding: 0px; text-align: right">
-              <button class="btn btn-success" type="submit">
-                  <i class="fa fa-coffee" style="font-weight: bold;" > Upload</i>
-              </button>
-          </div>
-      </div>-->
 
   </div>
 
@@ -177,7 +81,8 @@
     </span>
 </div>
 <div class="row" style="padding: 5px;padding-right: 35px">
-    <button class="btn btn-default pull-right" type="submit" [disabled]="!coffeeForm.valid || notReady || spinning">
+    <!-- <button class="btn btn-default pull-right" type="submit" [disabled]="!coffeeForm.valid || notReady || spinning"> -->
+    <button class="btn btn-default pull-right" type="submit">
         <i class="fa fa-coffee" style="font-weight: bold;" *ngIf="!spinning"></i>
         <i class="fa fa-spinner fa-spin fa-fw" aria-hidden="true" *ngIf="spinning"></i>
         Upload
