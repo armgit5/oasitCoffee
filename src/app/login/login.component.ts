@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit {
         let password = this.registerForm.value.password;
         let companyName = this.registerForm.value.companyName;
         this.loginService.register(email, password, companyName);
-        // this.posted = false;
+        this.posted = false;
       }
 
     }
@@ -113,8 +113,7 @@ export class LoginComponent implements OnInit {
         let password = this.loginForm.value.password;
         this.loginService.login(email, password)
           .then(authState => {
-            // this.modalOff.emit(true);
-            console.log(authState);
+            this.modalOff.emit(true);
           })
           .catch(error => console.log(error));
       }

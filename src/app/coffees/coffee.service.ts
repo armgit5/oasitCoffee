@@ -1,7 +1,6 @@
 import * as firebase from 'firebase';
 import { Injectable, Inject, EventEmitter}  from "@angular/core";
 import { Http, Headers, RequestOptions } from '@angular/http';
-import { xhrHeaders } from './xhr-headers';
 import { cartData } from '../cart/cartData';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Coffee } from './coffee';
@@ -12,6 +11,7 @@ import { CoffeeOutput } from './coffee-output';
 import { apiMethods, apiUrl } from '../../environments/environment';
 import { LoginService } from '../login/login.service';
 import { User } from '../login/user';
+import { xhrHeadersWithToken } from '../shared/xhr-headers';
 
 @Injectable()
 export class CoffeeService {
@@ -101,12 +101,9 @@ export class CoffeeService {
 
         if (apiMethods.vWuth) {
           // console.log('v3');
-          let headers = new Headers({ 'Access-Control-Allow-Origin': '*' });
-          headers.append('Authorization', 'Bearer ' + localStorage.getItem('access_token'));
-          let options = new RequestOptions({ headers: headers });
           path = `${apiUrl.url}/api/products?Company=oasit`;
           // path = 'https://oasit-b6bc8.firebaseio.com/coffees.json';
-          return this.http.get(path, options)
+          return this.http.get(path, xhrHeadersWithToken())
                 .map(res => res.json())
                 .map(Coffee.fromJsonListV2);
         }

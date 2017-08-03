@@ -65,7 +65,6 @@ import { AdminModule } from './admin/admin.module';
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-
     // ReactiveFormsModule,
     // ModalModule.forRoot(),
     // AlertModule.forRoot(),

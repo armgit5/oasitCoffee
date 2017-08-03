@@ -6,6 +6,7 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 import { apiMethods, apiUrl } from '../../environments/environment';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { tokenNotExpired } from 'angular2-jwt';
+import { xhrHeaders } from '../shared/xhr-headers';
 
 @Injectable()
 export class LoginService {
@@ -69,15 +70,13 @@ export class LoginService {
     login(email, password): Promise<any> {
 
       if (apiMethods.vWuth) {
-            let headers = new Headers({ 'Access-Control-Allow-Origin': '*' });
-            let options = new RequestOptions({ headers: headers });
             let path = `${apiUrl.url}/api/login`;
             let body = JSON.stringify({
                 username: email,
                 password: password
             });
 
-          return new Promise((resolve, reject) => {  this.http.post(path, body, options).map(res => res.json())
+          return new Promise((resolve, reject) => {  this.http.post(path, body, xhrHeaders()).map(res => res.json())
             .subscribe(authState => {
               // console.log(userInfo);
               // localStorage.setItem('access_token', authState.access_token);
