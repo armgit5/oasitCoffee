@@ -3,6 +3,8 @@ import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
 import { User } from './user';
 import * as firebase from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { apiMethods, apiUrl } from '../../environments/environment';
+import { Http, RequestOptions, Headers } from '@angular/http';
 
 @Injectable()
 export class LoginService {
@@ -15,7 +17,8 @@ export class LoginService {
     @ViewChild('staticModal') loginModal;
 
     constructor(private afAuth: AngularFireAuth,
-                private db: AngularFireDatabase) {
+                private db: AngularFireDatabase,
+                private http: Http) {
         this.afAuth.authState.subscribe(authState => {
             if (authState) {
                 // console.log(authState);
@@ -55,7 +58,34 @@ export class LoginService {
 
     login(email, password): Promise<any> {
 
-        return new Promise((resolve, reject) => {
+      if (apiMethods.vWuth) {
+            let headers = new Headers({ 'Access-Control-Allow-Origin': '*' });
+            let options = new RequestOptions({ headers: headers });
+            let path = `${apiUrl.url}/api/login`;
+            let body = JSON.stringify({
+                username: email,
+                password: password
+            });
+
+          return new Promise((resolve, reject) => {  this.http.post(path, body, options).map(res => res.json())
+            .subscribe(authState => {
+              // console.log(userInfo);
+              // localStorage.setItem('access_token', authState.access_token);
+              // localStorage.setItem('refresh_token', authState.refresh_token);
+              localStorage.setItem('access_token', authState.access_token);
+              localStorage.setItem('refresh_token', authState.refresh_token);
+              localStorage.setItem('username', authState.username);
+              console.log(localStorage.getItem('access_token'));
+              resolve(authState);
+              this.user.email = authState.username;
+              this.user.name = authState.username;
+              this.user.companyName = 'Super admin';
+              this.userOutput.emit(this.user);
+            });
+          });
+      }
+      if (apiMethods.v1 || apiMethods.vCompanies) {
+         return new Promise((resolve, reject) => {
 
             this.afAuth.auth.signInWithEmailAndPassword(email, password)
             .then(authState => {
@@ -63,6 +93,7 @@ export class LoginService {
             })
             .catch(error => resolve(error));
         });
+      }
     }
 
     private createUserToCompany(email, companyName) {
@@ -86,42 +117,47 @@ export class LoginService {
 
         // Sign up a company.
         // Check to see if the company name exists or not.
-        let myObject= this.db.object("/companies/"+companyName);
+        let myObject= this.db.object('/companies/'+companyName);
         myObject.subscribe(snapshot => {
           if (snapshot.$value === null) {
             myObject.set({
               users: [{
                 email: email,
-                role: "admin"
+                role: 'admin'
               }]
             });
 
             this.createUserToCompany(email, companyName);
 
           } else {
-            console.log("company already exists");
+            console.log('company already exists');
           }
         });
     }
 
     register(email, password, companyName) {
 
+      if (apiMethods.v1 || apiMethods.vCompanies) {
+
         if (companyName) {
-          console.log("there is company");
+          console.log('there is company');
           this.registerCompanyWithUser(companyName, email);
         } else {
-          console.log("not a company user");
+          console.log('not a company user');
         }
 
         this.afAuth.auth.createUserWithEmailAndPassword(email, password)
         .then(authState => {
           if (companyName) {
-            console.log("there is company");
+            console.log('there is company');
           } else {
-            console.log("not a company user");
+            console.log('not a company user');
           }
         })
         .catch(error => console.log(error));
+
+      }
+
     }
 
     facebookLogin(): Promise<any> {
@@ -138,7 +174,15 @@ export class LoginService {
     }
 
     logout() {
+      if (apiMethods.v1 || apiMethods.vCompanies) {
         this.afAuth.auth.signOut();
+      }
+
+      if (apiMethods.vWuth) {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+      }
+
         // this.isLoggedIn.emit(false);
     }
 }

@@ -11,6 +11,7 @@ import { CoffeeOutput } from './coffee-output';
 import { LoginService } from '../login/login.service';
 import { User } from '../login/user';
 import { apiMethods } from '../../environments/environment';
+import { tokenNotExpired } from 'angular2-jwt';
 
 @Component({
   selector: 'coffee',
@@ -42,35 +43,49 @@ export class CoffeesComponent {
                 private categoryService: CategoryService,
                 private loginService: LoginService) {
 
-      // this.coffees = this.coffeeService.coffees;
+      if (apiMethods.v1 || apiMethods.vCompanies) {
 
-      this.subToUserCoffees(this.loginService.user);
+        this.subToUserCoffees(this.loginService.user);
 
-      // This is for the first time opening the page
-      // and the user info is not loaded fast enough
-      // from firebase
-      loginService.userOutput.subscribe(
-        (user: User) => {
-          this.email = user.email;
-          this.companyName = user.companyName;
+        // This is for the first time opening the page
+        // and the user info is not loaded fast enough
+        // from firebase
+        loginService.userOutput.subscribe(
+          (user: User) => {
+            this.email = user.email;
+            this.companyName = user.companyName;
 
-          this.subToUserCoffees(user);
+            this.subToUserCoffees(user);
 
-          // this.$coffee = this.coffeeService.loadAllCoffees(user).subscribe(
-          //   coffees => {
-          //     this.coffees = coffees;
-          //     this.coffeeService.coffees = coffees;
-          //   }
-          // );
+            // this.$coffee = this.coffeeService.loadAllCoffees(user).subscribe(
+            //   coffees => {
+            //     this.coffees = coffees;
+            //     this.coffeeService.coffees = coffees;
+            //   }
+            // );
+          }
+        );
+
+        this.categoryService.categoryChanged.subscribe(filterArg => {
+          this.filterArg = filterArg;
+          console.log(filterArg);
+        });
+
+      }
+
+      if (apiMethods.vWuth) {
+        if (localStorage.getItem('username') == null) {
+          loginService.userOutput.subscribe(
+          (user: User) => {
+            this.email = user.email;
+            this.companyName = user.companyName;
+            this.subToUserCoffees(user);
+          });
+        } else {
+          this.email = localStorage.getItem('username');
         }
-      );
-
-      // console.log('coffees construction');
-
-      this.categoryService.categoryChanged.subscribe(filterArg => {
-        this.filterArg = filterArg;
-        console.log(filterArg);
-      });
+        this.companyName = 'Super Admin';
+      }
     }
 
     private subToUserCoffees(user: User) {

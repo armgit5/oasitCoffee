@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { LoginService } from './login.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { apiMethods } from '../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -69,12 +70,23 @@ export class LoginComponent implements OnInit {
     }
 
     register() {
+      if (apiMethods.v1 || apiMethods.vCompanies) {
         console.log(this.registerForm.value);
         let email = this.registerForm.value.email;
         let password = this.registerForm.value.password;
         let companyName = this.registerForm.value.companyName;
         this.loginService.register(email, password, companyName);
         this.posted = false;
+      }
+
+      if (apiMethods.vWuth) {
+        let email = this.registerForm.value.email;
+        let password = this.registerForm.value.password;
+        let companyName = this.registerForm.value.companyName;
+        this.loginService.register(email, password, companyName);
+        // this.posted = false;
+      }
+
     }
 
     facebookLogin() {
@@ -86,6 +98,7 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
+      if (apiMethods.v1 || apiMethods.vCompanies) {
         let email = this.loginForm.value.email;
         let password = this.loginForm.value.password;
         this.loginService.login(email, password)
@@ -93,6 +106,19 @@ export class LoginComponent implements OnInit {
             this.modalOff.emit(true);
           })
           .catch(error => console.log(error));
+      }
+
+      if (apiMethods.vWuth) {
+        let email = this.loginForm.value.email;
+        let password = this.loginForm.value.password;
+        this.loginService.login(email, password)
+          .then(authState => {
+            // this.modalOff.emit(true);
+            console.log(authState);
+          })
+          .catch(error => console.log(error));
+      }
+
     }
 
     logout() {

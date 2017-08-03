@@ -1,11 +1,13 @@
 import { Component, Input, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { cartData } from './cart/cartData';
 import { CoffeeService } from './coffees/coffee.service';
-import { Observable } from "rxjs/Observable";
+import { Observable } from 'rxjs/Observable';
 import { Category } from './coffees/category/category';
 import { CategoryService } from './coffees/category/category.service';
 import { Subscription } from 'rxjs/Rx';
 import { LoginService } from './login/login.service';
+import { apiMethods } from '../environments/environment';
+import { tokenNotExpired } from 'angular2-jwt';
 
 @Component({
     selector: 'my-header',
@@ -35,18 +37,31 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 private categorySerivce: CategoryService,
                 private loginService: LoginService) {
 
-        this.$logIn = this.loginService.isLoggedIn.subscribe(isLoggedIn => {
-            if (isLoggedIn) {
-                console.log("login");
-                this.loginStatus = true;
-                this.customerName = this.loginService.user.name;
-            } else {
-                console.log("false");
-                this.loginStatus = false;
-                this.customerName = null;
-                this.login();
-            }
-        });
+        if (apiMethods.v1 || apiMethods.vCompanies) {
+
+          this.$logIn = this.loginService.isLoggedIn.subscribe(isLoggedIn => {
+              if (isLoggedIn) {
+                  console.log('login');
+                  this.loginStatus = true;
+                  this.customerName = this.loginService.user.name;
+              } else {
+                  console.log('false');
+                  this.loginStatus = false;
+                  this.customerName = null;
+                  this.login();
+              }
+          });
+
+        } else {
+          if (tokenNotExpired) {
+            this.loginStatus = true;
+            this.customerName = localStorage.getItem('username');
+          } else {
+            this.loginStatus = false;
+            this.customerName = null;
+            this.login();
+          }
+        }
     }
 
     ngOnInit() {
@@ -57,22 +72,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     openNav() {
         if (!this.clicked) {
-            document.getElementById("mySidenav").style.width = "17%";
-            document.getElementById("mySidenav").style.paddingLeft = "4%";
-            document.getElementById("mySidenav").style.paddingRight = "4%";
+            document.getElementById('mySidenav').style.width = '17%';
+            document.getElementById('mySidenav').style.paddingLeft = '4%';
+            document.getElementById('mySidenav').style.paddingRight = '4%';
             this.clicked = true;
         } else {
-            document.getElementById("mySidenav").style.width = "0";
-             document.getElementById("mySidenav").style.paddingLeft = "0%";
-            document.getElementById("mySidenav").style.paddingRight = "0%";
+            document.getElementById('mySidenav').style.width = '0';
+             document.getElementById('mySidenav').style.paddingLeft = '0%';
+            document.getElementById('mySidenav').style.paddingRight = '0%';
             this.clicked = false;
         }
     }
 
     menuOut() {
-        document.getElementById("mySidenav").style.width = "0";
-        document.getElementById("mySidenav").style.paddingLeft = "0%";
-        document.getElementById("mySidenav").style.paddingRight = "0%";
+        document.getElementById('mySidenav').style.width = '0';
+        document.getElementById('mySidenav').style.paddingLeft = '0%';
+        document.getElementById('mySidenav').style.paddingRight = '0%';
         this.clicked = false;
     }
 

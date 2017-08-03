@@ -14,5 +14,6 @@ export const apiMethods = {
 };
 
 export const apiUrl = {
-  url: 'https://api-oasit.herokuapp.com/'
+  // url: 'https://api-oasit.herokuapp.com'
+  url: 'http://oasit-env.rmm4dcfjgy.ap-southeast-1.elasticbeanstalk.com'
 };
