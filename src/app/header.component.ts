@@ -37,9 +37,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 private categorySerivce: CategoryService,
                 private loginService: LoginService) {
 
-        if (apiMethods.v1 || apiMethods.vCompanies) {
-
-          this.$logIn = this.loginService.isLoggedIn.subscribe(isLoggedIn => {
+        this.$logIn = this.loginService.isLoggedIn.subscribe(isLoggedIn => {
               if (isLoggedIn) {
                   console.log('login');
                   this.loginStatus = true;
@@ -51,17 +49,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
                   this.login();
               }
           });
-
-        } else {
-          if (tokenNotExpired) {
-            this.loginStatus = true;
-            this.customerName = localStorage.getItem('username');
-          } else {
-            this.loginStatus = false;
-            this.customerName = null;
-            this.login();
-          }
-        }
     }
 
     ngOnInit() {

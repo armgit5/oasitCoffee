@@ -98,7 +98,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // tslint:disable-next-line:max-line-length
     if (apiMethods.vWuth) {
-      this.imageUrl = ' https://s3-ap-southeast-1.amazonaws.com/oasit/coffee330x275.jpg';
+      this.imageUrl = 'https://s3-ap-southeast-1.amazonaws.com/oasit/coffee330x275.jpg';
     } else {
       this.imageUrl = 'https://firebasestorage.googleapis.com/v0/b/oasit-b6bc8.appspot.com/o/cup-of-black-coffee1.jpg?alt=media&token=94afc335-0a25-4956-aea8-6d1fe140b65d';
     }

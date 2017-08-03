@@ -54,15 +54,7 @@ export class CoffeesComponent {
           (user: User) => {
             this.email = user.email;
             this.companyName = user.companyName;
-
             this.subToUserCoffees(user);
-
-            // this.$coffee = this.coffeeService.loadAllCoffees(user).subscribe(
-            //   coffees => {
-            //     this.coffees = coffees;
-            //     this.coffeeService.coffees = coffees;
-            //   }
-            // );
           }
         );
 
@@ -84,7 +76,10 @@ export class CoffeesComponent {
         } else {
           this.email = localStorage.getItem('username');
         }
-        this.companyName = 'Super Admin';
+        this.companyName = 'OASIT';
+        this.coffeeService.loadAllCoffees(null).subscribe(
+          coffees => this.coffees = coffees
+        );
       }
     }
 
@@ -96,14 +91,6 @@ export class CoffeesComponent {
               this.coffeeService.coffees = coffees;
             }
           );
-        }
-        if (apiMethods.vWuth) {
-          // this.coffeeService.loadAllCoffees(null).subscribe(
-          //   (coffees: Coffee[]) => {
-          //     this.coffees = coffees;
-          //     this.coffeeService.coffees = coffees;
-          //   }
-          // );
         }
     }
 

@@ -5,6 +5,7 @@ import * as firebase from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { apiMethods, apiUrl } from '../../environments/environment';
 import { Http, RequestOptions, Headers } from '@angular/http';
+import { tokenNotExpired } from 'angular2-jwt';
 
 @Injectable()
 export class LoginService {
@@ -19,6 +20,8 @@ export class LoginService {
     constructor(private afAuth: AngularFireAuth,
                 private db: AngularFireDatabase,
                 private http: Http) {
+
+        if (apiMethods.v1 || apiMethods.vCompanies) {
         this.afAuth.authState.subscribe(authState => {
             if (authState) {
                 // console.log(authState);
@@ -36,6 +39,13 @@ export class LoginService {
                 this.userOutput.emit(this.user);
             }
         });
+        } else {
+          if (tokenNotExpired) {
+            this.isLoggedIn.emit(true);
+          } else {
+            this.isLoggedIn.emit(false);
+          }
+        }
     }
 
     // Query users to comapanies table
@@ -183,6 +193,6 @@ export class LoginService {
         localStorage.removeItem('refresh_token');
       }
 
-        // this.isLoggedIn.emit(false);
+      this.isLoggedIn.emit(false);
     }
 }

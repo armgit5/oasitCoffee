@@ -102,6 +102,7 @@ export class CoffeeService {
         if (apiMethods.vWuth) {
           // console.log('v3');
           let headers = new Headers({ 'Access-Control-Allow-Origin': '*' });
+          headers.append('Authorization', 'Bearer ' + localStorage.getItem('access_token'));
           let options = new RequestOptions({ headers: headers });
           path = `${apiUrl.url}/api/products?Company=oasit`;
           // path = 'https://oasit-b6bc8.firebaseio.com/coffees.json';
