@@ -1,7 +1,5 @@
-
 import {Injectable} from "@angular/core";
 import {Http} from "@angular/http";
-import {xhrHeaders} from "./coffees/xhr-headers";
 import { cartData } from './cart/cartData';
 
 @Injectable()

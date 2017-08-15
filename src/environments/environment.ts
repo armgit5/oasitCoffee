@@ -9,8 +9,8 @@ export const environment = {
 
 export const apiMethods = {
   v1: false,
-  vCompanies: false,
-  vWuth: true
+  vCompanies: true,
+  vWuth: false
 };
 
 export const apiUrl = {
