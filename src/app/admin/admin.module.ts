@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { UserFormComponent } from './users/userform/userform.component';
 import { UserTableComponent } from './users/usertable/usertable.component';
 import { ModalModule } from 'ngx-bootstrap';
+import { ProductsComponent } from './products/products.component';
 
 @NgModule({
 
@@ -18,7 +19,8 @@ import { ModalModule } from 'ngx-bootstrap';
     UsersComponent,
     UserFormComponent,
     NavbarComponent,
-    UserTableComponent
+    UserTableComponent,
+    ProductsComponent
   ],
   imports: [
     CommonModule,
