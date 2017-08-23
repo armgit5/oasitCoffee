@@ -1,6 +1,29 @@
 <div class="main-content">
   <div class="container-fluid">
     Product page
-    <tree-root [nodes]="nodes"></tree-root>
+<!--
+    <tree-root #tree [nodes]="nodes">
+        <ng-template #treeNodeTemplate let-node let-index="index">
+            <span (click)="showNodeButton(node.data.name)">{{ node.data.name }}</span>
+
+            <span *ngIf="shownNode == node.data.name">
+              <input  [(ngModel)]="inputName">
+              <button (click)="addNode(node.data.name)">add</button>
+            </span>
+            <button *ngIf="node.data.name != 'categories' ||
+            node.data.name != 'attributes'"
+             (click)="addNode(node.data.name, input.value)">edit</button>
+            <button *ngIf="node.data.name != 'categories' ||
+            node.data.name != 'attributes'"
+            (click)="addNode(node.data.name, input)">delete</button>
+        </ng-template>
+    </tree-root> -->
+
+    <button (click)="create()">Create</button>
+    <button (click)="rename()">Rename</button>
+    <button (click)="delete()">Delete</button>
+
+    <div id="tree"></div>
+
   </div>
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-
+import { TreeComponent, TreeModel, TreeNode, IActionMapping, KEYS, TREE_ACTIONS } from 'angular-tree-component';
+// import { TreeModel, NodeEvent, Ng2TreeSettings, RenamableNode } from 'ng2-tree';
+declare var $: any;
 @Component({
   selector: 'products',
   templateUrl: './products.component.html',
@@ -11,35 +12,52 @@ import { FormGroup } from '@angular/forms';
 })
 export class ProductsComponent implements OnInit {
 
-  nodes = [
-    {
-      id: 1,
-      name: 'categories',
-      children: [
-        { id: 2, name: 'coffees', children: [
-          { id: 8, name: 'hot' },
-          { id: 9, name: 'cold' },
-          { id: 10, name: 'shake' }
-        ]},
-        { id: 3, name: 'foods' },
-        { id: 11, name: 'cakes' }
-      ]
-    },
-    {
-      id: 4,
-      name: 'attributes',
-      children: [
-        { id: 5, name: 'sm' },
-        { id: 6, name: 'md' },
-        { id: 6, name: 'lg' }
-      ]
-    }
-  ];
+
+  testData = ["Categories", "Attributes"];
 
   constructor() { }
 
   ngOnInit() {
+    $('#tree').jstree({
+      "core" : {
+          "animation" : 0,
+          "check_callback" : true,
+          "themes" : { "stripes" : true },
+          'data' : this.testData
+      }
+  });
   }
+
+  create() {
+    let ref = $('#tree').jstree(true),
+        sel = ref.get_selected();
+    if (!sel.length) { return false; }
+    sel = sel[0];
+    sel = ref.create_node(sel, {"type":"file"});
+    if (sel) {
+      ref.edit(sel, null, (info) => {
+        console.log(info.text);
+      });
+    }
+  };
+
+  rename() {
+    let ref = $('#tree').jstree(true),
+    sel = ref.get_selected();
+    if (!sel.length) { return false; }
+    sel = sel[0];
+    ref.edit(sel, null, (info) => {
+      console.log(info.text);
+    });
+  }
+
+  delete() {
+    let ref = $('#tree').jstree(true),
+        sel = ref.get_selected(true);
+    if (!sel.length) { return false; }
+    ref.delete_node(sel);
+    console.log(sel[0].text);
+  };
 
 
 }
