@@ -21,7 +21,6 @@
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
-    "angular-tree-component": "^4.1.0",
     "angular2-jwt": "^0.2.3",
     "angularfire2": "^4.0.0-rc.0",
     "aws-sdk": "^2.92.0",

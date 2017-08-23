@@ -13,6 +13,7 @@ import { Coffee } from './coffee';
 import { ImageCropperComponent } from 'ng2-img-cropper';
 import { ModalModule } from 'ngx-bootstrap';
 import { AlertModule } from 'ngx-bootstrap/alert';
+import { CoffeeRoutingModule } from './coffee-routing.module';
 
 
 @NgModule ({
@@ -30,6 +31,7 @@ import { AlertModule } from 'ngx-bootstrap/alert';
     ReactiveFormsModule,
     ModalModule.forRoot(),
     AlertModule.forRoot(),
+    CoffeeRoutingModule
   ],
   exports: [
     CoffeePipe,
