@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { TreeComponent, TreeModel, TreeNode, IActionMapping, KEYS, TREE_ACTIONS } from 'angular-tree-component';
-// import { TreeModel, NodeEvent, Ng2TreeSettings, RenamableNode } from 'ng2-tree';
+
 declare var $: any;
+
 @Component({
   selector: 'products',
   templateUrl: './products.component.html',

@@ -28,12 +28,12 @@ export class AppComponent {
     router.events.subscribe(
       (val: NavigationEnd) => {
         // console.log("1 " + (val.url=="/admin"));
-        if (val.url.indexOf('/admin') >= 0) {
-          this.isAdmin = true;
-          // console.log("isAdmin " + this.isAdmin);
-        } else {
-          this.isAdmin = false;
-          // console.log("isAdmin " + this.isAdmin);
+        if (val.url) {
+          if (val.url.indexOf('/admin') >= 0) {
+            this.isAdmin = true;
+          } else {
+            this.isAdmin = false;
+          }
         }
       }
     );

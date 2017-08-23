@@ -60,9 +60,11 @@ export class LoginService {
       }).subscribe(
         items => {
           // console.log(items);
-          this.user.companyName = items[0].companyName;
-          this.isLoggedIn.emit(true);
-          this.userOutput.emit(this.user);
+          if (items.length > 0) {
+            this.user.companyName = items[0].companyName;
+            this.isLoggedIn.emit(true);
+            this.userOutput.emit(this.user);
+          }
         }
       );
     }

@@ -9,13 +9,11 @@ import { ProductsComponent } from './admin/products/products.component';
 export const routeConfig = [
   { path: '', component: CoffeesComponent },
   { path: 'cart', component: CartComponent},
-  { path: 'queue', component: QueueComponent}
+  { path: 'queue', component: QueueComponent},
+  { path: 'admin', loadChildren: './admin/admin.module#AdminModule'}
 ];
 
 export const navigatableComponents = [
-  // CoffeesComponent,
-  // CoffeeEditComponent,
   CartComponent,
   QueueComponent
-  // AdminComponent
 ];
