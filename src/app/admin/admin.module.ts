@@ -10,6 +10,7 @@ import { UserFormComponent } from './users/userform/userform.component';
 import { UserTableComponent } from './users/usertable/usertable.component';
 import { ModalModule } from 'ngx-bootstrap';
 import { ProductsComponent } from './products/products.component';
+import { AdminRoutingModule } from './admin-routing.module';
 
 @NgModule({
 
@@ -27,7 +28,8 @@ import { ProductsComponent } from './products/products.component';
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    ModalModule
+    ModalModule,
+    AdminRoutingModule
   ]
 
 })

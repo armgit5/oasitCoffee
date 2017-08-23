@@ -9,16 +9,7 @@ import { ProductsComponent } from './admin/products/products.component';
 export const routeConfig = [
   { path: '', component: CoffeesComponent },
   { path: 'cart', component: CartComponent},
-  { path: 'queue', component: QueueComponent},
-  { path: 'admin', component: AdminComponent, children: [
-    { path: 'user',
-      component: UsersComponent
-    },
-    {
-      path: 'product',
-      component: ProductsComponent
-    }
-  ]},
+  { path: 'queue', component: QueueComponent}
 ];
 
 export const navigatableComponents = [
