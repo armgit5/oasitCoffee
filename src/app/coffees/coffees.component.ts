@@ -78,7 +78,7 @@ export class CoffeesComponent {
         }
         this.companyName = 'OASIT';
         this.coffeeService.loadAllCoffees(null).subscribe(
-          coffees => this.coffees = coffees
+          coffees => {this.coffees = coffees; console.log(coffees)}
         );
       }
     }
@@ -89,6 +89,7 @@ export class CoffeesComponent {
             coffees => {
               this.coffees = coffees;
               this.coffeeService.coffees = coffees;
+              console.log(JSON.stringify(coffees));
             }
           );
         }
