@@ -211,9 +211,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
         let buf = new Buffer(image[1], 'base64');
 
         let AWSService = AWS;
-        AWSService.config.region = 'ap-southeast-1';
-        AWSService.config.accessKeyId = 'AKIAJBFYUAJ3KHEUWOPA';
-        AWSService.config.secretAccessKey = '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';
+
         let bucket = new AWSService.S3();
         let params = {Bucket: 'oasit/images', Key: 'key123.png', Body: buf};
         bucket.upload(params, function (err, data) {
