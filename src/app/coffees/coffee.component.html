@@ -1,78 +1,13 @@
-<!--<div class="thumbnail" style="height: 100%; width: 100%">
-      
-            <div class="col">
-            <img src={{coffee?.url}} 
-                alt="..." 
-                class="img-responsive" 
-                style="min-height: 200px; 
-                        width: 100%; 
-                        display: block;
-                        padding: 0px;
-                        margin: 0px">
-            </div>
-      
-        <div class="caption">
-            <h3 style="margin: 0px">{{coffee?.name}}</h3>
-            <p class="description">{{coffee?.status}}</p>
-        
-        <div class="row">
-            <div class="col-md-6">{{coffee?.price | currency:'THB':true}}</div>
-            <div class="input-group col-md-6" style="padding-right: 5px">
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-default btn-number" (click)="minus()">
-                        <span class="glyphicon glyphicon-minus"></span>
-                    </button>
-                </span>
-                <input type="text" name="quant[1]" class="form-control input-number" value={{coffeeCount}} min="1">
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-default btn-number" (click)="plus()">
-                        <span class="glyphicon glyphicon-plus"></span>
-                    </button>
-                </span>
-            </div>
-        </div>
-
-        <div class="row" style="padding: 5px">
-            <textarea class="form-control" style="min-width: 100%" [(ngModel)]='comment'></textarea>
-        </div>
-        <div class="row">
-            <div class="col-md-7">
-                <button class="btn btn-success pull-left" type="button" (click)="add()">Add to cart</button>
-            </div>
-            <div class="col-md-5" style="padding-right: 0px">
-                <div class="col-md-6">
-                    <button class="btn btn-warning pull-right" type="button" (click)="editCoffee()">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                    </button>
-                </div>
-                <div class="col-md-6">
-                    <button class="btn btn-danger pull-right" type="button" (click)="deleteCoffee()">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                </div>
-            </div>
-           
-            
-            <div *ngIf="added">Coffee has been added</div>
-        </div>
-
-        </div>
-       
-    </div>-->
-
-
-
-<div [ngClass]="!mouseOver ? 'product-title' : 'product-title custom'" 
-    id="product-boarder" 
+<div [ngClass]="!mouseOver ? 'product-title' : 'product-title custom'"
+    id="product-boarder"
     (mouseover)='over()'
     (mouseleave)='out()'>
-    
-    
+
     <div class="img-middle">
-        <img alt="Simple Living Seneca Reclaimed Double 'X' Design Cocktail Table" 
-        src= {{coffee?.url}} 
+        <img alt="Simple Living Seneca Reclaimed Double 'X' Design Cocktail Table"
+        src= {{coffee?.url}}
         class="img-responsive product-img "
-        align="middle" 
+        align="middle"
         style="border-radius: 8px;padding-top:2px">
     </div>
 
@@ -86,35 +21,21 @@
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
             </div>
         </div>
-        
-        <div class="row">
-            <div class="col-md-5" style="font-size: 11px;">({{coffee?.type}})</div>
-            <div class="col-md-7" style="padding-top:5px;">
-                    <div class="container">
-                    <ul class="nav nav-pills">
-                        <li class="active"><a href="#">SM</a></li>
-                        <li><a href="#">MD</a></li>
-                        <li><a href="#">LG</a></li>
-                    </ul>
-                    </div>
-            </div>
-        </div>
-        
-        
+
         <div class="col-md-6 pull-left" style="padding: 0px;font-weight: 200;">
-            <div class="product-title pull-left">{{coffee?.name}} </div>    
+            <div class="product-title pull-left">{{coffee?.name}} </div>
         </div>
         <div class="col-md-6 pull-right"
             style="padding: 0px; text-align: right; margin-top: 5px; margin-bottom: 2px">
-            
+
             <div class="col-md-3" style="padding: 0; padding-top: 2px">
                 <a class="btn" (click)="minus()" style="padding: 0">
                     <i class="fa fa-minus-square fa-2x"></i>
                 </a>
             </div>
             <div class="col-md-6" style="padding: 0">
-                <input type="text" name="quant[1]" 
-                    class="form-control input-number" 
+                <input type="text" name="quant[1]"
+                    class="form-control input-number"
                     [(ngModel)]="coffeeCount"
                     min="1"
                     style="text-align: center;">
@@ -127,8 +48,8 @@
         </div>
 
         <div class="product-comment" style="padding: 0px">
-            <textarea class="form-control" 
-                style="min-width: 100%" 
+            <textarea class="form-control"
+                style="min-width: 100%"
                 [(ngModel)]='comment'
                 placeholder="please leave a comment here..."></textarea>
         </div>
@@ -136,27 +57,20 @@
             <div class="col-md-6" style="padding: 0px;">
                 <div class="product-price standard" style="font-weight: 400;">{{ coffee?.price | currency:'THB':true}}</div>
             </div>
-            <div class="col-md-6" 
+            <div class="col-md-6"
                 style="padding: 0px; text-align: right">
-                <button type="button" 
-                    class="btn btn-default" 
+                <button type="button"
+                    class="btn btn-default"
                     (click)="add()"
                     *ngIf="mouseOver">
                     <i class="fa fa-shopping-cart" style="font-weight: bold;font-weight: 500;"> Add</i>
                 </button>
-                <!--<button class="btn btn-default pull-right" type="button" (click)="deleteCoffee()">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </button>-->
             </div>
         </div>
 
     </div>
-      
-</div>
 
-<!--<div *ngFor="let alert of alerts">
-  <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout"><span [innerHtml]="alert.msg"></span></alert>
-</div>-->
+</div>
 
 
 

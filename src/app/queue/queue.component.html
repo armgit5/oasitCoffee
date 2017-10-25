@@ -1,80 +1,40 @@
 
 <div class="container col-sm-12 col-md-10 col-md-offset-1">
-	<!--<table class="table table-hover table-condensed">
-    				<thead>
-                        
-						<tr>
-							<th style="width:45%" class="cart-header">Product</th>
-							<th style="width:12%" class="cart-header">Price</th>
-							<th style="width:15%" class="cart-header">Quantity</th>
-							<th style="width:21%" class="text-center cart-header">Subtotal</th>
-							<th style="width:7%" class="cart-header"></th>
-						</tr>
-					</thead>
-					<tbody  *ngFor="let queue of queues">
-						<tr *ngFor="let cartCoffee of queue.cartCoffees">
-							<td data-th="Product">
-								<div class="row">
-									<div class="col-sm-4 hidden-xs"><img src="" alt="..." class="img-responsive"/></div>
-									<div class="col-sm-8" style="padding-right:35px">
-										<h5 style="margin:5px;font-weight:300">{{cartCoffee.coffeeName}} {{cartCoffee.coffeeType}}</h5>
-										<p><textarea type="text" 
-												class="form-control"
-												style="padding-top:0;padding-bottom:0;background-color:white"
-												placeholder="Comment here...">{{cartCoffee.comment}}</textarea></p>
-									</div>
-								</div>
-							</td>
-							<td data-th="Price" style="padding-top:15px">13</td>
-							<td data-th="Quantity">
-                                    {{cartCoffee.qty}}
-							</td>
-							<td data-th="Subtotal" style="padding-top:15px" class="text-center"></td>
-							<td class="" data-th="">
-								<button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
-								<button class="btn btn-danger btn-sm" (click)="delete(i)"><i class="fa fa-trash-o"></i></button>								
-							</td>
-						</tr>
-					 
-					</tbody>
-
-				</table>-->
-
-                    <div class="panel" 
+                    <div class="panel"
 							[ngClass]="{'panel-default': !queue?.readyStatus, 'panel-success': queue?.readyStatus}"
 							 *ngFor="let queue of queues; let i = index">
                         <div class="panel-heading">
-                           
-                                
-                                
+
+
+
                                 <div class="chat_user_avatar">
                                     <img *ngIf="queue?.customerImage != null" src={{queue?.customerImage}} class="md-user-image">
-                                    <i class="fa fa-user-circle fa-2x" aria-hidden="true" *ngIf="queue?.customerImage == null"></i>    
+                                    <i class="fa fa-user-circle fa-2x" aria-hidden="true" *ngIf="queue?.customerImage == null"></i>
                                      <span> &nbsp; {{queue.customerName}}</span>
                                      <span *ngIf="queue?.readyStatus"> &nbsp; (Status: Ready) </span>
 									 <span *ngIf="!queue?.readyStatus"> &nbsp; (Status: Still making) </span>
-  
-                                     <button class="btn btn-danger btn-sm" 
+
+                                     <button class="btn btn-danger btn-sm"
                                       (click)="deleteQueue(queue.$key)"
-                                      style="float:right"><i class="fa fa-trash-o"></i></button>   
+                                      style="float:right"><i class="fa fa-trash-o"></i></button>
 
 									  <button *ngIf="!queue?.readyStatus"
-									   class="btn btn-success btn-sm" 
+									   class="btn btn-success btn-sm"
                                       (click)="markReady(queue.$key, true)"
-                                      style="float:right; margin-right:5px"><i class="fa fa-check-square-o"></i></button> 
+                                      style="float:right; margin-right:5px"><i class="fa fa-check-square-o"></i></button>
 
 									  <button *ngIf="queue?.readyStatus"
-									   class="btn btn-warning btn-sm" 
+									   class="btn btn-warning btn-sm"
                                       (click)="markReady(queue.$key, false)"
-                                      style="float:right; margin-right:5px"><i class="fa fa-coffee"></i></button>            
+                                      style="float:right; margin-right:5px"><i class="fa fa-coffee"></i></button>
                                 </div>
-                     
-                                
+
+
                         </div>
                         <div class="panel-body" >
-                             
+
                         <div class="chat_message_wrapper chat_message_right" *ngFor="let cartCoffee of queue.cartCoffees">
-                                
+
                                 <ul class="chat_message">
                                     <li>
                                         <p>
@@ -89,7 +49,6 @@
                         </div>
 
 </div>
-<!--</form>-->
 
 
 
