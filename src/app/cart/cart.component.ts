@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-// import { cartData } from './cartData';
 import { coffeesData } from '../coffees/coffeesData';
 import { CoffeeService } from '../coffees/coffee.service';
-// import { element } from 'protractor/globals';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { QueueService } from '../queue/queue.service';
 import { Router } from "@angular/router";
@@ -11,6 +9,7 @@ import { User } from '../login/user';
 
 import { LoginService } from '../login/login.service';
 import { Subscription } from 'rxjs/Rx';
+import { apiMethods } from '../../environments/environment';
 
 @Component({
   selector: 'cart',
@@ -116,7 +115,8 @@ export class CartComponent implements OnInit, OnDestroy {
         this.cartForm = this.formBuilder.group({
             customerName: [customerName],
             customerImage: [customerImage],
-            cartCoffees: cartCoffees
+            cartCoffees: cartCoffees,
+            customerName2: ['', Validators.required]
         });
 
     }
@@ -146,8 +146,8 @@ export class CartComponent implements OnInit, OnDestroy {
     }
 
     onSubmit() {
-        console.log(this.cartForm.value);
-        if (this.customerName == undefined || this.customerName == null) {
+
+        if (this.customerName === undefined || this.customerName == null) {
             this.loginModal.show();
         } else {
             this.addToQueue();

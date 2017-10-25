@@ -1,6 +1,6 @@
 <div class="container main">
 
-<p>Welcome: {{email}} to {{companyName}}</p>
+<p *ngIf="apiMethodV1">Welcome: {{email}}</p>
 
 <div *ngFor="let alert of alerts">
 <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout"
@@ -8,7 +8,6 @@
                                   border-radius:0px;
                                   text-align:right;
                                   right: 5%;">
-      <!--<strong>Well done!</strong> You successfully added coffees-->
       <strong>Well done! </strong><span [innerHtml]="alert.msg"></span>
     </alert>
 </div>

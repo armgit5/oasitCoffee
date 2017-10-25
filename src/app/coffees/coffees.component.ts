@@ -22,6 +22,7 @@ export class CoffeesComponent {
     coffees: Coffee[];
     filterArg: Category;
     $coffee: Subscription;
+    apiMethodV1 = apiMethods.v1;
 
     public alerts: any = [];
 

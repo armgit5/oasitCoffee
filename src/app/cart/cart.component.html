@@ -1,69 +1,3 @@
-<!--<form [formGroup]="cartForm" (ngSubmit)="onSubmit()">
-    <h2>Coffee Cart</h2>
-    <div>
-        <ul class="list-group" formArrayName="cartCoffees">
-            <table class="table">
-                <tr>
-                    <th>Coffee</th>
-                    <th>Type</th>
-                    <th>Qty</th>
-                    <th>Comment</th>
-                    <th>Cost</th>
-                    <th>Delete</th>
-                    <th></th>
-                </tr>
-            </table>
-            <table class="table">
-            <div *ngFor="let coffee of cartForm.controls['cartCoffees'].controls; let i = index">
-                
-                    <tr formGroupName="{{i}}">
-                        <td>
-                            <input type="text" 
-                                    class="form-control"
-                                    formControlName="coffeeName">
-                        </td>           
-                        <td>
-                            <input type="text" 
-                                    class="form-control"
-                                    formControlName="coffeeType">
-                        </td>
-                        <td>
-                            <input type="number" 
-                                    class="form-control"
-                                    formControlName="qty">
-                        </td>
-                    
-                        <td>
-                            <input type="text" 
-                                    class="form-control"
-                                    formControlName="comment">
-                        </td> 
-                        <td>
-                            <input type="number" 
-                                    class="form-control"
-                                    formControlName="price">
-                        </td>
-                        
-                        <td><button class="btn btn-danger pull-right" type="button" (click)="delete(i)">Delete</button></td> 
-                    </tr> 
-                        
-            </div>
-            </table>   
-        
-        </ul>
-        <div><input type="text" 
-                class="form-control"
-                formControlName="customerName"></div>
-        <div>Total: {{total}}</div>
-        
-        <div>
-            <button type="submit" class="btn btn-success">Save</button>
-        </div>
-
-    </div>
-</form>-->
-
-
 <form [formGroup]="cartForm" (ngSubmit)="onSubmit()" (keydown.enter)="$event.preventDefault()">
 <div class="container col-sm-12 col-md-10 col-md-offset-1">
 	<table formArrayName="cartCoffees" id="cart" class="table table-hover table-condensed">
@@ -84,7 +18,7 @@
 									<div class="col-sm-4 hidden-xs"><img src={{cartForm.value.cartCoffees[i].imageUrl}} alt="..." class="img-responsive"/></div>
 									<div class="col-sm-8" style="padding-right:35px">
 										<h5 style="margin:5px;font-weight:300">{{cartForm.value.cartCoffees[i].coffeeName}} ({{cartForm.value.cartCoffees[i].coffeeType}})</h5>
-										<p><textarea type="text" 
+										<p><textarea type="text"
 												class="form-control"
 												formControlName="comment"
 												style="padding-top:0;padding-bottom:0;background-color:white"
@@ -94,23 +28,19 @@
 							</td>
 							<td data-th="Price" style="padding-top:15px">{{cartForm.value.cartCoffees[i].price}}</td>
 							<td data-th="Quantity">
-								<!--<input type="number" 
-                                    class="form-control"
-                                    formControlName="qty"
-									style="padding-top:8px">-->
 									<div class="col-md-3" style="padding: 0; padding-top: 2px">
 										<a class="btn" (click)="minus(i)" style="padding: 0">
-											<i class="fa fa-minus-square fa-2x"></i> 
+											<i class="fa fa-minus-square fa-2x"></i>
 										</a>
 									</div>
 									<div class="col-md-6" style="padding: 0">
-										<input type="text" name="quant[1]" 
-											class="form-control input-number" 
+										<input type="text" name="quant[1]"
+											class="form-control input-number"
 											value = {{cartForm.value.cartCoffees[i].qty}}
 											min="1"
 											style="text-align: center;background-color:white;color:black"
 											#qtyInput
-											disabled> 
+											disabled>
 									</div>
 									<div class="col-md-3" style="padding: 0; padding-top: 2px; padding-right: 1px">
 										<a class="btn" (click)="plus(i)" style="padding: 0">
@@ -120,33 +50,36 @@
 							</td>
 							<td data-th="Subtotal" style="padding-top:15px" class="text-center">{{cartForm.value.cartCoffees[i].price * cartForm.value.cartCoffees[i].qty}}</td>
 							<td class="" data-th="">
-								<!--<button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>-->
-								<button class="btn btn-danger btn-sm" (click)="delete(i)"><i class="fa fa-trash-o"></i></button>								
+								<button class="btn btn-danger btn-sm" (click)="delete(i)"><i class="fa fa-trash-o"></i></button>
 							</td>
 						</tr>
-					 
+
 					</tbody>
 					<tfoot>
 						<tr class="visible-xs">
 							<td class="text-center"><strong>Total: {{total}}</strong></td>
 						</tr>
 						<tr>
-							<!--<td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>-->
 							<td></td>
 							<td colspan="2" class="hidden-xs"></td>
 							<td class="text-center" >Total: {{total}}</td>
 							<td><button type="submit" class="btn btn-success"
-							 [disabled]="cartItems.length <= 0">Save</button></td>
-							<!--<td><a class="btn btn-success btn-block" type="submit">Checkout <i class="fa fa-angle-right"></i></a></td>-->
+							 [disabled]="cartItems.length <= 0 || cartForm.value.customerName2 == ''">Add to queue</button></td>
 						</tr>
 					</tfoot>
-				</table>
+        </table>
+        <input
+        type="text"
+        id="name"
+        class="form-control"
+        placeholder="Please enter customer's name here"
+        formControlName="customerName2">
 </div>
 </form>
 
 <div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
                   tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog"> 
+  <div class="modal-dialog">
     <div class="modal-content" style="width:750px;height:475px;margin:0px;margin-left:-15%">
       <div class="modal-header">
         <h4 class="modal-title pull-left">USER ACCOUNT</h4>
@@ -155,18 +88,10 @@
         </button>
       </div>
       <div class="modal-body">
-		  
-		<app-login (customerNameOutput)="onHasName($event)"></app-login>
-			
+
+		<app-login (customerNameOutput)="cartformName($event)"></app-login>
+
       </div>
     </div>
   </div>
 </div>
-
-<!--<div class="col-sm-4 hidden-xs">
-	<img src={{user.imageUrl}} alt="..." class="img-responsive"/>
-	<div>{{user.name}}</div>
-	<div>{{user.email}}</div>
-	<div>{{user.uid}}</div>
-</div>-->
-

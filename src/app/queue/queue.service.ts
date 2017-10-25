@@ -3,6 +3,7 @@ import { Queue } from './queue';
 import { Http } from '@angular/http';
 import { AngularFireDatabase } from 'angularfire2/database';
 import {Observable, Subject} from 'rxjs/Rx';
+import { apiMethods } from '../../environments/environment';
 
 @Injectable()
 export class QueueService {
@@ -11,20 +12,24 @@ export class QueueService {
   sdkDb: any;
 
   constructor(private db: AngularFireDatabase) {
-    
+
   }
-  
+
   addQueue(cart) {
     // push queue to firebase without key
-    let queue = {customerName: cart.customerName, 
-                customerImage: cart.customerImage, 
-                cartCoffees: cart.cartCoffees,
-                readyStatus: false};  
-    this.sdkDb.child("queue").push(queue);
+
+    if (apiMethods.v1) {
+      let queue = {customerName: cart.customerName2,
+      customerImage: cart.customerImage,
+      cartCoffees: cart.cartCoffees,
+      readyStatus: false};
+      this.db.list('queue').push(queue);
+    }
+
   }
 
   getQueue(): Observable<Queue[]> {
-    return this.db.list('queue');  
+    return this.db.list('queue');
   }
 
   deleteQueue($key) {
