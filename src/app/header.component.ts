@@ -46,7 +46,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
                   console.log('false');
                   this.loginStatus = false;
                   this.customerName = null;
-                  this.login();
+                  // don't force login
+                  // this.login();
               }
           });
     }

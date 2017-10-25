@@ -2,23 +2,17 @@
     <div class="box">
 			<div class="content">
 				<div class="col-md-6 login" style="margin-bottom:15px">
-					<div class="social">
-						<!--<a class="circle github" href="/auth/github">
-							<i class="fa fa-github fa-fw"></i>
-						</a>
-						<a id="google_login" class="circle google" href="/auth/google_oauth2">
-							<i class="fa fa-google-plus fa-fw"></i>
-						</a>-->
+					<!-- <div class="social">
 						<a id="facebook_login" class="circle facebook"
 							(click)="facebookLogin()" *ngIf="!newAccount">
 							<i class="fa fa-facebook fa-fw"></i>
 						</a>
-					</div>
-					<div class="division" *ngIf="!newAccount">
+					</div> -->
+					<!-- <div class="division" *ngIf="!newAccount">
 						<div class="line l"></div>
 							<span>or</span>
 						<div class="line r"></div>
-					</div>
+					</div> -->
 					<div class="error"></div>
 					<h4 class="modal-title" *ngIf="!newAccount">Login with</h4>
 					<h4 class="modal-title" *ngIf="newAccount">Register with</h4>
@@ -42,22 +36,20 @@
 						</form>
 					</div>
 				</div>
-				<div class="col-md-6 login" *ngIf="!newAccount">
+				<!-- <div class="col-md-6 login" *ngIf="!newAccount">
 					<h4 class="modal-title"> Guest account </h4>
 					<div class="form loginBox">
-						<!--<form method="post" action="/login" accept-charset="UTF-8">-->
 						<input id="email" class="form-control" type="text" placeholder="Name" 		name="name" #guestInput>
 						<input class="btn btn-default btn-login"
 							type="button"
 							value="Login as guest"
 							(click)="loginAsGuest(guestInput.value)">
-						<!--</form>-->
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 
-    <div class="forgot login-footer" *ngIf="!newAccount">
+    <!-- <div class="forgot login-footer" *ngIf="!newAccount">
 				<span>Looking to
 						<a (click)="toggleLogin(false)">create an account</a>
             or
@@ -67,4 +59,4 @@
 			<div class="forgot register-footer" *ngIf="newAccount">
 					<span>Already have an account?</span>
 					<a (click)="toggleLogin(false)" >Login</a>
-			</div>
+			</div> -->

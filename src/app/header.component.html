@@ -54,8 +54,8 @@
                           <ul class="dropdown-menu">
                             <li><a [routerLink]="['/admin']">Admin</a></li>
                             <li><a (click)="login()" *ngIf="!loginStatus">Login/ Signup</a></li>
-                            <li><a (click)="accountLogin()"  *ngIf="loginStatus">{{customerName}}</a></li>
-                            <li><a (click)="logout()">Logout</a></li>
+                            <!-- <li><a (click)="accountLogin()"  *ngIf="loginStatus">{{customerName}}</a></li> -->
+                            <li><a (click)="logout()" *ngIf="loginStatus">Logout</a></li>
                           </ul>
                     </li>
                </ul>
