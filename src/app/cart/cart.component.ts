@@ -147,11 +147,12 @@ export class CartComponent implements OnInit, OnDestroy {
 
     onSubmit() {
 
-        if (this.customerName === undefined || this.customerName == null) {
-            this.loginModal.show();
-        } else {
-            this.addToQueue();
-        }
+        // if (this.customerName === undefined || this.customerName == null) {
+        //     this.loginModal.show();
+        // } else {
+        //     this.addToQueue();
+        // }
+        this.addToQueue();
     }
 
     update() {
