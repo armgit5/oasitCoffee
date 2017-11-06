@@ -133,7 +133,7 @@ export class LoginService {
         });
     }
 
-    register(email, password, companyName, role) {
+    register(email, password, companyName) {
 
       if (apiMethods.v1 || apiMethods.vCompanies) {
 

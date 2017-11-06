@@ -1,5 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { UsersService } from '../users.service';
+import { User } from '../users';
 
 @Component({
   selector: 'usertable',
@@ -10,14 +12,16 @@ import { FormGroup } from '@angular/forms';
                 '../../light-bootstrap-dashboard.css',
                 './usertable.component.css']
 })
-export class UserTableComponent implements OnInit {
+export class UserTableComponent implements OnInit, OnDestroy {
 
   registerForm: FormGroup;
   @ViewChild('staticModal') button;
+  users: User[];
 
-  constructor() { }
+  constructor(private usersService: UsersService) { }
 
   ngOnInit() {
+    this.loadAllUsers();
   }
 
   newUser() {
@@ -30,5 +34,18 @@ export class UserTableComponent implements OnInit {
 
   hideModal() {
     this.hide();
+  }
+
+  loadAllUsers() {
+    this.usersService.loadAllUsers().subscribe(
+      users => {
+        console.log(users);
+        this.users = users;
+      }
+    );
+  }
+
+  ngOnDestroy() {
+
   }
 }
