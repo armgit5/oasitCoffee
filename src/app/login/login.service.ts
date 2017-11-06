@@ -133,7 +133,7 @@ export class LoginService {
         });
     }
 
-    register(email, password, companyName) {
+    register(email, password, companyName, role) {
 
       if (apiMethods.v1 || apiMethods.vCompanies) {
 
@@ -146,6 +146,7 @@ export class LoginService {
 
         this.afAuth.auth.createUserWithEmailAndPassword(email, password)
         .then(authState => {
+          console.log(authState);
           if (companyName) {
             console.log('there is company');
           } else {

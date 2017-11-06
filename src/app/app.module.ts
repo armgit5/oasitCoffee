@@ -22,6 +22,7 @@ import { AlertModule } from 'ngx-bootstrap/alert';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
 import { CoffeeModule } from './coffees/coffee.module';
+import { UsersService } from './admin/users/users.service';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { CoffeeModule } from './coffees/coffee.module';
   providers: [CoffeeService,
               QueueService,
               CategoryService,
-              LoginService],
+              LoginService,
+              UsersService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

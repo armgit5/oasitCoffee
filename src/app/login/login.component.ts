@@ -69,13 +69,13 @@ export class LoginComponent implements OnInit {
         this.newCompany = newCompany;
     }
 
-    register() {
+    register(role: string) {
       if (apiMethods.v1 || apiMethods.vCompanies) {
         console.log(this.registerForm.value);
         let email = this.registerForm.value.email;
         let password = this.registerForm.value.password;
         let companyName = this.registerForm.value.companyName;
-        this.loginService.register(email, password, companyName);
+        this.loginService.register(email, password, companyName, role);
         this.posted = false;
       }
 
@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit {
         let email = this.registerForm.value.email;
         let password = this.registerForm.value.password;
         let companyName = this.registerForm.value.companyName;
-        this.loginService.register(email, password, companyName);
+        this.loginService.register(email, password, companyName, role);
         this.posted = false;
       }
 

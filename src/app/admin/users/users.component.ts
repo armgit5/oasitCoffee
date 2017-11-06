@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { UsersService } from './users.service';
 
 @Component({
   selector: 'users',
@@ -13,10 +14,21 @@ export class UsersComponent implements OnInit {
 
   registerForm: FormGroup;
 
-  constructor() { }
+  constructor(private userService: UsersService) { }
 
   ngOnInit() {
   }
 
+  createUser() {
+
+  }
+
+  deleteUser(id: number) {
+
+  }
+
+  loadAllUsers() {
+    this.userService.loadAllUsers();
+  }
 
 }

@@ -13,6 +13,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class UserFormComponent implements OnInit {
 
   userForm: FormGroup;
+  selectedValue: string = null;
 
   constructor(private formBuilder: FormBuilder) {
     this.initRegisterForm();
@@ -26,17 +27,19 @@ export class UserFormComponent implements OnInit {
     let email = '';
     let password = '';
     let confirm = '';
+    let role = '';
 
     this.userForm = this.formBuilder.group({
       username: [username, Validators.required],
       email: [email, Validators.required],
       password: [password, Validators.required],
-      confirm: [confirm, Validators.required]
+      confirm: [confirm, Validators.required],
+      role: [role]
     });
   }
 
-  // createUser() {
-
-  // }
+  createUser() {
+      console.log(this.userForm.value, this.selectedValue);
+  }
 
 }
