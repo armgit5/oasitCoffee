@@ -25,11 +25,16 @@ export class UserFormComponent implements OnInit {
   }
 
   private initRegisterForm() {
-    let username = 'armTest';
-    let email = 'ysuwansiri2@yahoo.com';
-    let password = '123456';
-    let confirm = '123456';
-    let role = 'Manager';
+    // let username = 'armTest';
+    // let email = 'ysuwansiri2@yahoo.com';
+    // let password = '123456';
+    // let confirm = '123456';
+    // let role = 'Manager';
+    let username = '';
+    let email = '';
+    let password = '';
+    let confirm = '';
+    let role = '';
 
     this.userForm = this.formBuilder.group({
       username: [username, Validators.required],
