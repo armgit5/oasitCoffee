@@ -45,6 +45,10 @@ export class UserTableComponent implements OnInit, OnDestroy {
     );
   }
 
+  deleteUser($key: string, uid: string) {
+    this.usersService.deleteUser($key, uid);
+  }
+
   ngOnDestroy() {
 
   }

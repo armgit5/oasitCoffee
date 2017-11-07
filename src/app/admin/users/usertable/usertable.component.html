@@ -4,7 +4,7 @@
       <div class="header">
         <div class="row">
         <div class="col-md-6">
-          <h4 class="title">Striped Table with Hover</h4>
+          <h4 class="title">User management table</h4>
         </div>
         <div class="col-md-6" style="text-align:right;">
            <span class="glyphicon glyphicon-plus" (click)="newUser()"></span>
@@ -12,7 +12,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <p class="category" style="padding-left:15px;">Here is a subtitle for this table</p>
+            <p class="category" style="padding-left:15px;">add and delete users from here</p>
           </div>
         </div>
       </div>
@@ -28,7 +28,9 @@
               <td>{{user.username}}</td>
               <td>{{user.email}}</td>
               <td>{{user.role}}</td>
-              <td><button type="button" class="btn btn-danger">X</button>
+              <td><button type="button"
+                  class="btn btn-danger"
+                  (click)="deleteUser(user.$key, user.uid)">X</button>
               </td>
             </tr>
           </tbody>
