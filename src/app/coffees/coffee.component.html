@@ -12,7 +12,7 @@
     </div>
 
     <div class="product-info" style="height:200px">
-        <div *ngIf="mouseOver" style="height:5px">
+        <div *ngIf="mouseOver && role === 'Manager'" style="height:5px">
             <div class="x-container" (click)="deleteCoffee()">
                 <i class="fa fa-times-rectangle-o" aria-hidden="true"></i>
             </div>

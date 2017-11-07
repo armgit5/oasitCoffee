@@ -9,9 +9,9 @@ import { CategoryService } from './category/category.service';
 import { Category } from './category/category';
 import { CoffeeOutput } from './coffee-output';
 import { LoginService } from '../login/login.service';
-import { User } from '../login/user';
 import { apiMethods } from '../../environments/environment';
 import { tokenNotExpired } from 'angular2-jwt';
+import { User } from '../admin/users/users';
 
 @Component({
   selector: 'coffee',
@@ -53,9 +53,10 @@ export class CoffeesComponent {
         // from firebase
         loginService.userOutput.subscribe(
           (user: User) => {
+            console.log(user);
             this.email = user.email;
             this.companyName = user.companyName;
-            this.subToUserCoffees(user);
+            // this.subToUserCoffees(user);
           }
         );
 
@@ -90,7 +91,7 @@ export class CoffeesComponent {
             coffees => {
               this.coffees = coffees;
               this.coffeeService.coffees = coffees;
-              console.log(JSON.stringify(coffees));
+              // console.log(JSON.stringify(coffees));
             }
           );
         }

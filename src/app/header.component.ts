@@ -29,6 +29,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     loginStatus = false;
     customerName: string;
 
+    role = '';
+
     onFilter(filter) {
         this.categorySerivce.categoryChanged.emit(filter);
     }
@@ -41,7 +43,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
               if (isLoggedIn) {
                   console.log('login');
                   this.loginStatus = true;
-                  this.customerName = this.loginService.user.name;
+                  this.customerName = this.loginService.user.username;
+                  this.role = this.loginService.user.role;
               } else {
                   console.log('false');
                   this.loginStatus = false;

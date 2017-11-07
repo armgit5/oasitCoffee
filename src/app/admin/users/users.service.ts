@@ -3,7 +3,6 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Subscription } from 'rxjs/Rx';
 import { User } from './users';
-import * as admin from 'firebase-admin';
 
 @Injectable()
 export class UsersService {

@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { LoginService } from './login.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { apiMethods } from '../../environments/environment';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,8 @@ export class LoginComponent implements OnInit {
   modalOff = new EventEmitter<boolean>();
 
   constructor(private loginService: LoginService,
-              private formBuilder: FormBuilder) { }
+              private formBuilder: FormBuilder,
+              private db: AngularFireDatabase) { }
 
   ngOnInit() {
     this.initLoginForm();
@@ -104,6 +106,7 @@ export class LoginComponent implements OnInit {
         this.loginService.login(email, password)
           .then(authState => {
             this.modalOff.emit(true);
+
           })
           .catch(error => console.log(error));
       }
@@ -117,6 +120,10 @@ export class LoginComponent implements OnInit {
           })
           .catch(error => console.log(error));
       }
+
+    }
+
+    private findUserByEmail() {
 
     }
 

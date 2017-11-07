@@ -5,7 +5,7 @@ import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@ang
 import { QueueService } from '../queue/queue.service';
 import { Router } from "@angular/router";
 import { Cart } from './cart';
-import { User } from '../login/user';
+import { User } from '../admin/users/users';
 
 import { LoginService } from '../login/login.service';
 import { Subscription } from 'rxjs/Rx';
@@ -27,7 +27,7 @@ export class CartComponent implements OnInit, OnDestroy {
     newTotal: number = 0;
     newCount: number = 0;
 
-    user: User = new User(null, null, null, null, null);
+    user: User = new User(null, null, null, null, null, null, null);
 
     $logIn: Subscription;
 
@@ -44,10 +44,10 @@ export class CartComponent implements OnInit, OnDestroy {
     }
 
     private assignUserInfo() {
-        if (!this.loginService.user.name && this.loginService.user.email) {
+        if (!this.loginService.user.username && this.loginService.user.email) {
             this.customerName = this.loginService.user.email;
         } else {
-            this.customerName = this.loginService.user.name;
+            this.customerName = this.loginService.user.username;
         }
     }
 

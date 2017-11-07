@@ -3,7 +3,10 @@ export class User {
                   public $key: string,
                   public username: string,
                   public email: string,
-                  public role: string
+                  public role: string,
+                  public imageUrl: string,
+                  public uid: string,
+                  public companyName: string
                   ) {
 
       }

@@ -10,8 +10,8 @@ import { Subscription } from 'rxjs/Rx';
 import { CoffeeOutput } from './coffee-output';
 import { apiMethods, apiUrl } from '../../environments/environment';
 import { LoginService } from '../login/login.service';
-import { User } from '../login/user';
 import { xhrHeadersWithToken } from '../shared/xhr-headers';
+import { User } from '../admin/users/users';
 
 @Injectable()
 export class CoffeeService {

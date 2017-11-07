@@ -3,10 +3,12 @@ import { coffeesData } from './coffeesData';
 import {Coffee} from "./coffee";
 import { cartData } from '../cart/cartData';
 import { CoffeeService } from './coffee.service';
-import { Observable } from "rxjs/Rx";
+import { Observable, Subscription, Subject } from 'rxjs/Rx';
 import { Router } from "@angular/router";
 import { CategoryService } from './category/category.service';
 import { CoffeeOutput } from './coffee-output';
+import { LoginService } from '../login/login.service';
+import { User } from '../admin/users/users';
 
 @Component({
   selector: 'coffee-component',
@@ -33,10 +35,22 @@ export class CoffeeComponent implements OnInit {
     comment:string = "";
     public alerts: any = [];
 
+    role = '';
 
     constructor(private coffeeService: CoffeeService,
-                private router: Router) {
+                private router: Router,
+                private loginService: LoginService) {
+        this.loginService.userOutput.subscribe(
+          user => {
+            console.log(user);
+          }
+        );
 
+        loginService.userOutput.subscribe(
+          (user: User) => {
+            this.role = user.role;
+          }
+        );
     }
 
     ngOnInit() {

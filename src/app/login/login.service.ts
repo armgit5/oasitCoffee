@@ -1,19 +1,20 @@
 import { Injectable, EventEmitter, ViewChild } from '@angular/core';
 import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
-import { User } from './user';
+
 import * as firebase from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { apiMethods, apiUrl } from '../../environments/environment';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { tokenNotExpired } from 'angular2-jwt';
 import { xhrHeaders } from '../shared/xhr-headers';
+import { User } from '../admin/users/users';
 
 @Injectable()
 export class LoginService {
 
     isLoggedIn = new EventEmitter<boolean>();
     userOutput = new EventEmitter<User>();
-    user: User = new User(null, null, null, null, null);
+    user: User = new User(null, null, null, null, null, null, null);
 
     @ViewChild('staticModal') loginModal;
 
@@ -24,16 +25,20 @@ export class LoginService {
         if (apiMethods.v1 || apiMethods.vCompanies) {
         this.afAuth.authState.subscribe(authState => {
             if (authState) {
-                this.user.uid = authState.uid;
+
                 this.user.email = authState.email;
                 this.user.imageUrl = authState.photoURL;
-                this.user.name = authState.displayName;
-                this.queryCompanyName(this.user);
+                this.user.uid = authState.uid;
+
+                console.log(this.user);
+                this.isLoggedIn.emit(true);
+                this.findUserByEmail(this.user.email);
+                // this.queryCompanyName(this.user);
             } else {
                 this.user.uid = null;
                 this.user.email = null;
                 this.user.imageUrl = null;
-                this.user.name = null;
+                this.user.username = null;
                 this.isLoggedIn.emit(false);
                 this.userOutput.emit(this.user);
             }
@@ -45,6 +50,23 @@ export class LoginService {
             this.isLoggedIn.emit(false);
           }
         }
+    }
+
+    private findUserByEmail(email: string) {
+      this.db.list('/users', {
+        query: {
+          orderByChild: 'email',
+          equalTo: email
+        }
+      }).subscribe(
+        users => {
+          let user = users[0];
+          this.user.username = user.username;
+          this.user.role = user.role;
+          this.user.$key = user.$key;
+          this.userOutput.emit(this.user);
+        }
+      );
     }
 
     // Query users to comapanies table
@@ -59,7 +81,7 @@ export class LoginService {
         items => {
           // console.log(items);
           if (items.length > 0) {
-            this.user.companyName = items[0].companyName;
+            // this.user.companyName = items[0].companyName;
             this.isLoggedIn.emit(true);
             this.userOutput.emit(this.user);
           }

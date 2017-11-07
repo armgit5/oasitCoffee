@@ -9,7 +9,7 @@ import { ImageCropperComponent, CropperSettings, Bounds } from 'ng2-img-cropper'
 import { CategoryService } from '../coffees/category/category.service';
 import * as firebase from 'firebase/app';
 import { LoginService } from '../login/login.service';
-import { User } from '../login/user';
+import { User } from '../admin/users/users';
 import { apiMethods } from '../../environments/environment';
 import * as AWS from 'aws-sdk';
 import { PutObjectRequest } from "aws-sdk/clients/s3";
