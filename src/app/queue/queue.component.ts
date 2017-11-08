@@ -38,6 +38,6 @@ export class QueueComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-  
+
   }
 }

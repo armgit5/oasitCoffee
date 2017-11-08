@@ -22,7 +22,8 @@ export class QueueService {
       let queue = {customerName: cart.customerName2,
       customerImage: cart.customerImage,
       cartCoffees: cart.cartCoffees,
-      readyStatus: false};
+      readyStatus: false,
+      dateTime: Date.now()};
       this.db.list('queue').push(queue);
     }
 
