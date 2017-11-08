@@ -22,25 +22,25 @@
             </div>
         </div>
 
-        <div class="col-md-6 pull-left" style="padding: 0px;font-weight: 200;">
+        <div class="col-md-6 col-sm-6 col-xs-12 pull-left" style="padding: 0px;font-weight: 200;">
             <div class="product-title pull-left">{{coffee?.name}} </div>
         </div>
-        <div class="col-md-6 pull-right"
+        <div class="col-md-6 col-sm-6 col-xs-12 pull-right"
             style="padding: 0px; text-align: right; margin-top: 5px; margin-bottom: 2px">
 
-            <div class="col-md-3" style="padding: 0; padding-top: 2px">
+            <div class="col-md-3 col-sm-3 col-xs-3" style="padding: 0; padding-top: 2px">
                 <a class="btn" (click)="minus()" style="padding: 0">
                     <i class="fa fa-minus-square fa-2x"></i>
                 </a>
             </div>
-            <div class="col-md-6" style="padding: 0">
+            <div class="col-md-6 col-sm-6 col-xs-6" style="padding: 0">
                 <input type="text" name="quant[1]"
                     class="form-control input-number"
                     [(ngModel)]="coffeeCount"
                     min="1"
                     style="text-align: center;">
             </div>
-            <div class="col-md-3" style="padding: 0; padding-top: 2px; padding-right: 1px">
+            <div class="col-md-3 col-sm-3 col-xs-3" style="padding: 0; padding-top: 2px; padding-right: 1px">
                 <a class="btn" (click)="plus()" style="padding: 0">
                     <i class="fa fa-plus-square fa-2x"></i>
                 </a>
@@ -54,10 +54,10 @@
                 placeholder="please leave a comment here..."></textarea>
         </div>
         <div class="product-price-wrapper">
-            <div class="col-md-6" style="padding: 0px;">
+            <div class="col-md-6 col-sm-6 col-xs-6" style="padding: 0px;">
                 <div class="product-price standard" style="font-weight: 400;">{{ coffee?.price | currency:'THB':true}}</div>
             </div>
-            <div class="col-md-6"
+            <div class="col-md-6 col-sm-3 col-xs-6"
                 style="padding: 0px; text-align: right">
                 <button type="button"
                     class="btn btn-default"
