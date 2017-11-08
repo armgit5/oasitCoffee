@@ -28,21 +28,21 @@
 							</td>
 							<td data-th="Price" style="padding-top:15px">{{cartForm.value.cartCoffees[i].price}}</td>
 							<td data-th="Quantity">
-									<div class="col-md-3" style="padding: 0; padding-top: 2px">
+									<div class="col-md-3 col-xs-3" style="padding: 0; padding-top: 2px">
 										<a class="btn" (click)="minus(i)" style="padding: 0">
 											<i class="fa fa-minus-square fa-2x"></i>
 										</a>
 									</div>
-									<div class="col-md-6" style="padding: 0">
+									<div class="col-md-6 col-xs-6" style="padding: 0">
 										<input type="text" name="quant[1]"
 											class="form-control input-number"
 											value = {{cartForm.value.cartCoffees[i].qty}}
 											min="1"
-											style="text-align: center;background-color:white;color:black"
+											style="text-align: center;background-color:white;color:black; padding:0px"
 											#qtyInput
 											disabled>
 									</div>
-									<div class="col-md-3" style="padding: 0; padding-top: 2px; padding-right: 1px">
+									<div class="col-md-3 col-xs-3" style="padding: 0; padding-top: 2px; padding-right: 1px">
 										<a class="btn" (click)="plus(i)" style="padding: 0">
 											<i class="fa fa-plus-square fa-2x"></i>
 										</a>
@@ -56,12 +56,9 @@
 
 					</tbody>
 					<tfoot>
-						<tr class="visible-xs">
-							<td class="text-center"><strong>Total: {{total}}</strong></td>
-						</tr>
 						<tr>
 							<td></td>
-							<td colspan="2" class="hidden-xs"></td>
+							<td colspan="2"></td>
 							<td class="text-center" >Total: {{total}}</td>
 							<td><button type="submit" class="btn btn-success"
 							 [disabled]="cartItems.length <= 0 || cartForm.value.customerName2 == ''">Add to queue</button></td>
