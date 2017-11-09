@@ -7,7 +7,7 @@
         <!-- <i class="fa fa-user-circle fa-2x" aria-hidden="true" *ngIf="queue?.customerImage == null"></i> -->
         <span> &nbsp; คุณ {{queue.customerName}}</span>
         <span *ngIf="queue?.readyStatus"> &nbsp; ทำเสร็จแล้วครับ มารับกาแฟใด้เลยครับ </span>
-        <span *ngIf="!queue?.readyStatus"> &nbsp; สั่งเมื่อเวลา {{queue.dateTime}}</span>
+        <span *ngIf="!queue?.readyStatus"> &nbsp; สั่งเมื่อเวลา {{queue.dateTime | date:'shortTime'}}</span>
         <span *ngIf="!queue?.readyStatus"> &nbsp; ตอนนี้ </span>
         <span *ngIf="!queue?.readyStatus"> &nbsp; กำลังทำอยู่ครับ </span>
 
@@ -31,7 +31,7 @@
         <ul class="chat_message">
           <li>
             <p>
-              {{cartCoffee.coffeeName}}
+              {{cartCoffee.coffeeName}} ({{cartCoffee.comment}})
             </p>
           </li>
         </ul>
