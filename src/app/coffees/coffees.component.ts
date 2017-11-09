@@ -30,6 +30,8 @@ export class CoffeesComponent {
     email = '';
     companyName = '';
 
+    role = '';
+
     // isNew: boolean = true;
     // inputId: string = "";
 
@@ -56,6 +58,7 @@ export class CoffeesComponent {
             console.log(user);
             this.email = user.email;
             this.companyName = user.companyName;
+            this.role = user.role;
             // this.subToUserCoffees(user);
           }
         );

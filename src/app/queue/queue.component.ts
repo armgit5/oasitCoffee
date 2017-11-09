@@ -3,6 +3,7 @@ import { QueueService } from './queue.service';
 import { Queue } from './queue';
 import { LoginService } from '../login/login.service';
 import { Subscription } from 'rxjs/Rx';
+import { User } from '../admin/users/users';
 
 @Component({
   selector: 'app-queue',
@@ -14,11 +15,16 @@ export class QueueComponent implements OnInit, OnDestroy {
   queues: Queue[];
   userUrl: string;
   $login: Subscription;
+  role = '';
 
   constructor(private queueService: QueueService,
               private loginService: LoginService) {
 
-
+                loginService.userOutput.subscribe(
+                  (user: User) => {
+                    this.role = user.role;
+                  }
+                );
   }
 
   ngOnInit() {

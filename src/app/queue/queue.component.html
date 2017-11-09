@@ -15,11 +15,11 @@
           <i class="fa fa-trash-o"></i>
         </button>
 
-        <button *ngIf="queue?.readyStatus" class="btn btn-success btn-sm" (click)="markReady(queue.$key, false)" style="float:right; margin-right:5px">
+        <button *ngIf="queue?.readyStatus && (role === 'Manager' || role === 'Employee')" class="btn btn-success btn-sm" (click)="markReady(queue.$key, false)" style="float:right; margin-right:5px">
           <i class="fa fa-check-square-o"></i>
         </button>
 
-        <button *ngIf="!queue?.readyStatus" class="btn btn-warning btn-sm" (click)="markReady(queue.$key, true)" style="float:right; margin-right:5px">
+        <button *ngIf="!queue?.readyStatus && (role === 'Manager' || role === 'Employee')" class="btn btn-warning btn-sm" (click)="markReady(queue.$key, true)" style="float:right; margin-right:5px">
           <i class="fa fa-coffee"></i>
         </button>
       </div>
