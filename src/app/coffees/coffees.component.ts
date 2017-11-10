@@ -22,6 +22,7 @@ export class CoffeesComponent {
 
     coffees: Coffee[];
     filterArg: Category;
+    searchVal: string = '';
     $coffee: Subscription;
     apiMethodV1 = apiMethods.v1;
 
@@ -84,7 +85,8 @@ export class CoffeesComponent {
         // Subcribe to search val
         this.headerService.searchValOutput.subscribe(
           searchVal => {
-            console.log(searchVal);
+            // console.log(searchVal);
+            this.searchVal = searchVal;
           }
         );
 
