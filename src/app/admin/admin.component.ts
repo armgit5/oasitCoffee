@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../login/login.service';
+import { User } from './users/users';
 
 @Component({
   selector: 'admin',
@@ -10,7 +12,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
-  constructor() { }
+
+  constructor(private loginService: LoginService) {
+    loginService.userOutput.subscribe(
+      (user: User) => {
+        console.log(user);
+      }
+    );
+  }
 
   ngOnInit() {
   }

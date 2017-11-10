@@ -11,7 +11,9 @@
         <span *ngIf="!queue?.readyStatus"> &nbsp; ตอนนี้ </span>
         <span *ngIf="!queue?.readyStatus"> &nbsp; กำลังทำอยู่ครับ </span>
 
-        <button class="btn btn-danger btn-sm" (click)="deleteQueue(queue.$key)" style="float:right">
+        <button  *ngIf="role === 'Manager' || role === 'Employee'"
+        class="btn btn-danger btn-sm"
+        (click)="deleteQueue(queue.$key)" style="float:right">
           <i class="fa fa-trash-o"></i>
         </button>
 

@@ -35,22 +35,12 @@ export class CoffeeComponent implements OnInit {
     comment:string = "";
     public alerts: any = [];
 
+    @Input()
     role = '';
 
     constructor(private coffeeService: CoffeeService,
                 private router: Router,
                 private loginService: LoginService) {
-        this.loginService.userOutput.subscribe(
-          user => {
-            console.log(user);
-          }
-        );
-
-        loginService.userOutput.subscribe(
-          (user: User) => {
-            this.role = user.role;
-          }
-        );
     }
 
     ngOnInit() {

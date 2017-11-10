@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs/Rx';
 import { LoginService } from './login/login.service';
 import { apiMethods } from '../environments/environment';
 import { tokenNotExpired } from 'angular2-jwt';
+import { User } from './admin/users/users';
 
 @Component({
     selector: 'my-header',
@@ -53,6 +54,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
                   // this.login();
               }
           });
+
+      if (this.loginService.user.email == null) {
+        loginService.userOutput.subscribe(
+          (user: User) => {
+            console.log(user);
+            this.role = user.role;
+            // this.subToUserCoffees(user);
+          }
+        );
+      } else {
+        this.role = this.loginService.user.role;
+      }
     }
 
     ngOnInit() {

@@ -53,15 +53,25 @@ export class CoffeesComponent {
         // This is for the first time opening the page
         // and the user info is not loaded fast enough
         // from firebase
-        loginService.userOutput.subscribe(
-          (user: User) => {
-            console.log(user);
-            this.email = user.email;
-            this.companyName = user.companyName;
-            this.role = user.role;
-            // this.subToUserCoffees(user);
-          }
-        );
+        if (this.loginService.user.email == null) {
+          console.log('user info not fast enough');
+          loginService.userOutput.subscribe(
+            (user: User) => {
+              console.log(user);
+              this.email = user.email;
+              this.companyName = user.companyName;
+              this.role = user.role;
+              // this.subToUserCoffees(user);
+            }
+          );
+        } else {
+          this.email = this.loginService.user.email;
+          this.companyName = this.loginService.user.companyName;
+          this.role = this.loginService.user.role;
+          console.log('user info is already there');
+        }
+
+        console.log(this.role);
 
         this.categoryService.categoryChanged.subscribe(filterArg => {
           this.filterArg = filterArg;

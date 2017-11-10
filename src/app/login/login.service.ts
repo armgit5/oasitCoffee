@@ -25,14 +25,11 @@ export class LoginService {
         if (apiMethods.v1 || apiMethods.vCompanies) {
         this.afAuth.authState.subscribe(authState => {
             if (authState) {
-
                 this.user.email = authState.email;
                 this.user.imageUrl = authState.photoURL;
                 this.user.uid = authState.uid;
-                console.log(this.user);
                 this.isLoggedIn.emit(true);
                 this.findUserByEmail(this.user.email);
-                // this.queryCompanyName(this.user);
             } else {
                 this.user.email = null;
                 this.user.uid = null;
