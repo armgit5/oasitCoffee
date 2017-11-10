@@ -23,6 +23,7 @@ import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
 import { CoffeeModule } from './coffees/coffee.module';
 import { UsersService } from './admin/users/users.service';
+import { HeaderService } from './header.service';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { UsersService } from './admin/users/users.service';
               QueueService,
               CategoryService,
               LoginService,
-              UsersService],
+              UsersService,
+              HeaderService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

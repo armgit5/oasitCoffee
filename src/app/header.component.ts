@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, ElementRef, ViewChild, OnDestroy, EventEmitter } from '@angular/core';
 import { cartData } from './cart/cartData';
 import { CoffeeService } from './coffees/coffee.service';
 import { Observable } from 'rxjs/Observable';
@@ -9,6 +9,7 @@ import { LoginService } from './login/login.service';
 import { apiMethods } from '../environments/environment';
 import { tokenNotExpired } from 'angular2-jwt';
 import { User } from './admin/users/users';
+import { HeaderService } from './header.service';
 
 @Component({
     selector: 'my-header',
@@ -38,7 +39,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     constructor(private coffeeService: CoffeeService,
                 private categorySerivce: CategoryService,
-                private loginService: LoginService) {
+                private loginService: LoginService,
+                private headerService: HeaderService) {
 
         this.$logIn = this.loginService.isLoggedIn.subscribe(isLoggedIn => {
               if (isLoggedIn) {
@@ -119,5 +121,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     accountInfo() {
 
     }
+
+    onKey(event: any) { // without type info
+      this.headerService.searchVal(event.target.value);
+    }
+
 
 }

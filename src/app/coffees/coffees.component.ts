@@ -12,6 +12,7 @@ import { LoginService } from '../login/login.service';
 import { apiMethods } from '../../environments/environment';
 import { tokenNotExpired } from 'angular2-jwt';
 import { User } from '../admin/users/users';
+import { HeaderService } from '../header.service';
 
 @Component({
   selector: 'coffee',
@@ -29,8 +30,9 @@ export class CoffeesComponent {
     // Company Name and User Name
     email = '';
     companyName = '';
-
     role = '';
+
+    searchName = 'la';
 
     // isNew: boolean = true;
     // inputId: string = "";
@@ -44,7 +46,8 @@ export class CoffeesComponent {
     constructor(private coffeeService: CoffeeService,
                 private router: Router,
                 private categoryService: CategoryService,
-                private loginService: LoginService) {
+                private loginService: LoginService,
+                private headerService: HeaderService) {
 
       if (apiMethods.v1 || apiMethods.vCompanies) {
 
@@ -77,6 +80,13 @@ export class CoffeesComponent {
           this.filterArg = filterArg;
           console.log(filterArg);
         });
+
+        // Subcribe to search val
+        this.headerService.searchValOutput.subscribe(
+          searchVal => {
+            console.log(searchVal);
+          }
+        );
 
       }
 
