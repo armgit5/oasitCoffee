@@ -1,0 +1,45 @@
+<div class="container col-sm-12 col-md-10 col-md-offset-1">
+  <div class="panel" [ngClass]="{'panel-default': !queue?.readyStatus, 'panel-success': queue?.readyStatus}" *ngFor="let queue of queues; let i = index">
+    <div class="panel-heading">
+
+      <div class="chat_user_avatar">
+        <img *ngIf="queue?.customerImage != null" src={{queue?.customerImage}} class="md-user-image">
+        <!-- <i class="fa fa-user-circle fa-2x" aria-hidden="true" *ngIf="queue?.customerImage == null"></i> -->
+        <span> &nbsp; {{i + 1}}.  คุณ {{queue.customerName}}</span>
+        <span *ngIf="queue?.readyStatus"> &nbsp; ทำเสร็จแล้วครับ มารับกาแฟใด้เลยครับ </span>
+        <span *ngIf="!queue?.readyStatus"> &nbsp; สั่งเมื่อเวลา {{queue.dateTime | date:'shortTime'}}</span>
+        <span *ngIf="!queue?.readyStatus"> &nbsp; ตอนนี้ </span>
+        <span *ngIf="!queue?.readyStatus"> &nbsp; กำลังทำอยู่ครับ </span>
+
+        <button  *ngIf="role === 'Manager' || role === 'Employee'"
+        class="btn btn-danger btn-sm"
+        (click)="deleteQueue(queue.$key)" style="float:right">
+          <i class="fa fa-trash-o"></i>
+        </button>
+
+        <button *ngIf="queue?.readyStatus && (role === 'Manager' || role === 'Employee')" class="btn btn-success btn-sm" (click)="markReady(queue.$key, false)" style="float:right; margin-right:5px">
+          <i class="fa fa-check-square-o"></i>
+        </button>
+
+        <button *ngIf="!queue?.readyStatus && (role === 'Manager' || role === 'Employee')" class="btn btn-warning btn-sm" (click)="markReady(queue.$key, true)" style="float:right; margin-right:5px">
+          <i class="fa fa-coffee"></i>
+        </button>
+      </div>
+    </div>
+    <div class="panel-body">
+
+      <div class="chat_message_wrapper chat_message_right" *ngFor="let cartCoffee of queue.cartCoffees">
+
+        <ul class="chat_message">
+          <li>
+            <p>
+              {{cartCoffee.coffeeName}} ({{cartCoffee.comment}})
+            </p>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+</div>
