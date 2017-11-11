@@ -19,12 +19,15 @@ export class QueueComponent implements OnInit, OnDestroy {
 
   constructor(private queueService: QueueService,
               private loginService: LoginService) {
-
-                loginService.userOutput.subscribe(
-                  (user: User) => {
-                    this.role = user.role;
-                  }
-                );
+    if (this.loginService.user.email == null) {
+      loginService.userOutput.subscribe(
+        (user: User) => {
+          this.role = user.role;
+        }
+      );
+    } else {
+      this.role = this.loginService.user.role;
+    }
   }
 
   ngOnInit() {
