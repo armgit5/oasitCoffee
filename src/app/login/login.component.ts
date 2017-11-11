@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
   registerForm: FormGroup;
   posted = false;
 
+  spinning: boolean = false;
+
   @Output()
   customerNameOutput = new EventEmitter<string>();
 
@@ -100,13 +102,14 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
+      this.spinning = true;
       if (apiMethods.v1 || apiMethods.vCompanies) {
         let email = this.loginForm.value.email;
         let password = this.loginForm.value.password;
         this.loginService.login(email, password)
           .then(authState => {
+            this.spinning = false;
             this.modalOff.emit(true);
-
           })
           .catch(error => console.log(error));
       }
