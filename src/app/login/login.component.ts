@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   posted = false;
 
   spinning: boolean = false;
+  errStatus = false;
 
   @Output()
   customerNameOutput = new EventEmitter<string>();
@@ -108,10 +109,16 @@ export class LoginComponent implements OnInit {
         let password = this.loginForm.value.password;
         this.loginService.login(email, password)
           .then(authState => {
+              this.errStatus = false;
+              this.spinning = false;
+              this.loginService.loginStatusOutput.emit(email);
+              this.modalOff.emit(true);
+            }
+          )
+          .catch(err => {
+            this.errStatus = true;
             this.spinning = false;
-            this.modalOff.emit(true);
-          })
-          .catch(error => console.log(error));
+          });
       }
 
       if (apiMethods.vWuth) {
@@ -123,10 +130,6 @@ export class LoginComponent implements OnInit {
           })
           .catch(error => console.log(error));
       }
-
-    }
-
-    private findUserByEmail() {
 
     }
 

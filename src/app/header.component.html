@@ -75,7 +75,15 @@
             <div class="img-src" style="background-image: url('images/bg.jpg')"></div>
         </div>-->
     </div>
-
+    <div *ngFor="let alert of alerts">
+        <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout"
+                style=" position:fixed; top: 60px; z-index:9999;
+                                          border-radius:0px;
+                                          text-align:right;
+                                          right: 5%;">
+              <strong>Welcome </strong><span [innerHtml]="alert.msg"></span>
+            </alert>
+        </div>
 </div>
 
 <div id="mySidenav"
@@ -101,7 +109,6 @@
       <div class="modal-body">
 
 		<app-login (customerNameOutput)="onHasName($event)" (modalOff)="hideModal()"></app-login>
-
       </div>
     </div>
   </div>

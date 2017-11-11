@@ -15,6 +15,7 @@ export class LoginService {
     isLoggedIn = new EventEmitter<boolean>();
     userOutput = new EventEmitter<User>();
     user: User = new User(null, null, null, null, null, null, null);
+    loginStatusOutput = new EventEmitter<string>();
 
     @ViewChild('staticModal') loginModal;
 
@@ -115,12 +116,11 @@ export class LoginService {
       // }
       if (apiMethods.v1 || apiMethods.vCompanies) {
          return new Promise((resolve, reject) => {
-
             this.afAuth.auth.signInWithEmailAndPassword(email, password)
             .then(authState => {
                 resolve(authState);
             })
-            .catch(error => resolve(error));
+            .catch(error => reject(error));
         });
       }
     }

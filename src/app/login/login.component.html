@@ -13,7 +13,7 @@
 							<span>or</span>
 						<div class="line r"></div>
 					</div> -->
-					<div class="error"></div>
+          <div *ngIf="errStatus" style="color: red;">Invalid email or password</div>
 					<h4 class="modal-title" *ngIf="!newAccount">Login with</h4>
 					<h4 class="modal-title" *ngIf="newAccount">Register with</h4>
 					<div class="form loginBox" *ngIf="!newAccount">

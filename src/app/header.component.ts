@@ -32,6 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     customerName: string;
 
     role = '';
+    alerts = [];
 
     onFilter(filter) {
         this.categorySerivce.categoryChanged.emit(filter);
@@ -68,9 +69,25 @@ export class HeaderComponent implements OnInit, OnDestroy {
       } else {
         this.role = this.loginService.user.role;
       }
+
+      this.subscribeToLoginMsg();
+    }
+
+    private subscribeToLoginMsg() {
+      this.loginService.loginStatusOutput.subscribe(
+        email => {
+          console.log(email);
+          this.alerts.push({
+            type: 'success',
+            msg: email,
+            timeout: 2000
+          });
+        }
+      );
     }
 
     ngOnInit() {
+
         this.coffeeCounts = this.coffeeService.getCoffeeCounts();
         this.$coffeeCounts = this.coffeeService.coffeeCountsChanged
             .subscribe(coffeeCounts => this.coffeeCounts = coffeeCounts);
