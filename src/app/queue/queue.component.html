@@ -26,13 +26,14 @@
                         <tbody style="font-weight:400;">
                             <tr *ngFor="let queue of queues; let i = index"
                                 [ngClass]="{'finished': queue?.readyStatus}"
-                                ng-animate="'animate'">
+                                [ngStyle]="{ 'color': (highlighted && queue?.readyStatus ? 'black' : 'white') }">
+
                             	<td>{{i+1}}</td>
                             	<td>{{queue.dateTime | date:'shortTime'}}</td>
                             	<td>คุณ {{queue.customerName}}</td>
                             	<td>
                                 <div *ngFor="let cartCoffee of queue.cartCoffees">
-                                    {{cartCoffee.coffeeName}}<span *ngIf="cartCoffee.comment !== ''">,{{cartCoffee.comment}}</span>, x{{cartCoffee.qty}}
+                                    {{cartCoffee.coffeeName}}<span *ngIf="cartCoffee.comment !== ''">, {{cartCoffee.comment}}</span>, x{{cartCoffee.qty}}
                                 </div>
                               </td>
                             	<td>

@@ -2,9 +2,8 @@ import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/co
 import { QueueService } from './queue.service';
 import { Queue } from './queue';
 import { LoginService } from '../login/login.service';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription, Observable } from 'rxjs/Rx';
 import { User } from '../admin/users/users';
-declare var $: any;
 
 @Component({
   selector: 'app-queue',
@@ -18,6 +17,7 @@ export class QueueComponent implements OnInit, OnDestroy {
   userUrl: string;
   $login: Subscription;
   role = '';
+  highlighted = false;
 
   constructor(private queueService: QueueService,
     private loginService: LoginService) {
@@ -49,6 +49,14 @@ export class QueueComponent implements OnInit, OnDestroy {
       }
     );
 
+    let timer = Observable.timer(2000, 1000);
+    timer.subscribe(t => {
+      if (this.highlighted) {
+        this.highlighted = false;
+      } else {
+        this.highlighted = true;
+      }
+    });
 
   }
 
