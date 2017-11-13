@@ -35,9 +35,8 @@ export class QueueService {
     return this.db.list('queue');
   }
 
-  deleteQueue($key) {
-    console.log(`queue/${$key}`);
-    this.db.object(`queue/${$key}`).remove();
+  deleteQueue(deletedQueue) {
+    this.db.object(`queue/${deletedQueue.$key}`).remove();
   }
 
   markReady($key, status) {

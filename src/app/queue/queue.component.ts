@@ -20,7 +20,7 @@ export class QueueComponent implements OnInit, OnDestroy {
   role = '';
   highlighted = false;
   modalRef: BsModalRef;
-  $deleteKey: string;
+  private deletedQueue: Queue;
 
   constructor(private queueService: QueueService,
               private loginService: LoginService,
@@ -64,13 +64,13 @@ export class QueueComponent implements OnInit, OnDestroy {
 
   }
 
-  openModal(template: TemplateRef<any>, $key) {
-    this.$deleteKey = $key;
+  openModal(template: TemplateRef<any>, deletedQueue) {
+    this.deletedQueue = deletedQueue;
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
 
   deleteQueue() {
-    this.queueService.deleteQueue(this.$deleteKey);
+    this.queueService.deleteQueue(this.deletedQueue);
     this.modalRef.hide();
   }
 
