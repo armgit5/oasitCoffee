@@ -1,16 +1,18 @@
 import { Cart } from '../cart/cart';
 
 export class Queue {
-    
+
     constructor(
                 public $key,
                 public customerName: string,
                 public customerImage: string,
                 public cartCoffees: Cart[],
-                public status: boolean
+                public readyStatus: boolean,
+                public dateTime: number,
+                public total: number
                 ) {
 
-    } 
+    }
 
     static fromJsonList(array): Queue[] {
         return array.map(Queue.fromJson);

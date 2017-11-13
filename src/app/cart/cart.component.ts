@@ -140,7 +140,8 @@ export class CartComponent implements OnInit, OnDestroy {
     }
 
     private addToQueue() {
-        this.queueService.addQueue(this.cartForm.value);
+        // console.log(this.cartForm.value);
+        this.queueService.addQueue(this.cartForm.value, this.total);
         this.setToZero();
         this.router.navigate(['queue']);
     }

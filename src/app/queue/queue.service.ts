@@ -15,7 +15,7 @@ export class QueueService {
 
   }
 
-  addQueue(cart) {
+  addQueue(cart, total) {
     // push queue to firebase without key
 
     if (apiMethods.v1) {
@@ -23,7 +23,9 @@ export class QueueService {
       customerImage: cart.customerImage,
       cartCoffees: cart.cartCoffees,
       readyStatus: false,
-      dateTime: Date.now()};
+      dateTime: Date.now(),
+      total: total
+    };
       this.db.list('queue').push(queue);
     }
 

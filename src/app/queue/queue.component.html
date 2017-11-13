@@ -20,7 +20,8 @@
                         	<th data-field="name" data-sortable="true">Time</th>
                         	<th data-field="salary" data-sortable="true">Name</th>
                         	<th data-field="country" data-sortable="true">Order Detail</th>
-                        	<th data-field="city">Status</th>
+                          <th data-field="city">Status</th>
+                          <th data-field="city">Total</th>
                         	<th data-field="actions" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
                         </thead>
                         <tbody style="font-weight:400;">
@@ -40,6 +41,9 @@
                                 <span *ngIf="!queue?.readyStatus"> &nbsp; ตอนนี้กำลังทำอยู่ครับ </span>
                                 <span *ngIf="queue?.readyStatus"> &nbsp;  มารับกาแฟใด้เลยครับ </span>
                               </td>
+                              <td>
+                                  THB{{queue.total}}
+                                </td>
                               <td style="float:left;" *ngIf="role === 'Manager' || role === 'Employee'">
                                   <button
                                   class="btn btn-danger btn-sm"
