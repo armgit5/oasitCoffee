@@ -47,7 +47,7 @@
                               <td style="float:left;" *ngIf="role === 'Manager' || role === 'Employee'">
                                   <button
                                   class="btn btn-danger btn-sm"
-                                  (click)="deleteQueue(queue.$key)" style="float:right">
+                                  (click)="openModal(template, queue.$key)" style="float:right">
                                     <i class="fa fa-trash-o"></i>
                                   </button>
 
@@ -69,3 +69,12 @@
         </div>
     </div>
 </div>
+
+
+<ng-template #template>
+    <div class="modal-body text-center">
+      <p>Do you want to confirm?</p>
+      <button type="button" class="btn btn-default" (click)="deleteQueue()" >Yes</button>
+      <button type="button" class="btn btn-primary" (click)="decline()" >No</button>
+    </div>
+  </ng-template>

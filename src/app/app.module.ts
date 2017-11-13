@@ -41,7 +41,8 @@ import { HeaderService } from './header.service';
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    CoffeeModule
+    CoffeeModule,
+    ModalModule.forRoot()
     // AdminModule
   ],
   providers: [CoffeeService,

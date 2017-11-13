@@ -18,7 +18,7 @@ export class Queue {
         return array.map(Queue.fromJson);
     }
 
-    static fromJson({$key, customerName, customerImage, cartCoffee, status}):Queue {
-       return  new Queue($key, customerName, customerImage, cartCoffee, status);
+    static fromJson({$key, customerName, customerImage, cartCoffee, status, dateTime, total}):Queue {
+       return  new Queue($key, customerName, customerImage, cartCoffee, status, dateTime, total);
     }
 }
