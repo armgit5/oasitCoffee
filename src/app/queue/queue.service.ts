@@ -35,7 +35,23 @@ export class QueueService {
     return this.db.list('queue');
   }
 
-  deleteQueue(deletedQueue) {
+  deleteQueue(deletedQueue: Queue) {
+    let comments: string[] = [];
+    deletedQueue.cartCoffees.forEach(coffee => {
+      if (coffee.comment !== '') {
+        comments.push(coffee.comment);
+      }
+    });
+
+    let order = {
+      customerName: deletedQueue.customerName,
+      dateTime: deletedQueue.dateTime,
+      total: deletedQueue.total,
+      queueKey: deletedQueue.$key,
+      comments: comments
+    };
+
+    this.db.list('orders').push(order);
     this.db.object(`queue/${deletedQueue.$key}`).remove();
   }
 
