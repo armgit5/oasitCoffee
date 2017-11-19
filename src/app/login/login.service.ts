@@ -8,6 +8,7 @@ import { Http, RequestOptions, Headers } from '@angular/http';
 import { tokenNotExpired } from 'angular2-jwt';
 import { xhrHeaders } from '../shared/xhr-headers';
 import { User } from '../admin/users/users';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class LoginService {
@@ -21,7 +22,8 @@ export class LoginService {
 
     constructor(private afAuth: AngularFireAuth,
                 private db: AngularFireDatabase,
-                private http: Http) {
+                private http: Http,
+                private router: Router) {
 
         if (apiMethods.v1 || apiMethods.vCompanies) {
         this.afAuth.authState.subscribe(authState => {
@@ -203,5 +205,7 @@ export class LoginService {
       }
 
       this.isLoggedIn.emit(false);
+      this.userOutput.emit(new User(null, null, null, null, null, null, null));
+      this.router.navigate(['/']);
     }
 }

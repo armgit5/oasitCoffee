@@ -3,6 +3,7 @@ import { LoginService } from './login.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { apiMethods } from '../../environments/environment';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -28,7 +29,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private loginService: LoginService,
               private formBuilder: FormBuilder,
-              private db: AngularFireDatabase) { }
+              private db: AngularFireDatabase,
+              private router: Router) { }
 
   ngOnInit() {
     this.initLoginForm();
@@ -113,6 +115,7 @@ export class LoginComponent implements OnInit {
               this.spinning = false;
               this.loginService.loginStatusOutput.emit(email);
               this.modalOff.emit(true);
+              this.router.navigate(['/']);
             }
           )
           .catch(err => {
