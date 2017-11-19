@@ -32,7 +32,7 @@ export class CoffeeComponent implements OnInit {
     coffeeCount:number = 1;
     coffeeCountModel = 1;
     cart = cartData.cart;
-    comment:string = "";
+    comment = '';
     public alerts: any = [];
 
     @Input()
@@ -75,7 +75,7 @@ export class CoffeeComponent implements OnInit {
       //   msg: `${this.coffee.name} is added to cart`,
       //   timeout: 2000
       // });
-      // this.comment = "";
+      this.comment = '';
       this.addCoffeeOutput.emit(this.coffee.name);
     }
 
@@ -88,7 +88,7 @@ export class CoffeeComponent implements OnInit {
     }
 
     deleteCoffee() {
-      console.log("delete coffee " + this.coffee.$key);
+      console.log('delete coffee ' + this.coffee.$key);
       this.coffeeService.deleteCoffee(this.coffee.$key);
     }
 
