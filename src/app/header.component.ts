@@ -43,31 +43,29 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 private loginService: LoginService,
                 private headerService: HeaderService) {
 
-        this.$logIn = this.loginService.isLoggedIn.subscribe(isLoggedIn => {
-              if (isLoggedIn) {
-                  console.log('login');
-                  this.loginStatus = true;
-                  this.customerName = this.loginService.user.username;
-                  this.role = this.loginService.user.role;
-              } else {
-                  console.log('false');
-                  this.loginStatus = false;
-                  this.customerName = null;
-                  // don't force login
-                  // this.login();
-              }
-          });
+      this.$logIn = this.loginService.isLoggedIn.subscribe(isLoggedIn => {
+          if (isLoggedIn) {
+              console.log('login');
+              this.loginStatus = true;
+              this.customerName = this.loginService.user.username;
+              this.role = this.loginService.user.role;
+          } else {
+              console.log('false');
+              this.loginStatus = false;
+              this.customerName = null;
+          }
+      });
 
       if (this.loginService.user.email == null) {
         loginService.userOutput.subscribe(
           (user: User) => {
             console.log(user);
             this.role = user.role;
-            // this.subToUserCoffees(user);
           }
         );
       } else {
         this.role = this.loginService.user.role;
+        this.loginStatus = true;
       }
 
       this.subscribeToLoginMsg();
