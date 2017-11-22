@@ -4,9 +4,14 @@ import { RouterModule } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { UsersComponent } from './users/users.component';
 import { ProductsComponent } from './products/products.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const adminRoutes: Routes = [
   { path: '', component: AdminComponent, children: [
+    {
+      path: 'dashboard',
+      component: DashboardComponent
+    },
     { path: 'user',
       component: UsersComponent
     },

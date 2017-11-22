@@ -11,6 +11,9 @@ import { UserTableComponent } from './users/usertable/usertable.component';
 import { ModalModule } from 'ngx-bootstrap';
 import { ProductsComponent } from './products/products.component';
 import { AdminRoutingModule } from './admin-routing.module';
+import { Ng2TableModule } from 'ng2-table/ng2-table';
+import { DashboardComponent } from './dashboard/dashboard.component';
+
 
 @NgModule({
 
@@ -21,7 +24,8 @@ import { AdminRoutingModule } from './admin-routing.module';
     UserFormComponent,
     NavbarComponent,
     UserTableComponent,
-    ProductsComponent
+    ProductsComponent,
+    DashboardComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +33,8 @@ import { AdminRoutingModule } from './admin-routing.module';
     ReactiveFormsModule,
     RouterModule,
     ModalModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    Ng2TableModule
   ]
 
 })

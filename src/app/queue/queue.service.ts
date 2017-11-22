@@ -49,9 +49,9 @@ export class QueueService {
       customerName: deletedQueue.customerName,
       dateTime: deletedQueue.dateTime,
       total: deletedQueue.total,
-      queueKey: deletedQueue.$key,
       comments: comments,
-      employeeEmail: employeeEmail
+      employeeEmail: employeeEmail,
+      coffees: deletedQueue.cartCoffees
     };
 
     this.db.list('orders').push(order);

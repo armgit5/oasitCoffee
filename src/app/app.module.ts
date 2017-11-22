@@ -24,6 +24,7 @@ import { LoginService } from './login/login.service';
 import { CoffeeModule } from './coffees/coffee.module';
 import { UsersService } from './admin/users/users.service';
 import { HeaderService } from './header.service';
+import { DashboardService } from './admin/dashboard/dashboard.service';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { HeaderService } from './header.service';
               CategoryService,
               LoginService,
               UsersService,
-              HeaderService],
+              HeaderService,
+              DashboardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

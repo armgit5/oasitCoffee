@@ -4,7 +4,7 @@
       <div class="header">
         <div class="row">
         <div class="col-md-6">
-          <h4 class="title">User management table</h4>
+          <h4 class="title">Order overview table</h4>
         </div>
         <div class="col-md-6" style="text-align:right;">
            <span class="glyphicon glyphicon-plus" (click)="newUser()"></span>
@@ -12,25 +12,30 @@
         </div>
         <div class="row">
           <div class="col">
-            <p class="category" style="padding-left:15px;">review your daily orders here</p>
+            <p class="category" style="padding-left:15px;">add and delete users from here</p>
           </div>
         </div>
       </div>
       <div class="content table-responsive table-full-width">
         <table class="table table-hover table-striped">
           <thead>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Role</th>
+            <th>Date & Time</th>
+            <th>Employee</th>
+            <th>Customer</th>
+            <th>Coffees</th>
+            <th>Total</th>
           </thead>
           <tbody>
-            <tr *ngFor="let user of users">
-              <td>{{user.username}}</td>
-              <td>{{user.email}}</td>
-              <td>{{user.role}}</td>
-              <td><button type="button"
-                  class="btn btn-danger"
-                  (click)="deleteUser(user.$key, user.uid)">X</button>
+            <tr *ngFor="let order of orders">
+              <td>{{order.dateTime | date:'short'}}</td>
+              <td>{{order.employeeEmail}}</td>
+              <td>{{order.customerName}}</td>
+              <td>
+                <div *ngFor="let coffee of order.coffees">
+                  {{coffee.coffeeName}}<span *ngIf="coffee.comment !== ''">, {{coffee.comment}}</span>, x{{coffee.qty}}
+                </div>
+              </td>
+              <td>{{order.total}}
               </td>
             </tr>
           </tbody>
