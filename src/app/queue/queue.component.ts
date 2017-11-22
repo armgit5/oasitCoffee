@@ -17,6 +17,7 @@ export class QueueComponent implements OnInit, OnDestroy {
   queues: Queue[];
   userUrl: string;
   $login: Subscription;
+  employeeEmail = '';
   role = '';
   highlighted = false;
   modalRef: BsModalRef;
@@ -28,10 +29,12 @@ export class QueueComponent implements OnInit, OnDestroy {
     if (this.loginService.user.email == null) {
       loginService.userOutput.subscribe(
         (user: User) => {
+          this.employeeEmail = user.email;
           this.role = user.role;
         }
       );
     } else {
+      this.employeeEmail = this.loginService.user.email;
       this.role = this.loginService.user.role;
     }
 
@@ -70,7 +73,7 @@ export class QueueComponent implements OnInit, OnDestroy {
   }
 
   deleteQueue() {
-    this.queueService.deleteQueue(this.deletedQueue);
+    this.queueService.deleteQueue(this.deletedQueue, this.employeeEmail);
     this.modalRef.hide();
   }
 

@@ -35,20 +35,23 @@ export class QueueService {
     return this.db.list('queue');
   }
 
-  deleteQueue(deletedQueue: Queue) {
+  deleteQueue(deletedQueue: Queue, employeeEmail: string) {
     let comments: string[] = [];
-    deletedQueue.cartCoffees.forEach(coffee => {
-      if (coffee.comment !== '') {
-        comments.push(coffee.comment);
-      }
-    });
+    if (deletedQueue.cartCoffees) {
+      deletedQueue.cartCoffees.forEach(coffee => {
+        if (coffee.comment !== '') {
+          comments.push(coffee.comment);
+        }
+      });
+    }
 
     let order = {
       customerName: deletedQueue.customerName,
       dateTime: deletedQueue.dateTime,
       total: deletedQueue.total,
       queueKey: deletedQueue.$key,
-      comments: comments
+      comments: comments,
+      employeeEmail: employeeEmail
     };
 
     this.db.list('orders').push(order);
