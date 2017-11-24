@@ -6,9 +6,6 @@
         <div class="col-md-6">
           <h4 class="title">Order overview table</h4>
         </div>
-        <div class="col-md-6" style="text-align:right;">
-           <span class="glyphicon glyphicon-plus" (click)="newUser()"></span>
-        </div>
         </div>
         <div class="row">
           <div class="col">
@@ -19,14 +16,17 @@
       <div class="content table-responsive table-full-width">
         <table class="table table-hover table-striped">
           <thead>
+            <th>#</th>
             <th>Date & Time</th>
             <th>Employee</th>
             <th>Customer</th>
             <th>Coffees</th>
             <th>Total</th>
+            <th data-field="actions" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
           </thead>
           <tbody>
-            <tr *ngFor="let order of orders">
+            <tr *ngFor="let order of orders; let i = index;">
+              <td>{{i+1}}</td>
               <td>{{order.dateTime | date:'short'}}</td>
               <td>{{order.employeeEmail}}</td>
               <td>{{order.customerName}}</td>
@@ -36,6 +36,10 @@
                 </div>
               </td>
               <td>{{order.total}}
+              </td>
+              <td><button type="button"
+                  class="btn btn-danger"
+                  (click)="deleteOrder(coffee.$key)">X</button>
               </td>
             </tr>
           </tbody>

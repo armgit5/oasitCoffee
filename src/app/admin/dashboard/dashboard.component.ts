@@ -14,7 +14,6 @@ export class DashboardComponent {
 
   orders: Order[];
 
-
   constructor(private dashboardService: DashboardService) {
     this.loadFirstOrder();
   }
@@ -27,5 +26,9 @@ export class DashboardComponent {
         console.log(this.orders);
       }
     );
+  }
+
+  deleteOrder($key) {
+
   }
 }

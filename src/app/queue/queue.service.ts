@@ -26,7 +26,12 @@ export class QueueService {
       dateTime: Date.now(),
       total: total
     };
-      this.db.list('queue').push(queue);
+
+      // Check to see if total == 0
+      // then do not add to queue
+      if (queue.total !== 0) {
+        this.db.list('queue').push(queue);
+      }
     }
 
   }
@@ -55,11 +60,38 @@ export class QueueService {
     };
 
     this.db.list('orders').push(order);
+    this.addToDailyTotal(deletedQueue.dateTime, deletedQueue.total);
     this.db.object(`queue/${deletedQueue.$key}`).remove();
   }
 
   markReady($key, status) {
     this.db.object(`queue/${$key}`).update({readyStatus: status});
+  }
+
+  private addToDailyTotal(dateTime: number, total: number) {
+    let d = new Date(dateTime);
+    let formattedDate = `${d.getDate()}:${d.getMonth()}:${d.getFullYear()}`;
+    // console.log(formattedDate);
+    this.db.object(`/dailyTotals/${formattedDate}`).take(1).subscribe(
+      oldTotal => {
+        let newTotal = total;
+        console.log(oldTotal);
+        // if new date
+        if (oldTotal.$value === null) {
+          console.log('old');
+          this.db.object(`/dailyTotals/${formattedDate}`).set({
+            total: newTotal
+          });
+        } else {
+          newTotal += oldTotal.total;
+          this.db.object(`/dailyTotals/${formattedDate}`).update({
+            total: newTotal
+          });
+        }
+      }
+    );
+
+    console.log(d.getDate(), d.getMonth(), d.getFullYear(), total);
   }
 
 

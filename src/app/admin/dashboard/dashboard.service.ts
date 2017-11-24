@@ -6,7 +6,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 @Injectable()
 export class DashboardService {
 
-  pageSize = 10;
+  pageSize = 2;
 
   constructor(private db: AngularFireDatabase) {
 
@@ -15,9 +15,15 @@ export class DashboardService {
   loadFirstOrder() {
     return this.db.list('orders', {
       query: {
-        limitToFirst: this.pageSize
+        limitToLast: this.pageSize
       }
-    });
+    }).map(orders => orders.reverse());
   }
 
+  deleteOrder($key: string) {
+    this.db.object('/orders/' + $key).remove()
+    .then(() => {
+    })
+    .catch(error => console.log('Delete Order Error'));
+  }
 }
