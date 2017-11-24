@@ -12,7 +12,7 @@ import { ModalModule } from 'ngx-bootstrap';
 import { ProductsComponent } from './products/products.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
-
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
 
@@ -32,7 +32,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     ReactiveFormsModule,
     RouterModule,
     ModalModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    ChartsModule
   ]
 
 })

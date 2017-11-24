@@ -1,6 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { DashboardService } from './dashboard.service';
 import { Order } from './order';
+import { DailyTotal } from './dailyTotal';
+import { BaseChartDirective } from 'ng2-charts/ng2-charts';
+
+
 
 @Component({
   selector: 'products',
@@ -13,9 +17,24 @@ import { Order } from './order';
 export class DashboardComponent {
 
   orders: Order[];
+  private data: number[] = [];
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+
+  public barChartOptions: any = {
+    scaleShowVerticalLines: false,
+    responsive: true
+  };
+  public barChartLabels: string[] = [];
+  public barChartType = 'bar';
+  public barChartLegend = false;
+
+  public barChartData: any[] = [
+    {data: [], label: 'Daily Total' }
+  ];
 
   constructor(private dashboardService: DashboardService) {
     this.loadFirstOrder();
+    this.loadDailyTotals();
   }
 
   loadFirstOrder() {
@@ -28,7 +47,26 @@ export class DashboardComponent {
     );
   }
 
+  loadDailyTotals() {
+    this.data = [];
+    this.barChartLabels = [];
+    this.dashboardService.loadDailyTotals().subscribe(
+      (dailyTotals: DailyTotal[]) => {
+        dailyTotals.forEach(total => {
+          this.data.push(total.total);
+          this.barChartLabels.push(total.$key);
+        });
+        this.barChartData = this.data;
+      }
+    );
+
+  }
+
   deleteOrder($key) {
 
   }
+
+
+
+
 }

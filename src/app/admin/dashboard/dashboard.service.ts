@@ -6,7 +6,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 @Injectable()
 export class DashboardService {
 
-  pageSize = 2;
+  pageSize = 10;
 
   constructor(private db: AngularFireDatabase) {
 
@@ -18,6 +18,14 @@ export class DashboardService {
         limitToLast: this.pageSize
       }
     }).map(orders => orders.reverse());
+  }
+
+  loadDailyTotals() {
+    return this.db.list('dailyTotals', {
+      query: {
+        limitToLast: 7
+      }
+    }).map(totals => totals.reverse());
   }
 
   deleteOrder($key: string) {
