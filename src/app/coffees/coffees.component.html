@@ -1,6 +1,22 @@
 <div class="container main">
 
-<p *ngIf="apiMethodV1">Welcome: {{email}}</p>
+<div class="row">
+  <div class="col-md-6">
+    <p *ngIf="apiMethodV1">Welcome: {{email}}</p>
+  </div>
+  <div class="col-md-6">
+    <div class="btn-group pull-right" role="group" aria-label="...">
+      <span> Views: &nbsp; </span>
+      <span class="glyphicon glyphicon glyphicon-th-large"
+       (click)="onImageView()"
+       [style.color]="imageView ? 'orange' : null"></span>
+      <span class="glyphicon glyphicon glyphicon-th"
+       (click)="onListView()"
+       [style.color]="!imageView ? 'orange' : null"></span>
+    </div>
+  </div>
+</div>
+
 
 <div *ngFor="let alert of alerts">
 <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout"

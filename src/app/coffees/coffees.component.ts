@@ -34,6 +34,7 @@ export class CoffeesComponent {
     role = '';
 
     searchName = 'la';
+    imageView = true;
 
     // isNew: boolean = true;
     // inputId: string = "";
@@ -149,6 +150,13 @@ export class CoffeesComponent {
       });
     }
 
+    onImageView() {
+      this.imageView = true;
+    }
+
+    onListView() {
+      this.imageView = false;
+    }
 
 
 }
