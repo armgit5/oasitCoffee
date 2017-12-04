@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Input } from '@angular/core/src/metadata/directives';
 
 @Component({
   selector: 'coffee-list-component',
@@ -6,6 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./coffee-list.component.css']
 })
 export class CoffeeListComponent {
+
+  @Input()
+  coffees = [];
+
+  constructor() {
+
+  }
+
 
 
 }
