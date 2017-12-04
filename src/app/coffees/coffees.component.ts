@@ -34,7 +34,7 @@ export class CoffeesComponent {
     role = '';
 
     searchName = 'la';
-    imageView = true;
+    imageView = false;
 
     // isNew: boolean = true;
     // inputId: string = "";

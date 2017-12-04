@@ -108,7 +108,11 @@ export class CoffeeService {
                 .map(Coffee.fromJsonListV2);
         }
 
-        return this.db.list(path)
+        return this.db.list(path, {
+                  query: {
+                    limitToFirst: 5
+                  }
+                })
                 .map(Coffee.fromJsonList);
 
     }
