@@ -1,16 +1,11 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { coffeesData } from './coffeesData';
-import { cartData } from '../cart/cartData';
+import { Component, ViewChild } from '@angular/core';
 import { CoffeeService } from './coffee.service';
-import { Observable, Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs/Rx';
 import { Coffee } from './coffee';
 import { Router } from '@angular/router';
 import { CategoryService } from './category/category.service';
 import { Category } from './category/category';
-import { CoffeeOutput } from './coffee-output';
 import { LoginService } from '../login/login.service';
-import { apiMethods } from '../../environments/environment';
-import { tokenNotExpired } from 'angular2-jwt';
 import { User } from '../admin/users/users';
 import { HeaderService } from '../header.service';
 
@@ -22,9 +17,8 @@ export class CoffeesComponent {
 
     coffees: Coffee[];
     filterArg: Category;
-    searchVal: string = '';
+    searchVal = '';
     $coffee: Subscription;
-    apiMethodV1 = apiMethods.v1;
 
     public alerts: any = [];
 
@@ -35,9 +29,6 @@ export class CoffeesComponent {
 
     searchName = 'la';
     imageView = false;
-
-    // isNew: boolean = true;
-    // inputId: string = "";
 
     @ViewChild('staticModal') button;
 
@@ -51,7 +42,7 @@ export class CoffeesComponent {
                 private loginService: LoginService,
                 private headerService: HeaderService) {
 
-      if (apiMethods.v1 || apiMethods.vCompanies) {
+
 
         this.subToUserCoffees(this.loginService.user);
 
@@ -86,28 +77,9 @@ export class CoffeesComponent {
           }
         );
 
-      }
-
-      if (apiMethods.vWuth) {
-        if (localStorage.getItem('username') == null) {
-          loginService.userOutput.subscribe(
-          (user: User) => {
-            this.email = user.email;
-            this.companyName = user.companyName;
-            this.subToUserCoffees(user);
-          });
-        } else {
-          this.email = localStorage.getItem('username');
-        }
-        this.companyName = 'OASIT';
-        this.coffeeService.loadAllCoffees(null).subscribe(
-          coffees => {this.coffees = coffees; console.log(coffees)}
-        );
-      }
     }
 
     private subToUserCoffees(user: User) {
-        if (apiMethods.v1 || apiMethods.vCompanies) {
           this.$coffee = this.coffeeService.loadAllCoffees(user).subscribe(
             coffees => {
               this.coffees = coffees;
@@ -115,7 +87,7 @@ export class CoffeesComponent {
               // console.log(JSON.stringify(coffees));
             }
           );
-        }
+
     }
 
     newCoffee() {

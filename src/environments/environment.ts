@@ -7,13 +7,13 @@ export const environment = {
   production: false
 };
 
-export const apiMethods = {
-  v1: true,
-  vCompanies: false,
-  vWuth: false
-};
+// export class apiMethods {
+//   v1: true;
+//   vCompanies: false;
+//   vWuth: false;
+// };
 
-export const apiUrl = {
-  // url: 'https://api-oasit.herokuapp.com'
-  url: 'http://oasit-env.rmm4dcfjgy.ap-southeast-1.elasticbeanstalk.com'
-};
+// export const apiUrl = {
+//   // url: 'https://api-oasit.herokuapp.com'
+//   url: 'http://oasit-env.rmm4dcfjgy.ap-southeast-1.elasticbeanstalk.com'
+// };

@@ -5,12 +5,8 @@ import { CoffeeComponent } from './coffee.component';
 import { CoffeeEditComponent } from '../coffee-edit/coffee-edit.component';
 import { CoffeesComponent } from './coffees.component';
 import { CategoryComponent } from './category/category.component';
-import { RouterModule } from '@angular/router';
-import { routeConfig } from '../app.routing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { Coffee } from './coffee';
-import { ImageCropperComponent } from 'ng2-img-cropper';
+import { ImageCropperModule} from 'ng2-img-cropper';
 import { ModalModule } from 'ngx-bootstrap';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { CoffeeRoutingModule } from './coffee-routing.module';
@@ -24,7 +20,6 @@ import { CoffeeListComponent } from './coffee-list/coffee-list.component';
     CoffeeEditComponent,
     CoffeesComponent,
     CategoryComponent,
-    ImageCropperComponent,
     CoffeeListComponent
   ],
   imports: [
@@ -33,7 +28,8 @@ import { CoffeeListComponent } from './coffee-list/coffee-list.component';
     ReactiveFormsModule,
     ModalModule.forRoot(),
     AlertModule.forRoot(),
-    CoffeeRoutingModule
+    CoffeeRoutingModule,
+    ImageCropperModule
   ],
   exports: [
     CoffeePipe,

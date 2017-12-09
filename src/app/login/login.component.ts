@@ -1,7 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { LoginService } from './login.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { apiMethods } from '../../environments/environment';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Router } from '@angular/router';
 
@@ -12,13 +11,13 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  newAccount:boolean = false;
-  newCompany: boolean = false;
+  newAccount = false;
+  newCompany = false;
   loginForm: FormGroup;
   registerForm: FormGroup;
   posted = false;
 
-  spinning: boolean = false;
+  spinning = false;
   errStatus = false;
 
   @Output()
@@ -77,22 +76,12 @@ export class LoginComponent implements OnInit {
     }
 
     register() {
-      if (apiMethods.v1 || apiMethods.vCompanies) {
         console.log(this.registerForm.value);
         let email = this.registerForm.value.email;
         let password = this.registerForm.value.password;
         let companyName = this.registerForm.value.companyName;
         this.loginService.register(email, password, companyName);
         this.posted = false;
-      }
-
-      if (apiMethods.vWuth) {
-        let email = this.registerForm.value.email;
-        let password = this.registerForm.value.password;
-        let companyName = this.registerForm.value.companyName;
-        this.loginService.register(email, password, companyName);
-        this.posted = false;
-      }
 
     }
 
@@ -106,33 +95,23 @@ export class LoginComponent implements OnInit {
 
     login() {
       this.spinning = true;
-      if (apiMethods.v1 || apiMethods.vCompanies) {
-        let email = this.loginForm.value.email;
-        let password = this.loginForm.value.password;
-        this.loginService.login(email, password)
-          .then(authState => {
-              this.errStatus = false;
-              this.spinning = false;
-              this.loginService.loginStatusOutput.emit(email);
-              this.modalOff.emit(true);
-              this.router.navigate(['/']);
-            }
-          )
-          .catch(err => {
-            this.errStatus = true;
-            this.spinning = false;
-          });
-      }
 
-      if (apiMethods.vWuth) {
-        let email = this.loginForm.value.email;
-        let password = this.loginForm.value.password;
-        this.loginService.login(email, password)
-          .then(authState => {
+      let email = this.loginForm.value.email;
+      let password = this.loginForm.value.password;
+      this.loginService.login(email, password)
+        .then(authState => {
+            this.errStatus = false;
+            this.spinning = false;
+            this.loginService.loginStatusOutput.emit(email);
             this.modalOff.emit(true);
-          })
-          .catch(error => console.log(error));
-      }
+            this.router.navigate(['/']);
+          }
+        )
+        .catch(err => {
+          this.errStatus = true;
+          this.spinning = false;
+        });
+
 
     }
 

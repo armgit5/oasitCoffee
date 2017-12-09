@@ -1,15 +1,11 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { coffeesData } from '../coffees/coffeesData';
 import { CoffeeService } from '../coffees/coffee.service';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { QueueService } from '../queue/queue.service';
-import { Router } from "@angular/router";
-import { Cart } from './cart';
 import { User } from '../admin/users/users';
-
 import { LoginService } from '../login/login.service';
 import { Subscription } from 'rxjs/Rx';
-import { apiMethods } from '../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'cart',
@@ -24,8 +20,8 @@ export class CartComponent implements OnInit, OnDestroy {
     cartItems = this.coffeeService.cartCoffees;
     total: number;
 
-    newTotal: number = 0;
-    newCount: number = 0;
+    newTotal = 0;
+    newCount = 0;
 
     user: User = new User(null, null, null, null, null, null, null);
 
@@ -140,7 +136,6 @@ export class CartComponent implements OnInit, OnDestroy {
     }
 
     private addToQueue() {
-        // console.log(this.cartForm.value);
         this.queueService.addQueue(this.cartForm.value, this.total);
         this.setToZero();
         this.router.navigate(['queue']);

@@ -3,7 +3,6 @@ import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
 
 import * as firebase from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-import { apiMethods, apiUrl } from '../../environments/environment';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { tokenNotExpired } from 'angular2-jwt';
 import { xhrHeaders } from '../shared/xhr-headers';
@@ -25,7 +24,7 @@ export class LoginService {
                 private http: Http,
                 private router: Router) {
 
-        if (apiMethods.v1 || apiMethods.vCompanies) {
+
         this.afAuth.authState.subscribe(authState => {
             if (authState) {
                 this.user.email = authState.email;
@@ -44,13 +43,6 @@ export class LoginService {
                 this.userOutput.emit(this.user);
             }
         });
-        } else {
-          if (tokenNotExpired) {
-            this.isLoggedIn.emit(true);
-          } else {
-            this.isLoggedIn.emit(false);
-          }
-        }
     }
 
     private findUserByEmail(email: string) {
@@ -116,7 +108,7 @@ export class LoginService {
       //       });
       //     });
       // }
-      if (apiMethods.v1 || apiMethods.vCompanies) {
+
          return new Promise((resolve, reject) => {
             this.afAuth.auth.signInWithEmailAndPassword(email, password)
             .then(authState => {
@@ -124,7 +116,7 @@ export class LoginService {
             })
             .catch(error => reject(error));
         });
-      }
+
     }
 
     private createUserToCompany(email, companyName) {
@@ -157,7 +149,7 @@ export class LoginService {
 
     register(email, password, companyName) {
 
-      if (apiMethods.v1 || apiMethods.vCompanies) {
+
 
         if (companyName) {
           console.log('there is company');
@@ -177,7 +169,7 @@ export class LoginService {
         })
         .catch(error => console.log(error));
 
-      }
+
 
     }
 
@@ -195,14 +187,11 @@ export class LoginService {
     }
 
     logout() {
-      if (apiMethods.v1 || apiMethods.vCompanies) {
-        this.afAuth.auth.signOut();
-      }
 
-      if (apiMethods.vWuth) {
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('refresh_token');
-      }
+      this.afAuth.auth.signOut();
+
+
+
 
       this.isLoggedIn.emit(false);
       this.userOutput.emit(new User(null, null, null, null, null, null, null));

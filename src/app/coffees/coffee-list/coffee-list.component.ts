@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Input } from '@angular/core/src/metadata/directives';
+import { Component, Input } from '@angular/core';
+import { Coffee } from '../coffee';
 
 @Component({
   selector: 'coffee-list-component',
@@ -9,7 +9,7 @@ import { Input } from '@angular/core/src/metadata/directives';
 export class CoffeeListComponent {
 
   @Input()
-  coffees = [];
+  coffees: Coffee[];
 
   constructor() {
 

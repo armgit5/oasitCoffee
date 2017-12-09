@@ -1,13 +1,8 @@
-import { Component, Input, OnInit, ElementRef, ViewChild, OnDestroy, EventEmitter } from '@angular/core';
-import { cartData } from './cart/cartData';
+import { Component, Input, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { CoffeeService } from './coffees/coffee.service';
-import { Observable } from 'rxjs/Observable';
-import { Category } from './coffees/category/category';
 import { CategoryService } from './coffees/category/category.service';
 import { Subscription } from 'rxjs/Rx';
 import { LoginService } from './login/login.service';
-import { apiMethods } from '../environments/environment';
-import { tokenNotExpired } from 'angular2-jwt';
 import { User } from './admin/users/users';
 import { HeaderService } from './header.service';
 
@@ -20,7 +15,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // coffeeCounts = cartData.cart.length;
     coffeeCounts: number;
     $coffeeCounts: Subscription;
-    clicked: boolean = false;
+    clicked = false;
 
     @ViewChild('staticModal') loginModal;
 

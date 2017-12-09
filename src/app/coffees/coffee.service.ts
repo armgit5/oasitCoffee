@@ -1,14 +1,11 @@
 import * as firebase from 'firebase';
-import { Injectable, Inject, EventEmitter}  from "@angular/core";
-import { Http, Headers, RequestOptions } from '@angular/http';
-import { cartData } from '../cart/cartData';
+import { Injectable, EventEmitter}  from '@angular/core';
+import { Http } from '@angular/http';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Coffee } from './coffee';
 import { Observable } from 'rxjs';
 import { Cart } from '../cart/cart';
-import { Subscription } from 'rxjs/Rx';
 import { CoffeeOutput } from './coffee-output';
-import { apiMethods, apiUrl } from '../../environments/environment';
 import { LoginService } from '../login/login.service';
 import { xhrHeadersWithToken } from '../shared/xhr-headers';
 import { User } from '../admin/users/users';
@@ -18,7 +15,7 @@ export class CoffeeService {
 
     // coffee variables
     cartCoffees: Cart[] = [];
-    private coffeeCounts: number = 0;
+    private coffeeCounts = 0;
     coffeeCountsChanged = new EventEmitter<number>();
     coffees: Coffee[] = [];
 
@@ -29,7 +26,7 @@ export class CoffeeService {
     private storageFolderName: string;
 
     // coffee upload
-    private alreadyUploaded: boolean = false;
+    private alreadyUploaded = false;
 
     // coffee path
     private coffeePath: string;
@@ -37,28 +34,16 @@ export class CoffeeService {
     constructor(private http: Http,
                 private db: AngularFireDatabase,
                 private loginService: LoginService) {
-        if (apiMethods.v1) {
-          this.coffeePath = `coffees/`;
-          this.storageFolderName = 'images/';
-        }
 
-        if (apiMethods.vCompanies) {
-          this.loginService.userOutput.subscribe(
-            (user: User) => {
-              this.coffeePath = `/companies/${user.companyName}/coffees/`;
-              this.storageFolderName = `${user.companyName}/images/`;
-            }
-          );
-        }
+        this.coffeePath = `coffees/`;
+        this.storageFolderName = 'images/';
 
-        if (apiMethods.vWuth) {
-          this.loginService.userOutput.subscribe(
-            (user: User) => {
-              this.coffeePath = `/companies/${user.companyName}/coffees/`;
-              this.storageFolderName = `${user.companyName}/images/`;
-            }
-          );
-        }
+        // this.loginService.userOutput.subscribe(
+        //   (user: User) => {
+        //     this.coffeePath = `/companies/${user.companyName}/coffees/`;
+        //     this.storageFolderName = `${user.companyName}/images/`;
+        //   }
+        // );
     }
 
     addToCart(coffee, count, comment) {
@@ -89,24 +74,12 @@ export class CoffeeService {
     }
 
     loadAllCoffees(user: User): Observable<any[]> {
-        let path = ' ';
-        if (apiMethods.v1) {
-          // console.log('v1');
-          path = 'coffees';
-        }
-        if (apiMethods.vCompanies) {
-          //  console.log('v2');
-          path = `/companies/${user.companyName}/coffees`;
-        }
+        let path = 'coffees';
 
-        if (apiMethods.vWuth) {
-          // console.log('v3');
-          path = `${apiUrl.url}/api/products?Company=oasit`;
-          // path = 'https://oasit-b6bc8.firebaseio.com/coffees.json';
-          return this.http.get(path, xhrHeadersWithToken())
-                .map(res => res.json())
-                .map(Coffee.fromJsonListV2);
-        }
+        // if (apiMethods.vCompanies) {
+        //   //  console.log('v2');
+        //   path = `/companies/${user.companyName}/coffees`;
+        // }
 
         return this.db.list(path, {
                   query: {

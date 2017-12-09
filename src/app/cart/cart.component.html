@@ -11,7 +11,7 @@
 						</tr>
 					</thead>
 					<tbody
-					 *ngFor="let coffee of cartForm.controls['cartCoffees'].controls; let i = index">
+					 *ngFor="let coffee of cartForm.controls['cartCoffees']['controls']; let i = index">
 						<tr formGroupName="{{i}}">
 							<td data-th="Product">
 								<div class="row">
@@ -74,7 +74,7 @@
 </div>
 </form>
 
-<div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
+<!-- <div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
                   tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content" style="width:750px;height:475px;margin:0px;margin-left:-15%">
@@ -91,4 +91,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

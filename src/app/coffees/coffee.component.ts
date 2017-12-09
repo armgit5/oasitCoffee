@@ -1,14 +1,10 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { coffeesData } from './coffeesData';
-import {Coffee} from "./coffee";
+import {Coffee} from './coffee';
 import { cartData } from '../cart/cartData';
 import { CoffeeService } from './coffee.service';
-import { Observable, Subscription, Subject } from 'rxjs/Rx';
-import { Router } from "@angular/router";
-import { CategoryService } from './category/category.service';
+import { Router } from '@angular/router';
 import { CoffeeOutput } from './coffee-output';
 import { LoginService } from '../login/login.service';
-import { User } from '../admin/users/users';
 
 @Component({
   selector: 'coffee-component',
@@ -26,10 +22,10 @@ export class CoffeeComponent implements OnInit {
     @Output()
     addCoffeeOutput = new EventEmitter<string>();
 
-    mouseOver: boolean = false;
-    added: boolean = false;
+    mouseOver = false;
+    added = false;
 
-    coffeeCount:number = 1;
+    coffeeCount = 1;
     coffeeCountModel = 1;
     cart = cartData.cart;
     comment = '';
@@ -49,14 +45,12 @@ export class CoffeeComponent implements OnInit {
 
     plus() {
       this.coffeeCount++;
-      // console.log("plus");
     }
 
     minus() {
       if (this.coffeeCount > 1) {
         this.coffeeCount--;
       }
-      // console.log("minus");
     }
 
     addCoffeeAlert() {
@@ -94,12 +88,10 @@ export class CoffeeComponent implements OnInit {
 
     over() {
       this.mouseOver = true;
-      // console.log('over');
     }
 
     out() {
       this.mouseOver = false;
-      // console.log('out');
     }
 
 

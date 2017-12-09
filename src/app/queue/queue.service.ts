@@ -3,7 +3,6 @@ import { Queue } from './queue';
 import { Http } from '@angular/http';
 import { AngularFireDatabase } from 'angularfire2/database';
 import {Observable, Subject} from 'rxjs/Rx';
-import { apiMethods } from '../../environments/environment';
 
 @Injectable()
 export class QueueService {
@@ -18,21 +17,22 @@ export class QueueService {
   addQueue(cart, total) {
     // push queue to firebase without key
 
-    if (apiMethods.v1) {
-      let queue = {customerName: cart.customerName2,
-      customerImage: cart.customerImage,
-      cartCoffees: cart.cartCoffees,
-      readyStatus: false,
-      dateTime: Date.now(),
-      total: total
-    };
+
+      let queue = {
+        customerName: cart.customerName2,
+        customerImage: cart.customerImage,
+        cartCoffees: cart.cartCoffees,
+        readyStatus: false,
+        dateTime: Date.now(),
+        total: total
+      };
 
       // Check to see if total == 0
       // then do not add to queue
       if (queue.total !== 0) {
         this.db.list('queue').push(queue);
       }
-    }
+
 
   }
 
