@@ -16,6 +16,9 @@ export class CoffeeComponent implements OnInit {
     @Input()
     coffee: Coffee;
 
+    @Input()
+    typesMap = new Map<string, string>();
+
     @Output()
     editCoffeeOutput = new EventEmitter<CoffeeOutput>();
 
@@ -37,6 +40,7 @@ export class CoffeeComponent implements OnInit {
     constructor(private coffeeService: CoffeeService,
                 private router: Router,
                 private loginService: LoginService) {
+
     }
 
     ngOnInit() {
@@ -64,19 +68,11 @@ export class CoffeeComponent implements OnInit {
       this.addCoffeeAlert();
       this.coffeeService.addToCart(this.coffee, Number(this.coffeeCount), this.comment);
       this.coffeeCount = 1;
-      // this.alerts.push({
-      //   type: 'md-local',
-      //   msg: `${this.coffee.name} is added to cart`,
-      //   timeout: 2000
-      // });
       this.comment = '';
       this.addCoffeeOutput.emit(this.coffee.name);
     }
 
     editCoffee() {
-      // this.router.navigate(['/coffee', this.coffee.$key, "edit"]);
-      // let outputData = new CoffeeOutput(false, this.coffee.$key);
-      // this.editCoffeeOutput.emit(outputData);
       this.coffeeService.editCoffee(false, this.coffee.$key);
       this.editCoffeeOutput.emit();
     }

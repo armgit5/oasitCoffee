@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 import { Cart } from '../cart/cart';
 import { CoffeeOutput } from './coffee-output';
 import { LoginService } from '../login/login.service';
-import { xhrHeadersWithToken } from '../shared/xhr-headers';
 import { User } from '../admin/users/users';
 
 @Injectable()
@@ -48,15 +47,6 @@ export class CoffeeService {
 
     addToCart(coffee, count, comment) {
         let alreadyInCart = false;
-        // this.coffeeCounts = count;
-        // Check to see if this coffee is already added
-        // this.cart.forEach(cartCoffee => {
-        //     if (coffee.$key == cartCoffee.coffeeId) {
-        //          cartCoffee.qty += count;
-        //          cartCoffee.comment = comment;
-        //          alreadyInCart = true;
-        //     }
-        // });
 
         if (!alreadyInCart) {
             this.cartCoffees.push({
@@ -83,11 +73,19 @@ export class CoffeeService {
 
         return this.db.list(path, {
                   query: {
-                    limitToFirst: 5
+                    limitToFirst: 50
                   }
                 })
                 .map(Coffee.fromJsonList);
 
+    }
+
+    loadCategories() {
+      return this.db.list('/categories');
+    }
+
+    loadTypes() {
+      return this.db.list('/types');
     }
 
     loadCoffee($key) {

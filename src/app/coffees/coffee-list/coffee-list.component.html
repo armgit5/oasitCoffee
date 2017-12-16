@@ -1,5 +1,12 @@
 <h1>Coffee List</h1>
 
-<div *ngFor="let coffee of coffees">
-  <h2>{{coffee?.type}}</h2>
+<div class="col-xs-4 col-sm-4 col-md-3 col-lg-3"
+     *ngFor="let category of categories">
+  <h2>{{category.name}} H C</h2>
 </div>
+
+<!-- <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3"
+*ngFor="let category of coffees">
+<h2>{{category.name}}</h2>
+<div *ngFor="let coffee of coffees | coffeeFilter:category.name:'';"></div>
+</div> -->

@@ -15,120 +15,124 @@ import { HeaderService } from '../header.service';
 })
 export class CoffeesComponent {
 
-    coffees: Coffee[];
-    filterArg: Category;
-    searchVal = '';
-    $coffee: Subscription;
+  coffees: Coffee[];
+  filterArg: Category;
+  searchVal = '';
+  $coffee: Subscription;
+  typesMap = new Map<string, string>();
 
-    public alerts: any = [];
+  public alerts: any = [];
 
-    // Company Name and User Name
-    email = '';
-    companyName = '';
-    role = '';
+  // Company Name and User Name
+  email = '';
+  companyName = '';
+  role = '';
 
-    searchName = 'la';
-    imageView = false;
+  searchName = 'la';
+  imageView = false;
 
-    @ViewChild('staticModal') button;
+  @ViewChild('staticModal') button;
 
-    onFilter(filter) {
-        this.filterArg = filter;
+  onFilter(filter) {
+    this.filterArg = filter;
+  }
+
+  constructor(private coffeeService: CoffeeService,
+    private router: Router,
+    private categoryService: CategoryService,
+    private loginService: LoginService,
+    private headerService: HeaderService) {
+
+
+
+    this.subToUserCoffees(this.loginService.user);
+
+    // This is for the first time opening the page
+    // and the user info is not loaded fast enough
+    // from firebase
+    loginService.userOutput.subscribe(
+      (user: User) => {
+        console.log(user);
+        this.email = user.email;
+        this.companyName = user.companyName;
+        this.role = user.role;
+      }
+    );
+    if (this.loginService.user.email != null) {
+      this.email = this.loginService.user.email;
+      this.companyName = this.loginService.user.companyName;
+      this.role = this.loginService.user.role;
     }
 
-    constructor(private coffeeService: CoffeeService,
-                private router: Router,
-                private categoryService: CategoryService,
-                private loginService: LoginService,
-                private headerService: HeaderService) {
+    this.categoryService.categoryChanged.subscribe(filterArg => {
+      this.filterArg = filterArg;
+      console.log(filterArg);
+    });
 
+    // Subcribe to search val
+    this.headerService.searchValOutput.subscribe(
+      searchVal => {
+        this.searchVal = searchVal;
+      }
+    );
 
-
-        this.subToUserCoffees(this.loginService.user);
-
-        // This is for the first time opening the page
-        // and the user info is not loaded fast enough
-        // from firebase
-        loginService.userOutput.subscribe(
-          (user: User) => {
-            console.log(user);
-            this.email = user.email;
-            this.companyName = user.companyName;
-            this.role = user.role;
+    this.coffeeService.loadTypes().subscribe(
+      types => {
+        types.forEach(type => {
+          if (!this.typesMap.has(type.$key)) {
+            this.typesMap.set(type.$key, type.name);
           }
-        );
-        if (this.loginService.user.email != null) {
-          this.email = this.loginService.user.email;
-          this.companyName = this.loginService.user.companyName;
-          this.role = this.loginService.user.role;
-        }
-
-        console.log(this.role);
-
-        this.categoryService.categoryChanged.subscribe(filterArg => {
-          this.filterArg = filterArg;
-          console.log(filterArg);
         });
+        console.log(this.typesMap);
+      }
+    );
 
-        // Subcribe to search val
-        this.headerService.searchValOutput.subscribe(
-          searchVal => {
-            this.searchVal = searchVal;
-          }
-        );
+  }
 
-    }
+  private subToUserCoffees(user: User) {
+    this.$coffee = this.coffeeService.loadAllCoffees(user).subscribe(
+      coffees => {
+        this.coffees = coffees;
+        this.coffeeService.coffees = coffees;
+      }
+    );
+  }
 
-    private subToUserCoffees(user: User) {
-          this.$coffee = this.coffeeService.loadAllCoffees(user).subscribe(
-            coffees => {
-              this.coffees = coffees;
-              this.coffeeService.coffees = coffees;
-              // console.log(JSON.stringify(coffees));
-            }
-          );
+  newCoffee() {
+    this.coffeeService.editCoffee(true, '');
+    this.button.show();
+  }
 
-    }
+  onNgDestroy() {
+    this.$coffee.unsubscribe();
+  }
 
-    newCoffee() {
+  hide() {
+    this.button.hide();
+  }
 
-      this.coffeeService.editCoffee(true, '');
-      this.button.show();
+  hideModal() {
+    this.hide();
+  }
 
-    }
+  onEdit(coffeeOutput) {
+    this.button.show();
+  }
 
-    onNgDestroy() {
-      this.$coffee.unsubscribe();
-    }
+  onAdd(coffeeName) {
+    this.alerts.push({
+      type: 'success',
+      msg: `You successfully added ${coffeeName}`,
+      timeout: 2000
+    });
+  }
 
-    hide() {
-      this.button.hide();
-    }
+  onImageView() {
+    this.imageView = true;
+  }
 
-    hideModal() {
-      this.hide();
-    }
-
-    onEdit(coffeeOutput) {
-      // console.log('edit');
-      this.button.show();
-    }
-
-    onAdd(coffeeName) {
-      this.alerts.push({
-        type: 'success',
-        msg: `You successfully added ${coffeeName}`,
-        timeout: 2000
-      });
-    }
-
-    onImageView() {
-      this.imageView = true;
-    }
-
-    onListView() {
-      this.imageView = false;
-    }
-
+  onListView() {
+    this.imageView = false;
+  }
 
 }

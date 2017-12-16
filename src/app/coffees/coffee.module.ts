@@ -11,6 +11,7 @@ import { ModalModule } from 'ngx-bootstrap';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { CoffeeRoutingModule } from './coffee-routing.module';
 import { CoffeeListComponent } from './coffee-list/coffee-list.component';
+import { CategoryPipe } from './coffee-list/category.pipe';
 
 
 @NgModule ({
@@ -20,7 +21,8 @@ import { CoffeeListComponent } from './coffee-list/coffee-list.component';
     CoffeeEditComponent,
     CoffeesComponent,
     CategoryComponent,
-    CoffeeListComponent
+    CoffeeListComponent,
+    CategoryPipe
   ],
   imports: [
     CommonModule,

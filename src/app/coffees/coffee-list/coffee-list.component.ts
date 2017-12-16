@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Coffee } from '../coffee';
+import { CoffeeService } from '../coffee.service';
+import { Category } from 'aws-sdk/clients/support';
 
 @Component({
   selector: 'coffee-list-component',
@@ -11,9 +13,14 @@ export class CoffeeListComponent {
   @Input()
   coffees: Coffee[];
 
-  constructor() {
+  categories: Category[];
 
+  constructor(private coffeeService: CoffeeService) {
+    coffeeService.loadCategories().subscribe(categories => {
+      this.categories = categories;
+    });
   }
+
 
 
 

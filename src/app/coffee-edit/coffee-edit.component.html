@@ -33,7 +33,7 @@
             formControlName="type"
             [(ngModel)]="selectedType">
             <option *ngFor="let type of types"
-              [ngValue]="type.name"
+              [ngValue]="type.$key"
               [attr.selected]="type.name == name2 ? true : null">{{type.name}}</option>
           </select>
         </div>
