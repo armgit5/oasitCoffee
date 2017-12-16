@@ -110,6 +110,7 @@ export class CoffeeService {
     }
 
     private deteleImageInStorage(imageKey) {
+        console.log(imageKey);
         firebase.storage().ref().child(this.storageFolderName + imageKey)
         .delete().then(function() {
             // File deleted successfully
@@ -117,6 +118,7 @@ export class CoffeeService {
         }).catch(function(error) {
             // Uh-oh, an error occurred!
             console.log('error deleting the image');
+            console.log(error);
         });
         console.log('delete image in storage ' + imageKey);
     }

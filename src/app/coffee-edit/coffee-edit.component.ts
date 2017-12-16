@@ -175,10 +175,11 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
     let coffeeList = {
       name: this.coffeeForm.value.name,
       price: this.coffeeForm.value.price,
-      type: this.coffeeForm.value.type
+      type: this.coffeeForm.value.type,
+      category: this.coffeeForm.value.category
     };
 
-    this.db.list(`/coffeesList/${coffeeList.name}`)
+    this.db.list(`/coffeesList/${coffeeList.category}/${coffeeList.name}/`)
     .push(coffeeList);
   }
 
@@ -268,7 +269,7 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
 
     // add new image to storage
     let image = inputImage.split('base64,');
-    this.storageFolderName = `${this.loginService.user.companyName}/images/`;
+    this.storageFolderName = `/images/`;
 
     // console.log(coffeeId, image, newImageKey, oldImageKey, this.storageFolderName);
     let storageRef = firebase.storage().ref().child(this.storageFolderName + newImageKey);
