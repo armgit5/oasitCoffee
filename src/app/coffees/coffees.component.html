@@ -53,7 +53,11 @@
   </div><!--/row-->
 
   <div class="row" *ngIf="!imageView">
-    <coffee-list-component [coffees]="coffees"></coffee-list-component>
+    <coffee-list-component
+      [coffees]="coffees"
+      [typesMap]="typesMap"
+      [catMap]="catMap"
+      [coffeeMap]="coffeeMap"></coffee-list-component>
   </div>
 
   <hr>

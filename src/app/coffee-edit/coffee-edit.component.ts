@@ -173,18 +173,16 @@ export class CoffeeEditComponent implements OnInit, OnDestroy {
 
   private addToCoffeeList() {
     let coffeeList = {
-      name: this.coffeeForm.value.name,
       price: this.coffeeForm.value.price,
-      type: this.coffeeForm.value.type,
-      category: this.coffeeForm.value.category
+      type: this.coffeeForm.value.type
     };
 
-    this.db.list(`/coffeesList/${coffeeList.category}/${coffeeList.name}/`)
+    this.db.list(`/coffeesList/${this.coffeeForm.value.category}/${this.coffeeForm.value.name}/`)
     .push(coffeeList);
   }
 
   private deleteFromCoffeeList() {
-    this.db.object(`/coffeesList/${this.coffeeForm.value.name}`)
+    this.db.object(`/coffeesList/${this.coffeeForm.value.category}/${this.coffeeForm.value.name}`)
     .set(null);
   }
 

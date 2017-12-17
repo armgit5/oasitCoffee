@@ -8,6 +8,7 @@ import { Category } from './category/category';
 import { LoginService } from '../login/login.service';
 import { User } from '../admin/users/users';
 import { HeaderService } from '../header.service';
+import { categoriesData } from './category/categoriesData';
 
 @Component({
   selector: 'coffee',
@@ -31,6 +32,9 @@ export class CoffeesComponent {
   searchName = 'la';
   imageView = false;
 
+  coffeeMap = new Map();
+  catMap = new Map();
+
   @ViewChild('staticModal') button;
 
   onFilter(filter) {
@@ -52,7 +56,7 @@ export class CoffeesComponent {
     // from firebase
     loginService.userOutput.subscribe(
       (user: User) => {
-        console.log(user);
+        // console.log(user);
         this.email = user.email;
         this.companyName = user.companyName;
         this.role = user.role;
@@ -83,16 +87,64 @@ export class CoffeesComponent {
             this.typesMap.set(type.$key, type.name);
           }
         });
-        console.log(this.typesMap);
+        // console.log(this.typesMap);
       }
     );
 
   }
 
   private subToUserCoffees(user: User) {
+
+    let coffeeMap = new Map();
+    let catMap = new Map();
     this.$coffee = this.coffeeService.loadAllCoffees(user).subscribe(
       coffees => {
         this.coffees = coffees;
+
+        this.coffeeService.loadCategories().subscribe(categories => {
+
+          categories.forEach(category => {
+
+            coffees.forEach(coffee => {
+
+              if (coffee.category === category.$key) {
+
+                if (!coffeeMap.has(category.name)) {
+                  coffeeMap.set(category.name, new Map());
+                  catMap.set(category.name, new Map());
+                }
+
+                if (!catMap.get(category.name).has(coffee.type)) {
+                  catMap.get(category.name).set(coffee.type, this.typesMap.get(coffee.type));
+                }
+
+                if (!coffeeMap.get(category.name).has(coffee.name)) {
+                  coffeeMap.get(category.name).set(coffee.name, []);
+                }
+
+                coffeeMap.get(category.name).get(coffee.name).push({
+                  coffeeKey: coffee.$key,
+                  type: coffee.type,
+                  price: coffee.price
+                });
+
+
+              }
+
+            });
+
+          });
+
+          console.log(coffeeMap);
+          console.log(catMap);
+          this.coffeeMap = coffeeMap;
+          this.catMap = catMap;
+
+        });
+
+
+
+
         this.coffeeService.coffees = coffees;
       }
     );

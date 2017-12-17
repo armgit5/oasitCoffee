@@ -54,7 +54,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       if (this.loginService.user.email == null) {
         loginService.userOutput.subscribe(
           (user: User) => {
-            console.log(user);
+            // console.log(user);
             this.role = user.role;
           }
         );

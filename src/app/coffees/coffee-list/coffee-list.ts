@@ -1,8 +1,7 @@
 
 export class CoffeeList {
 
-  constructor(public name: string,
-              public prices: {string: number}
+  constructor(public name: Map<string, Map<string, number>>
   ) {
 
   }

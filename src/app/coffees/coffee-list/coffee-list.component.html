@@ -1,9 +1,40 @@
 <h1>Coffee List</h1>
+<!--
+<table id="fresh-table" class="table table-striped">
+    <thead style="
+        color: black;
+    ">
+      <th data-field="id">#</th>
+      <th data-field="name" data-sortable="true">Time</th>
+      <th data-field="salary" data-sortable="true">Name</th>
+      <th data-field="country" data-sortable="true">Order Detail</th>
+      <th data-field="city">Status</th>
+      <th data-field="city">Total</th>
+      <th data-field="actions" data-formatter="operateFormatter" data-events="operateEvents">Actions</th>
+    </thead>
+    <tbody style="font-weight:400;">
+        <tr -->
 
-<div class="col-xs-4 col-sm-4 col-md-3 col-lg-3"
+<table class="col-xs-4 col-sm-4 col-md-3 col-lg-3"
      *ngFor="let category of categories">
-  <h2>{{category.name}} H C</h2>
-</div>
+  <thead>
+    <th>{{category.name}}</th>
+    <th *ngFor="let t of getTypesFromCategory(category.name)">{{t}}</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let coffeeName of getCoffeesFromCategory(category.name)">
+        <td>{{coffeeName}}</td>
+        <th *ngFor="let type of getTypesFromCategory(category.name)" >
+
+          {{getPriceFromCategoryCoffeeType(category.name, coffeeName, type)}}
+        </th>
+
+
+    </tr>
+  </tbody>
+
+  <!-- <div *ngFor="let coffee of coffees | categoryFilter:category"></div> -->
+</table>
 
 <!-- <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3"
 *ngFor="let category of coffees">
