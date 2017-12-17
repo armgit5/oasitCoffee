@@ -53,6 +53,7 @@ export class CoffeeListComponent {
   constructor(private coffeeService: CoffeeService) {
     coffeeService.loadCategories().subscribe(categories => {
       this.categories = categories;
+
     });
 
     coffeeService.loadTypes().subscribe(types => {
@@ -109,7 +110,6 @@ export class CoffeeListComponent {
       return null;
     }
     return price;
-
   }
 
 }

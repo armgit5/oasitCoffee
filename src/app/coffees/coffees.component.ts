@@ -70,7 +70,6 @@ export class CoffeesComponent {
 
     this.categoryService.categoryChanged.subscribe(filterArg => {
       this.filterArg = filterArg;
-      console.log(filterArg);
     });
 
     // Subcribe to search val
@@ -135,8 +134,8 @@ export class CoffeesComponent {
 
           });
 
-          console.log(coffeeMap);
-          console.log(catMap);
+          // console.log(coffeeMap);
+          // console.log(catMap);
           this.coffeeMap = coffeeMap;
           this.catMap = catMap;
 
