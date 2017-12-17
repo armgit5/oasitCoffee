@@ -25,13 +25,13 @@ export class CoffeePipe implements PipeTransform {
     if (args != null) {
 
       for (let i = 0; i < array.length; i++) {
-        console.log(array[i].category, args.$key, array[i].type, args.types);
+        // console.log(array[i].category, args.$key, array[i].type, args.types);
         if (args.$key != null) {
           if (array[i].category === args.$key && args.types.indexOf(typesMap.get(array[i].type)) >= 0) {
             this.output.push(array[i]);
           }
         } else {
-          if (args.types.indexOf(array[i].type) >= 0) {
+          if (args.types.indexOf(typesMap.get(array[i].type)) >= 0) {
             this.output.push(array[i]);
           }
         }
